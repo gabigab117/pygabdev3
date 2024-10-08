@@ -24,53 +24,7 @@
     <link rel="icon" href="{% static 'logos/favicon.ico' %}"/>
     {% tailwind_css %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/custom_css.css' %}">
-    <style>
-        body {
-            background-color: #fef6e4;
-        }
-        .text-custom-blue {
-            color: #001858;
-        }
-        .hover\:text-custom-blue:hover {
-            color: #001858;
-        }
-        .elegant-hr {
-            border: 0;
-            height: 2px;
-            background-image: linear-gradient(to right, rgba(0, 24, 88, 0), rgba(0, 24, 88, 0.75), rgba(0, 24, 88, 0));
-            width: 80%;
-            margin: 20px auto;
-        }
-        .banner-border {
-            border-bottom: 1px solid rgba(0, 24, 88, 0.1);
-        }
-        .nav-link {
-            position: relative;
-        }
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            bottom: -2px;
-            left: 0;
-            background-color: #001858;
-            transform: scaleX(0);
-            transition: transform 0.3s ease-in-out;
-        }
-        .nav-link:hover::after {
-            transform: scaleX(1);
-        }
-        .services-menu summary::after {
-            display: none;
-        }
-        .services-menu ul {
-            margin-top: 0.5rem;
-        }
-        .services-menu ul li a::after {
-            bottom: 0;
-        }
-    </style>
+
 </head>
 
 <body class="flex flex-col min-h-full">
@@ -88,32 +42,32 @@
                     </div>
                     <ul tabindex="0"
                         class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                        <li><a class="nav-link hover:text-custom-blue transition-colors">Accueil</a></li>
+                        <li><a class="nav-link hover:text-custom-blue">Accueil</a></li>
                         <li class="services-menu">
-                            <a class="hover:text-custom-blue transition-colors">Services</a>
+                            <a class="hover:text-custom-blue">Services</a>
                             <ul class="p-2">
-                                <li><a class="nav-link hover:text-custom-blue transition-colors">Web Development</a></li>
-                                <li><a class="nav-link hover:text-custom-blue transition-colors">Data Science</a></li>
+                                <li><a class="nav-link hover:text-custom-blue">Web Development</a></li>
+                                <li><a class="nav-link hover:text-custom-blue">Data Science</a></li>
                             </ul>
                         </li>
-                        <li><a class="nav-link hover:text-custom-blue transition-colors">À propos</a></li>
+                        <li><a class="nav-link hover:text-custom-blue">À propos</a></li>
                     </ul>
                 </div>
                 <a class="btn btn-ghost normal-case text-xl text-custom-blue">PyGabDev</a>
             </div>
             <div class="navbar-center hidden lg:flex">
                 <ul class="menu menu-horizontal px-1">
-                    <li><a class="nav-link hover:text-custom-blue transition-colors">Accueil</a></li>
+                    <li><a class="nav-link hover:text-custom-blue">Accueil</a></li>
                     <li class="services-menu">
                         <details>
-                            <summary class="hover:text-custom-blue transition-colors">Services</summary>
+                            <summary class="hover:text-custom-blue">Services</summary>
                             <ul class="p-2 bg-base-100 rounded-box shadow-lg">
-                                <li><a class="nav-link hover:text-custom-blue transition-colors">Web Development</a></li>
-                                <li><a class="nav-link hover:text-custom-blue transition-colors">Data Science</a></li>
+                                <li><a class="nav-link hover:text-custom-blue">Web Development</a></li>
+                                <li><a class="nav-link hover:text-custom-blue">Data Science</a></li>
                             </ul>
                         </details>
                     </li>
-                    <li><a class="nav-link hover:text-custom-blue transition-colors">À propos</a></li>
+                    <li><a class="nav-link hover:text-custom-blue">À propos</a></li>
                 </ul>
             </div>
             <div class="navbar-end">
@@ -126,22 +80,22 @@
     </header>
 
     <div class="py-16 text-center bg-[#fef6e4] banner-border">
-        <h1 class="text-4xl font-bold mb-4 text-custom-blue">Bienvenue chez PyGabDev</h1>
+        <h1 class="text-4xl font-bold mb-4 text-custom-blue">{% block banner_title %}{{ page.title }}{% endblock %}</h1>
         <hr class="elegant-hr">
-        <p class="text-xl text-custom-blue mt-4">Solutions innovantes en développement Python et web</p>
+        <p class="text-xl text-custom-blue mt-4">{% block banner_text %}{{ page.header|richtext }}{% endblock %}</p>
         <hr class="elegant-hr">
     </div>
 
-    <main class="container mx-auto px-4 py-8 flex-grow mt-8">
+    <main class="container mx-auto px-4 py-8 flex-grow mt-8 max-w-3xl">
         {% block content %}{% endblock %}
     </main>
 
     <footer class="footer footer-center p-10 text-base-content rounded mt-8">
         <nav class="grid grid-flow-col gap-4">
-            <a class="nav-link link link-hover hover:text-custom-blue transition-colors">À propos</a>
-            <a class="nav-link link link-hover hover:text-custom-blue transition-colors">Contact</a>
-            <a class="nav-link link link-hover hover:text-custom-blue transition-colors">Emplois</a>
-            <a class="nav-link link link-hover hover:text-custom-blue transition-colors">Presse</a>
+            <a class="nav-link link link-hover hover:text-custom-blue">À propos</a>
+            <a class="nav-link link link-hover hover:text-custom-blue">Contact</a>
+            <a class="nav-link link link-hover hover:text-custom-blue">Emplois</a>
+            <a class="nav-link link link-hover hover:text-custom-blue">Presse</a>
         </nav>
         <nav>
             <div class="grid grid-flow-col gap-4">
