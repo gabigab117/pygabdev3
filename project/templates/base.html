@@ -25,16 +25,6 @@
     {% tailwind_css %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/custom_css.css' %}">
     <style>
-        @keyframes gradientBG {
-            0% {background-position: 0% 50%;}
-            50% {background-position: 100% 50%;}
-            100% {background-position: 0% 50%;}
-        }
-        .gradient-bg {
-            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-        }
         body {
             background-color: #fef6e4;
         }
@@ -43,6 +33,16 @@
         }
         .hover\:text-custom-blue:hover {
             color: #001858;
+        }
+        .elegant-hr {
+            border: 0;
+            height: 2px;
+            background-image: linear-gradient(to right, rgba(0, 24, 88, 0), rgba(0, 24, 88, 0.75), rgba(0, 24, 88, 0));
+            width: 80%;
+            margin: 20px auto;
+        }
+        .banner-border {
+            border-bottom: 1px solid rgba(0, 24, 88, 0.1);
         }
         .nav-link {
             position: relative;
@@ -74,94 +74,96 @@
 </head>
 
 <body class="flex flex-col min-h-full">
-{% wagtailuserbar %}
-<header class="shadow-md">
-    <div class="navbar container mx-auto">
-        <div class="navbar-start">
-            <div class="dropdown">
-                <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                         stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M4 6h16M4 12h8m-8 6h16"/>
-                    </svg>
+    {% wagtailuserbar %}
+    <header class="shadow-md">
+        <div class="navbar container mx-auto">
+            <div class="navbar-start">
+                <div class="dropdown">
+                    <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                             stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M4 6h16M4 12h8m-8 6h16"/>
+                        </svg>
+                    </div>
+                    <ul tabindex="0"
+                        class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                        <li><a class="nav-link hover:text-custom-blue transition-colors">Accueil</a></li>
+                        <li class="services-menu">
+                            <a class="hover:text-custom-blue transition-colors">Services</a>
+                            <ul class="p-2">
+                                <li><a class="nav-link hover:text-custom-blue transition-colors">Web Development</a></li>
+                                <li><a class="nav-link hover:text-custom-blue transition-colors">Data Science</a></li>
+                            </ul>
+                        </li>
+                        <li><a class="nav-link hover:text-custom-blue transition-colors">À propos</a></li>
+                    </ul>
                 </div>
-                <ul tabindex="0"
-                    class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                <a class="btn btn-ghost normal-case text-xl text-custom-blue">PyGabDev</a>
+            </div>
+            <div class="navbar-center hidden lg:flex">
+                <ul class="menu menu-horizontal px-1">
                     <li><a class="nav-link hover:text-custom-blue transition-colors">Accueil</a></li>
                     <li class="services-menu">
-                        <a class="hover:text-custom-blue transition-colors">Services</a>
-                        <ul class="p-2">
-                            <li><a class="nav-link hover:text-custom-blue transition-colors">Web Development</a></li>
-                            <li><a class="nav-link hover:text-custom-blue transition-colors">Data Science</a></li>
-                        </ul>
+                        <details>
+                            <summary class="hover:text-custom-blue transition-colors">Services</summary>
+                            <ul class="p-2 bg-base-100 rounded-box shadow-lg">
+                                <li><a class="nav-link hover:text-custom-blue transition-colors">Web Development</a></li>
+                                <li><a class="nav-link hover:text-custom-blue transition-colors">Data Science</a></li>
+                            </ul>
+                        </details>
                     </li>
                     <li><a class="nav-link hover:text-custom-blue transition-colors">À propos</a></li>
                 </ul>
             </div>
-            <a class="btn btn-ghost normal-case text-xl text-custom-blue">PyGabDev</a>
-        </div>
-        <div class="navbar-center hidden lg:flex">
-            <ul class="menu menu-horizontal px-1">
-                <li><a class="nav-link hover:text-custom-blue transition-colors">Accueil</a></li>
-                <li class="services-menu">
-                    <details>
-                        <summary class="hover:text-custom-blue transition-colors">Services</summary>
-                        <ul class="p-2 bg-base-100 rounded-box shadow-lg">
-                            <li><a class="nav-link hover:text-custom-blue transition-colors">Web Development</a></li>
-                            <li><a class="nav-link hover:text-custom-blue transition-colors">Data Science</a></li>
-                        </ul>
-                    </details>
-                </li>
-                <li><a class="nav-link hover:text-custom-blue transition-colors">À propos</a></li>
-            </ul>
-        </div>
-        <div class="navbar-end">
-            <div class="form-control">
-                <input type="text" placeholder="Recherche"
-                       class="input input-bordered w-24 md:w-auto focus:ring-2 focus:ring-custom-blue"/>
+            <div class="navbar-end">
+                <div class="form-control">
+                    <input type="text" placeholder="Recherche"
+                           class="input input-bordered w-24 md:w-auto focus:ring-2 focus:ring-custom-blue"/>
+                </div>
             </div>
         </div>
+    </header>
+
+    <div class="py-16 text-center bg-[#fef6e4] banner-border">
+        <h1 class="text-4xl font-bold mb-4 text-custom-blue">Bienvenue chez PyGabDev</h1>
+        <hr class="elegant-hr">
+        <p class="text-xl text-custom-blue mt-4">Solutions innovantes en développement Python et web</p>
+        <hr class="elegant-hr">
     </div>
-</header>
 
-<div class="gradient-bg py-16 text-white text-center">
-    <h1 class="text-4xl font-bold mb-4">Bienvenue chez PyGabDev</h1>
-    <p class="text-xl">Solutions innovantes en développement Python et web</p>
-</div>
+    <main class="container mx-auto px-4 py-8 flex-grow mt-8">
+        {% block content %}{% endblock %}
+    </main>
 
-<main class="container mx-auto px-4 py-8 flex-grow mt-8">
-    {% block content %}{% endblock %}
-</main>
-
-<footer class="footer footer-center p-10 text-base-content rounded mt-8">
-    <nav class="grid grid-flow-col gap-4">
-        <a class="nav-link link link-hover hover:text-custom-blue transition-colors">À propos</a>
-        <a class="nav-link link link-hover hover:text-custom-blue transition-colors">Contact</a>
-        <a class="nav-link link link-hover hover:text-custom-blue transition-colors">Emplois</a>
-        <a class="nav-link link link-hover hover:text-custom-blue transition-colors">Presse</a>
-    </nav>
-    <nav>
-        <div class="grid grid-flow-col gap-4">
-            <a aria-label="Réseau X de Gabriel Trouvé" href="https://twitter.com/GabrielTrouve" target="_blank"
-               class="hover:opacity-80 transition-opacity transform hover:scale-110">
-                <img src="{% static 'logos/x.png' %}" width="40" height="auto" alt="X">
-            </a>
-            <a aria-label="Réseau Linkedin de Gabriel Trouvé"
-               href="https://www.linkedin.com/in/gabriel-trouv%C3%A9-b6a2bb159/" target="_blank"
-               class="hover:opacity-80 transition-opacity transform hover:scale-110">
-                <img src="{% static 'logos/l.png' %}" width="40" height="auto" alt="LinkedIn">
-            </a>
-            <a aria-label="GitHub de Gabriel Trouvé" href="https://github.com/gabigab117" target="_blank"
-               class="hover:opacity-80 transition-opacity transform hover:scale-110">
-                <img src="{% static 'logos/g.png' %}" width="40" height="auto" alt="GitHub">
-            </a>
-        </div>
-    </nav>
-    <aside>
-        <p>PyGabDev © 2024 - Tous droits réservés</p>
-    </aside>
-</footer>
+    <footer class="footer footer-center p-10 text-base-content rounded mt-8">
+        <nav class="grid grid-flow-col gap-4">
+            <a class="nav-link link link-hover hover:text-custom-blue transition-colors">À propos</a>
+            <a class="nav-link link link-hover hover:text-custom-blue transition-colors">Contact</a>
+            <a class="nav-link link link-hover hover:text-custom-blue transition-colors">Emplois</a>
+            <a class="nav-link link link-hover hover:text-custom-blue transition-colors">Presse</a>
+        </nav>
+        <nav>
+            <div class="grid grid-flow-col gap-4">
+                <a aria-label="Réseau X de Gabriel Trouvé" href="https://twitter.com/GabrielTrouve" target="_blank"
+                   class="hover:opacity-80 transition-opacity transform hover:scale-110">
+                    <img src="{% static 'logos/x.png' %}" width="40" height="auto" alt="X">
+                </a>
+                <a aria-label="Réseau Linkedin de Gabriel Trouvé"
+                   href="https://www.linkedin.com/in/gabriel-trouv%C3%A9-b6a2bb159/" target="_blank"
+                   class="hover:opacity-80 transition-opacity transform hover:scale-110">
+                    <img src="{% static 'logos/l.png' %}" width="40" height="auto" alt="LinkedIn">
+                </a>
+                <a aria-label="GitHub de Gabriel Trouvé" href="https://github.com/gabigab117" target="_blank"
+                   class="hover:opacity-80 transition-opacity transform hover:scale-110">
+                    <img src="{% static 'logos/g.png' %}" width="40" height="auto" alt="GitHub">
+                </a>
+            </div>
+        </nav>
+        <aside>
+            <p>PyGabDev © 2024 - Tous droits réservés</p>
+        </aside>
+    </footer>
 
 </body>
 </html>
