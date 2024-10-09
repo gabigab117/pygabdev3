@@ -3,12 +3,12 @@ from wagtail.fields import RichTextField
 
 from wagtail.models import Page
 
+from core.models import GenericPage
 
-class HomePage(Page):
-    header = RichTextField(blank=True)
+
+class HomePage(GenericPage):
     body = RichTextField(blank=True)
 
-    content_panels = Page.content_panels + [
-        FieldPanel('header'),
+    content_panels = GenericPage.content_panels + [
         FieldPanel('body')
     ]

@@ -36,7 +36,10 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "tailwind",
     "theme",
+    "wagtailcodeblock",
     "account",
+    "core",
+    "blog",
 ]
 
 MIDDLEWARE = [
