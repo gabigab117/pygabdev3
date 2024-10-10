@@ -1,10 +1,8 @@
-from lib2to3.fixes.fix_input import context
-
-from modelcluster.contrib.taggit import ClusterTaggableManager
 from wagtail import blocks
 from wagtail.admin.panels import FieldPanel
 from wagtail.fields import RichTextField, StreamField
 from wagtail.models import Page
+from wagtail.images.models import Image
 from wagtail.search import index
 from wagtailcodeblock.blocks import CodeBlock
 
@@ -21,6 +19,7 @@ class BlogIndexPage(GenericPage):
 
 
 class BlogPage(GenericPage):
+    main_image = models.ForeignKey(Image, on_delete=models.PROTECT, verbose_name="Image principale", related_name="+")
     date = models.DateField(verbose_name="Date de publication")
     body = StreamField([
         ("paragraphe", blocks.RichTextBlock()),
@@ -34,5 +33,6 @@ class BlogPage(GenericPage):
 
     content_panels = GenericPage.content_panels + [
         FieldPanel("date"),
+        FieldPanel("main_image"),
         FieldPanel("body"),
         ]
