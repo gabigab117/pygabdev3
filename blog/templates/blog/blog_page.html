@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
 
-</body>
-</html>
+{% block content %}
+<div class="text-justify">
+    <div class="prose mx-auto text-custom-blue">
+
+        {% image page.main_image original class="rounded-xl" alt=page.main_image.title %}
+
+        {{ page.body }}
+    </div>
+    <hr class="mb-6">
+    <a href="{{ page.get_parent.url }}"
+       class="btn bg-[#f582ae] border-[#f582ae] hover:bg-[#f36a9f] hover:border-[#f36a9f] text-white transition-all duration-300 ease-in-out hover:scale-110">
+        Retour
+    </a>
+</div>
+{% endblock %}

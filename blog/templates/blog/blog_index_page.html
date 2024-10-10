@@ -1,20 +1,32 @@
 {% extends 'base.html' %}
 {% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
 
 {% block content %}
 <div class="text-justify">
-    <div class="prose mx-auto text-justify text-custom-blue">
-        <div class="card bg-[#f3d2c1] w-96 shadow-xl">
-            <div class="card-body">
-                <h2 class="card-title">Card title!</h2>
-                <p>If a dog chews shoes whose shoes does he choose?</p>
+    <!-- <div class="prose mx-auto text-justify text-custom-blue">-->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-12">
+        {% for post in blogpages %}
+        <div class="card bg-[#f3d2c1] w-96 shadow-xl mx-auto w-full transition duration-300 ease-in-out hover:scale-105 hover:-rotate-1 hover:shadow-2xl">
+            <figure class="px-10 pt-10">
+                {% image post.main_image original class="rounded-xl" alt=post.main_image.title %}
+            </figure>
+            <div class="card-body items-center text-center text-custom-blue">
+                <h2 class="card-title">{{ post.title }}</h2>
+                <p>{{ post.header|richtext }}</p>
+                <p><i>Par {{ post.owner }}</i></p>
+                <p>Le {{ post.date }}</p>
                 <div class="card-actions justify-end">
-                    <button class="btn bg-[#f582ae] border-[#f582ae] hover:bg-[#f36a9f] hover:border-[#f36a9f]">Buy Now</button>
+                    <a href="{% pageurl post %}"
+                       class="btn bg-[#f582ae] border-[#f582ae] hover:bg-[#f36a9f] hover:border-[#f36a9f] text-white transition-all duration-300 ease-in-out hover:scale-110">
+                        Lire
+                    </a>
                 </div>
             </div>
         </div>
-
+        {% endfor %}
     </div>
+
 </div>
 
 {% endblock %}
