@@ -1,5 +1,5 @@
 from wagtail import blocks
-from wagtail.admin.panels import FieldPanel
+from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail.fields import RichTextField, StreamField
 from wagtail.models import Page
 from wagtail.images.models import Image
@@ -11,8 +11,12 @@ from django.db import models
 
 
 class BlogIndexPage(GenericPage):
+    content_panels = GenericPage.content_panels + [
+        FieldPanel('header'),
+    ]
+
     def get_context(self, request, *args, **kwargs):
-        context = super().get_context(request,*args, **kwargs)
+        context = super().get_context(request, *args, **kwargs)
         blogpages = BlogPage.objects.child_of(self).live().order_by("-date")
         context["blogpages"] = blogpages
         return context
@@ -32,7 +36,10 @@ class BlogPage(GenericPage):
     ]
 
     content_panels = GenericPage.content_panels + [
-        FieldPanel("date"),
-        FieldPanel("main_image"),
+        MultiFieldPanel([
+            FieldPanel("header"),
+            FieldPanel("date"),
+            FieldPanel("main_image")],
+            heading="En-tête"),
         FieldPanel("body"),
-        ]
+    ]

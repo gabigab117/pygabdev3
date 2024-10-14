@@ -8,9 +8,5 @@ from django.db import models
 class GenericPage(Page):
     header = RichTextField(blank=True)
 
-    content_panels = Page.content_panels + [
-        FieldPanel('header'),
-    ]
-
     class Meta:
         abstract = True

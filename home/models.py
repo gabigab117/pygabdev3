@@ -10,5 +10,6 @@ class HomePage(GenericPage):
     body = RichTextField(blank=True)
 
     content_panels = GenericPage.content_panels + [
+        FieldPanel('header'),
         FieldPanel('body')
     ]
