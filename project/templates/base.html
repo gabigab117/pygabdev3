@@ -28,98 +28,106 @@
 </head>
 
 <body class="flex flex-col min-h-full">
-    {% wagtailuserbar %}
-    <header class="shadow-md">
-        <div class="navbar container mx-auto">
-            <div class="navbar-start">
-                <div class="dropdown">
-                    <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                             stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M4 6h16M4 12h8m-8 6h16"/>
-                        </svg>
-                    </div>
-                    <ul tabindex="0"
-                        class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                        <li><a class="nav-link hover:text-custom-blue">Accueil</a></li>
-                        <li class="services-menu">
-                            <a class="hover:text-custom-blue">Services</a>
-                            <ul class="p-2">
-                                <li><a class="nav-link hover:text-custom-blue">Web Development</a></li>
-                                <li><a class="nav-link hover:text-custom-blue">Data Science</a></li>
-                            </ul>
-                        </li>
-                        <li><a class="nav-link hover:text-custom-blue">À propos</a></li>
-                    </ul>
+{% wagtailuserbar %}
+<header class="shadow-md">
+    <div class="navbar container mx-auto">
+        <div class="navbar-start">
+            <div class="dropdown">
+                <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                         stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M4 6h16M4 12h8m-8 6h16"/>
+                    </svg>
                 </div>
-                <a class="btn btn-ghost normal-case text-xl text-custom-blue">PyGabDev</a>
-            </div>
-            <div class="navbar-center hidden lg:flex">
-                <ul class="menu menu-horizontal px-1">
+                <ul tabindex="0"
+                    class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                     <li><a class="nav-link hover:text-custom-blue">Accueil</a></li>
+                    <li><a class="nav-link hover:text-custom-blue">Projets</a></li>
+                    <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'blog' %}">Blog</a></li>
                     <li class="services-menu">
-                        <details>
-                            <summary class="hover:text-custom-blue">Services</summary>
-                            <ul class="p-2 bg-base-100 rounded-box shadow-lg">
-                                <li><a class="nav-link hover:text-custom-blue">Web Development</a></li>
-                                <li><a class="nav-link hover:text-custom-blue">Data Science</a></li>
-                            </ul>
-                        </details>
+                        <a class="hover:text-custom-blue">Réseaux</a>
+                        <ul class="p-2">
+                            <li><a class="nav-link hover:text-custom-blue">GitHub</a></li>
+                            <li><a class="nav-link hover:text-custom-blue">X</a></li>
+                            <li><a class="nav-link hover:text-custom-blue">Linkedin</a></li>
+                            <li><a class="nav-link hover:text-custom-blue">Youtube</a></li>
+                        </ul>
                     </li>
-                    <li><a class="nav-link hover:text-custom-blue">À propos</a></li>
+                    <li><a class="nav-link hover:text-custom-blue">Contact</a></li>
                 </ul>
             </div>
-            <div class="navbar-end">
-                <div class="form-control">
-                    <input type="text" placeholder="Recherche"
-                           class="input input-bordered w-24 md:w-auto focus:ring-2 focus:ring-custom-blue"/>
-                </div>
+            <a class="btn btn-ghost normal-case text-xl text-custom-blue">PyGabDev</a>
+        </div>
+        <div class="navbar-center hidden lg:flex">
+            <ul class="menu menu-horizontal px-1">
+                <li><a class="nav-link hover:text-custom-blue">Accueil</a></li>
+                <li><a class="nav-link hover:text-custom-blue">Projets</a></li>
+                <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'blog' %}">Blog</a></li>
+                <li class="services-menu">
+                    <details>
+                        <summary class="hover:text-custom-blue">Réseaux</summary>
+                        <ul class="p-2 bg-base-100 rounded-box shadow-lg">
+                            <li><a class="nav-link hover:text-custom-blue">GitHub</a></li>
+                            <li><a class="nav-link hover:text-custom-blue">X</a></li>
+                            <li><a class="nav-link hover:text-custom-blue">Linkedin</a></li>
+                            <li><a class="nav-link hover:text-custom-blue">Youtube</a></li>
+                        </ul>
+                    </details>
+                </li>
+                <li><a class="nav-link hover:text-custom-blue">Contact</a></li>
+            </ul>
+        </div>
+        <div class="navbar-end">
+            <div class="form-control">
+                <input type="text" placeholder="Recherche"
+                       class="input input-bordered w-24 md:w-auto focus:ring-2 focus:ring-custom-blue"/>
             </div>
         </div>
-    </header>
-
-    <div class="py-16 text-center bg-[#fef6e4] banner-border">
-        <h1 class="text-4xl font-bold mb-4 text-custom-blue">{% block banner_title %}{{ page.title }}{% endblock %}</h1>
-        <hr class="elegant-hr">
-        <p class="text-xl text-custom-blue mt-4">{% block banner_text %}{{ page.header|richtext }}{% endblock %}</p>
-        <hr class="elegant-hr">
     </div>
+</header>
 
-    <main class="container mx-auto px-4 py-8 flex-grow mt-8 max-w-3xl">
-        {% block content %}{% endblock %}
-    </main>
+<div class="py-16 text-center bg-[#fef6e4] banner-border">
+    <h1 class="text-4xl font-bold mb-4 text-custom-blue">{% block banner_title %}{{ page.title }}{% endblock %}</h1>
+    <hr class="elegant-hr">
+    <p class="text-xl text-custom-blue mt-4">{% block banner_text %}{{ page.header|richtext }}{% endblock %}</p>
+    <hr class="elegant-hr">
+</div>
 
-    <hr class="my-8 border-0 h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent">
+<main class="container mx-auto px-4 py-8 flex-grow mt-8 max-w-3xl">
+    {% block content %}{% endblock %}
+</main>
 
-    <footer class="footer footer-center p-10 text-base-content rounded mt-8 bg-[#f3d2c1]">
-        <nav class="grid grid-flow-col gap-4">
-            <a class="nav-link link link-hover hover:text-custom-blue">À propos</a>
-            <a class="nav-link link link-hover hover:text-custom-blue">Contact</a>
-            <a class="nav-link link link-hover hover:text-custom-blue">Emplois</a>
-            <a class="nav-link link link-hover hover:text-custom-blue">Presse</a>
-        </nav>
-        <nav>
-            <div class="grid grid-flow-col gap-4">
-                <a aria-label="Réseau X de Gabriel Trouvé" href="https://twitter.com/GabrielTrouve" target="_blank"
-                   class="hover:opacity-80 transition-opacity transform hover:scale-110">
-                    <img src="{% static 'logos/x.png' %}" width="40" height="auto" alt="X">
-                </a>
-                <a aria-label="Réseau Linkedin de Gabriel Trouvé"
-                   href="https://www.linkedin.com/in/gabriel-trouv%C3%A9-b6a2bb159/" target="_blank"
-                   class="hover:opacity-80 transition-opacity transform hover:scale-110">
-                    <img src="{% static 'logos/l.png' %}" width="40" height="auto" alt="LinkedIn">
-                </a>
-                <a aria-label="GitHub de Gabriel Trouvé" href="https://github.com/gabigab117" target="_blank"
-                   class="hover:opacity-80 transition-opacity transform hover:scale-110">
-                    <img src="{% static 'logos/g.png' %}" width="40" height="auto" alt="GitHub">
-                </a>
-            </div>
-        </nav>
-        <aside>
-            <p>PyGabDev © 2024 - Tous droits réservés</p>
-        </aside>
-    </footer>
+<hr class="my-8 border-0 h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent">
+
+<footer class="footer footer-center p-10 text-base-content rounded mt-8 bg-[#f3d2c1]">
+    <nav class="grid grid-flow-col gap-4">
+        <a class="nav-link link link-hover hover:text-custom-blue">À propos</a>
+        <a class="nav-link link link-hover hover:text-custom-blue">Contact</a>
+        <a class="nav-link link link-hover hover:text-custom-blue">Emplois</a>
+        <a class="nav-link link link-hover hover:text-custom-blue">Presse</a>
+    </nav>
+    <nav>
+        <div class="grid grid-flow-col gap-4">
+            <a aria-label="Réseau X de Gabriel Trouvé" href="https://twitter.com/GabrielTrouve" target="_blank"
+               class="hover:opacity-80 transition-opacity transform hover:scale-110">
+                <img src="{% static 'logos/x.png' %}" width="40" height="auto" alt="X">
+            </a>
+            <a aria-label="Réseau Linkedin de Gabriel Trouvé"
+               href="https://www.linkedin.com/in/gabriel-trouv%C3%A9-b6a2bb159/" target="_blank"
+               class="hover:opacity-80 transition-opacity transform hover:scale-110">
+                <img src="{% static 'logos/l.png' %}" width="40" height="auto" alt="LinkedIn">
+            </a>
+            <a aria-label="GitHub de Gabriel Trouvé" href="https://github.com/gabigab117" target="_blank"
+               class="hover:opacity-80 transition-opacity transform hover:scale-110">
+                <img src="{% static 'logos/g.png' %}" width="40" height="auto" alt="GitHub">
+            </a>
+        </div>
+    </nav>
+    <aside>
+        <p>PyGabDev © 2024 - Tous droits réservés</p>
+    </aside>
+</footer>
 
 
 </body>
