@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "core",
     "blog",
     "folio",
+    "tag",
 ]
 
 MIDDLEWARE = [

@@ -1,12 +1,13 @@
 from wagtail import blocks
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel
-from wagtail.fields import RichTextField, StreamField
-from wagtail.models import Page
+from wagtail.fields import StreamField
 from wagtail.images.models import Image
 from wagtail.search import index
 from wagtailcodeblock.blocks import CodeBlock
+from modelcluster.contrib.taggit import ClusterTaggableManager
 
 from core.models import GenericPage
+from tag.models import TaggedPage
 from django.db import models
 
 
@@ -29,6 +30,7 @@ class BlogPage(GenericPage):
         ("paragraphe", blocks.RichTextBlock()),
         ("code", CodeBlock()),
     ], use_json_field=True)
+    tags = ClusterTaggableManager(through=TaggedPage, blank=True)
 
     search_fields = GenericPage.search_fields + [
         index.SearchField("header"),
@@ -42,4 +44,5 @@ class BlogPage(GenericPage):
             FieldPanel("main_image")],
             heading="En-tête"),
         FieldPanel("body"),
+        FieldPanel("tags")
     ]

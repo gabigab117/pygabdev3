@@ -1,12 +1,14 @@
 from django.db import models
+from modelcluster.contrib.taggit import ClusterTaggableManager
 from wagtail import blocks
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel
-from wagtail.fields import StreamField, RichTextField
+from wagtail.fields import StreamField
 from wagtail.images.models import Image
 from wagtail.search import index
 from wagtailcodeblock.blocks import CodeBlock
 
 from core.models import GenericPage
+from tag.models import TaggedPage
 
 
 class FolioIndexPage(GenericPage):
@@ -24,11 +26,11 @@ class FolioIndexPage(GenericPage):
 class FolioPage(GenericPage):
     main_image = models.ForeignKey(Image, on_delete=models.PROTECT, verbose_name="Image principale", related_name="+")
     date = models.DateField(verbose_name="Date de publication")
-    # technologies = RichTextField(verbose_name="Technologies utilisées")
     body = StreamField([
         ("paragraphe", blocks.RichTextBlock()),
         ("code", CodeBlock()),
     ], use_json_field=True)
+    tags = ClusterTaggableManager(through=TaggedPage, blank=True)
     youtube = models.URLField(verbose_name="Lien Youtube", blank=True)
     github = models.URLField(verbose_name="Lien GitHub", blank=True)
     production = models.URLField(verbose_name="Lien du Projet", blank=True)
@@ -45,7 +47,8 @@ class FolioPage(GenericPage):
             FieldPanel("main_image")],
             heading="En-tête"),
         MultiFieldPanel([
-            FieldPanel("body")],
+            FieldPanel("body"),
+            FieldPanel("tags")],
             heading="Corps"),
         MultiFieldPanel([
             FieldPanel("youtube"),
