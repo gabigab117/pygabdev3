@@ -36,7 +36,6 @@ class FolioPage(GenericPage):
     search_fields = GenericPage.search_fields + [
         index.SearchField("header"),
         index.SearchField("body"),
-        index.SearchField("technologies")
     ]
 
     content_panels = GenericPage.content_panels + [
@@ -46,7 +45,6 @@ class FolioPage(GenericPage):
             FieldPanel("main_image")],
             heading="En-tête"),
         MultiFieldPanel([
-            FieldPanel("technologies"),
             FieldPanel("body")],
             heading="Corps"),
         MultiFieldPanel([

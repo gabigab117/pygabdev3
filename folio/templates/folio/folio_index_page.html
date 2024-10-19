@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+
+{% block content %}
+<div class="text-justify">
+    <!-- <div class="prose mx-auto text-justify text-custom-blue">-->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-12">
+        {% for project in foliopages %}
+        <div class="card bg-[#f3d2c1] w-96 shadow-xl mx-auto w-full transition duration-300 ease-in-out hover:scale-105 hover:-rotate-1 hover:shadow-2xl">
+            <figure class="px-10 pt-10">
+                {% image project.main_image original class="rounded-xl" alt=project.main_image.title %}
+            </figure>
+            <div class="card-body items-center text-center text-custom-blue">
+                <h2 class="card-title">{{ project.title }}</h2>
+                <p>{{ project.header|richtext }}</p>
+                <p>Le {{ project.date }}</p>
+                <div class="card-actions justify-end">
+                    <a href="{% pageurl project %}"
+                       class="btn bg-[#f582ae] border-[#f582ae] hover:bg-[#f36a9f] hover:border-[#f36a9f] text-white transition-all duration-300 ease-in-out hover:scale-110">
+                        Lire
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}
