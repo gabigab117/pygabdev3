@@ -43,7 +43,7 @@
                 <ul tabindex="0"
                     class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                     <li><a class="nav-link hover:text-custom-blue">Accueil</a></li>
-                    <li><a class="nav-link hover:text-custom-blue">Projets</a></li>
+                    <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'projets' %}">Projets</a></li>
                     <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'blog' %}">Blog</a></li>
                     <li class="services-menu">
                         <a class="hover:text-custom-blue">Réseaux</a>
@@ -62,7 +62,7 @@
         <div class="navbar-center hidden lg:flex">
             <ul class="menu menu-horizontal px-1">
                 <li><a class="nav-link hover:text-custom-blue">Accueil</a></li>
-                <li><a class="nav-link hover:text-custom-blue">Projets</a></li>
+                <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'projets' %}">Projets</a></li>
                 <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'blog' %}">Blog</a></li>
                 <li class="services-menu">
                     <details>
