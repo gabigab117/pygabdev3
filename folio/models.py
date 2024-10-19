@@ -8,7 +8,6 @@ from wagtail.search import index
 from wagtailcodeblock.blocks import CodeBlock
 
 from core.models import GenericPage
-from tag.models import TaggedPage
 
 
 class FolioIndexPage(GenericPage):
@@ -30,7 +29,6 @@ class FolioPage(GenericPage):
         ("paragraphe", blocks.RichTextBlock()),
         ("code", CodeBlock()),
     ], use_json_field=True)
-    tags = ClusterTaggableManager(through=TaggedPage, blank=True)
     youtube = models.URLField(verbose_name="Lien Youtube", blank=True)
     github = models.URLField(verbose_name="Lien GitHub", blank=True)
     production = models.URLField(verbose_name="Lien du Projet", blank=True)
@@ -47,8 +45,7 @@ class FolioPage(GenericPage):
             FieldPanel("main_image")],
             heading="En-tête"),
         MultiFieldPanel([
-            FieldPanel("body"),
-            FieldPanel("tags")],
+            FieldPanel("body")],
             heading="Corps"),
         MultiFieldPanel([
             FieldPanel("youtube"),

@@ -7,7 +7,7 @@ from wagtailcodeblock.blocks import CodeBlock
 from modelcluster.contrib.taggit import ClusterTaggableManager
 
 from core.models import GenericPage
-from tag.models import TaggedPage
+from tag.models import BlogTaggedPage
 from django.db import models
 
 
@@ -30,7 +30,7 @@ class BlogPage(GenericPage):
         ("paragraphe", blocks.RichTextBlock()),
         ("code", CodeBlock()),
     ], use_json_field=True)
-    tags = ClusterTaggableManager(through=TaggedPage, blank=True)
+    tags = ClusterTaggableManager(through=BlogTaggedPage, blank=True)
 
     search_fields = GenericPage.search_fields + [
         index.SearchField("header"),

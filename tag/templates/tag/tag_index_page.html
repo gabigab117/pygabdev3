@@ -36,31 +36,6 @@
             {% endfor %}
         </div>
 
-        <div class="mb-12">
-            <h2 class="text-2xl font-bold mb-4">Projets</h2>
-            {% for project in projects %}
-            <div class="card bg-base-100 shadow-xl mb-6">
-                <div class="card-body">
-                    <h3 class="card-title">
-                        <a href="{% pageurl project %}"
-                           class="text-[#f582ae] hover:text-[#f36a9f] transition-colors duration-300">
-                            {{ project.title }}
-                        </a>
-                    </h3>
-                    <p class="text-sm text-gray-500">Mis à jour le : {{ project.latest_revision_created_at|date:"d F Y"
-                        }}</p>
-                    {% if project.intro %}
-                    <p>{{ project.intro|truncatewords:30 }}</p>
-                    {% endif %}
-                    <div class="card-actions justify-end">
-                        <a href="{% pageurl project %}" class="btn btn-primary">Voir le projet</a>
-                    </div>
-                </div>
-            </div>
-            {% empty %}
-            <p class="text-center text-gray-500 italic">Aucun projet trouvé avec ce tag.</p>
-            {% endfor %}
-        </div>
     </div>
 
     <div class="text-center mt-8">
