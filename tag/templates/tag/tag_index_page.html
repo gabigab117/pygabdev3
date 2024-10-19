@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+<div class="text-justify">
+    <div class="prose mx-auto text-custom-blue">
+        {% if request.GET.tag %}
+        <h1 class="text-3xl font-bold mb-6 text-center">Pages avec le tag "{{ request.GET.tag }}"</h1>
+        {% else %}
+        <h1 class="text-3xl font-bold mb-6 text-center">Tous les articles et projets</h1>
+        {% endif %}
+
+        <div class="mb-12">
+            <h2 class="text-2xl font-bold mb-4">Articles</h2>
+            {% for blogpage in blogpages %}
+            <div class="card bg-base-100 shadow-xl mb-6">
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <a href="{% pageurl blogpage %}"
+                           class="text-[#f582ae] hover:text-[#f36a9f] transition-colors duration-300">
+                            {{ blogpage.title }}
+                        </a>
+                    </h3>
+                    <p class="text-sm text-gray-500">Mis à jour le : {{ blogpage.latest_revision_created_at|date:"d F Y"
+                        }}</p>
+                    {% if blogpage.intro %}
+                    <p>{{ blogpage.intro|truncatewords:30 }}</p>
+                    {% endif %}
+                    <div class="card-actions justify-end">
+                        <a href="{% pageurl blogpage %}" class="btn btn-primary">Lire plus</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-center text-gray-500 italic">Aucun article trouvé avec ce tag.</p>
+            {% endfor %}
+        </div>
+
+        <div class="mb-12">
+            <h2 class="text-2xl font-bold mb-4">Projets</h2>
+            {% for project in projects %}
+            <div class="card bg-base-100 shadow-xl mb-6">
+                <div class="card-body">
+                    <h3 class="card-title">
+                        <a href="{% pageurl project %}"
+                           class="text-[#f582ae] hover:text-[#f36a9f] transition-colors duration-300">
+                            {{ project.title }}
+                        </a>
+                    </h3>
+                    <p class="text-sm text-gray-500">Mis à jour le : {{ project.latest_revision_created_at|date:"d F Y"
+                        }}</p>
+                    {% if project.intro %}
+                    <p>{{ project.intro|truncatewords:30 }}</p>
+                    {% endif %}
+                    <div class="card-actions justify-end">
+                        <a href="{% pageurl project %}" class="btn btn-primary">Voir le projet</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-center text-gray-500 italic">Aucun projet trouvé avec ce tag.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="text-center mt-8">
+        <a href="{{ page.get_parent.url }}"
+           class="btn bg-[#f582ae] border-[#f582ae] hover:bg-[#f36a9f] hover:border-[#f36a9f] text-white transition-all duration-300 ease-in-out hover:scale-110">
+            Retour
+        </a>
+    </div>
+</div>
+{% endblock %}
