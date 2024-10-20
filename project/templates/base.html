@@ -80,8 +80,10 @@
         </div>
         <div class="navbar-end">
             <div class="form-control">
+                <form action="{% url 'search' %}" method="get">
                 <input type="text" placeholder="Recherche"
-                       class="input input-bordered w-24 md:w-auto focus:ring-2 focus:ring-custom-blue"/>
+                       class="input input-bordered w-24 md:w-auto focus:ring-2 focus:ring-custom-blue" name="query"/>
+                </form>
             </div>
         </div>
     </div>
