@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% load wagtailcore_tags %}
+{% block banner_text %}Votre message est bien envoyé{% endblock %}
+{% block content %}
+<div class="text-justify">
+<h3>{{ page.thank_you_text|safe }}</h3>
+</div>
+
+{% endblock %}

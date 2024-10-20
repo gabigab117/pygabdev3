@@ -60,3 +60,7 @@ text-white {
     color : white;
 }
 
+.g-recaptcha {
+  display: flex;
+  justify-content: center;
+}
