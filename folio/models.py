@@ -1,7 +1,8 @@
 from django.db import models
+from modelcluster.contrib.taggit import ClusterTaggableManager
 from wagtail import blocks
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel
-from wagtail.fields import StreamField, RichTextField
+from wagtail.fields import StreamField
 from wagtail.images.models import Image
 from wagtail.search import index
 from wagtailcodeblock.blocks import CodeBlock
@@ -24,7 +25,6 @@ class FolioIndexPage(GenericPage):
 class FolioPage(GenericPage):
     main_image = models.ForeignKey(Image, on_delete=models.PROTECT, verbose_name="Image principale", related_name="+")
     date = models.DateField(verbose_name="Date de publication")
-    # technologies = RichTextField(verbose_name="Technologies utilisées")
     body = StreamField([
         ("paragraphe", blocks.RichTextBlock()),
         ("code", CodeBlock()),
