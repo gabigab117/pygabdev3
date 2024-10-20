@@ -2,29 +2,30 @@
 {% load wagtailcore_tags %}
 
 {% block content %}
-<div class="text-justify">
-    <div class="prose mx-auto text-custom-blue">
-        {% if request.GET.tag %}
-        <h2 class="text-3xl font-bold mb-6 text-center">Articles avec le tag "{{ request.GET.tag }}"</h2>
-        {% else %}
-        <h2 class="text-3xl font-bold mb-6 text-center">Tous les articles</h2>
-        {% endif %}
 
-        <div class="mt-8 flex justify-center">
-            <div class="w-full max-w-4xl p-2 bg-[#f3d2c1] rounded-lg shadow-lg flex flex-col items-center">
-                {% for blogpage in blogpages %}
+<div class="prose mx-auto text-custom-blue w-full max-w-4xl">
+    {% if request.GET.tag %}
+    <h2 class="text-3xl font-bold mb-6 text-center">Articles avec le tag "{{ request.GET.tag }}"</h2>
+    {% else %}
+    <h2 class="text-3xl font-bold mb-6 text-center">Tous les articles</h2>
+    {% endif %}
 
-                <h3 class="text-2xl font-bold mb-2">
+    <div class="mt-8 flex justify-center">
+        <div class="w-full p-6 bg-[#f3d2c1] rounded-lg shadow-lg flex flex-col items-center">
+            {% for blogpage in blogpages %}
+            <div class="w-full mb-8 last:mb-0">
+                <h3 class="text-2xl font-bold mb-2 text-center">
                     <a href="{% pageurl blogpage %}"
                        class="text-[#f582ae] hover:text-[#f36a9f] transition-colors duration-300">
                         {{ blogpage.title }}
                     </a>
                 </h3>
-                <p class="text-sm text-gray-500 mb-2">Mis à jour le : {{ blogpage.latest_revision_created_at|date:"d F Y" }}</p>
+                <p class="text-sm text-gray-500 mb-2 text-center">Mis à jour le : {{
+                    blogpage.latest_revision_created_at|date:"d F Y" }}</p>
                 {% if blogpage.intro %}
-                <p class="mb-4">{{ blogpage.intro|truncatewords:30 }}</p>
+                <p class="mb-4 text-center">{{ blogpage.intro|truncatewords:30 }}</p>
                 {% endif %}
-                <div class="flex justify-end">
+                <div class="flex justify-center">
                     <a href="{% pageurl blogpage %}"
                        class="px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] !text-white hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110 inline-flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
@@ -35,23 +36,23 @@
                         Lire plus
                     </a>
                 </div>
-
-                {% empty %}
-                <p class="text-center text-gray-500 italic">Aucun article trouvé avec ce tag.</p>
-                {% endfor %}
             </div>
+            {% empty %}
+            <p class="text-center text-gray-500 italic">Aucun article trouvé avec ce tag.</p>
+            {% endfor %}
         </div>
     </div>
-
-    <div class="text-center mt-8">
-        <a href="{{ page.get_parent.url }}"
-           class="px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] text-white hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110 inline-flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
-                 stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-            </svg>
-            Retour
-        </a>
-    </div>
 </div>
+
+<div class="text-center mt-8">
+    <a href="{{ page.get_parent.url }}"
+       class="px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] text-white hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110 inline-flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
+             stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+        </svg>
+        Retour
+    </a>
+</div>
+
 {% endblock %}
