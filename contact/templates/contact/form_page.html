@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load wagtailcore_tags %}
+{% load crispy_forms_tags %}
+{% block banner_text %}Formulaire de contact{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type="submit" value="Envoyer" class="px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] !text-white hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110 inline-flex items-center">
+
+    </form>
+
+</div>
+
+{% endblock %}
