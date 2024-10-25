@@ -20,8 +20,7 @@
                         {{ blogpage.title }}
                     </a>
                 </h3>
-                <p class="text-sm text-gray-500 mb-2 text-center">Mis à jour le : {{
-                    blogpage.latest_revision_created_at|date:"d F Y" }}</p>
+                <p class="text-sm text-gray-500 mb-2 text-center">Mis à jour le : {{ blogpage.latest_revision_created_at|date:"d F Y" }}</p>
                 {% if blogpage.intro %}
                 <p class="mb-4 text-center">{{ blogpage.intro|truncatewords:30 }}</p>
                 {% endif %}
