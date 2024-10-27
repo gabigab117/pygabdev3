@@ -13,6 +13,10 @@ class Customer(models.Model):
     city = models.CharField(max_length=100, verbose_name="Ville")
     created_at = models.DateField(verbose_name="Création de la fiche", auto_now_add=True)
 
+    @property
+    def has_unpaid(self):
+        return Invoice.objects.filter(customer=self, paid=False).exists()
+
     def __str__(self):
         return self.name
 
