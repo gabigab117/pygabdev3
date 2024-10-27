@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Sum
-from django.db.models.signals import m2m_changed
+from django.db.models.signals import m2m_changed, post_save
 from django.dispatch import receiver
 
 
@@ -37,12 +37,12 @@ class Service(models.Model):
     project = models.ForeignKey(Project, on_delete=models.PROTECT, verbose_name="Projet", related_name="services")
     date = models.DateField(verbose_name="Date de réalisation")
     time_spent = models.FloatField(help_text="En centièmes", verbose_name="Temps passé")
-    billed = models.BooleanField(verbose_name="Réglé", default=False)
+    billed = models.BooleanField(verbose_name="Facturé", default=False)
     description = models.TextField(blank=True)
     total = models.DecimalField(decimal_places=2, max_digits=7, blank=True)
 
     def __str__(self):
-        return f"{self.project} - {self.billed}"
+        return f"{self.project} - {self.billed} - {self.total}"
 
     def save(self, *args, **kwargs):
         self.total = self.time_spent * self.project.hourly_rate
@@ -55,7 +55,7 @@ class Invoice(models.Model):
     issue_date = models.DateField(verbose_name="Date d'émission")
     delivery_date = models.DateField(verbose_name="Date de livraison")
     due_date = models.DateField(verbose_name="Date de d'échéance")
-    services = models.ManyToManyField(Service)
+    services = models.ManyToManyField(Service, blank=True, related_name="invoices")
     paid = models.BooleanField(verbose_name="Payé", default=False)
     total = models.DecimalField(decimal_places=2, max_digits=7, blank=True, null=True)
     pdf = models.FileField(upload_to="factures")
@@ -77,6 +77,18 @@ class Invoice(models.Model):
 
 
 @receiver(m2m_changed, sender=Invoice.services.through)
-def update_invoice_total(sender, instance, action, **kwargs):
-    if action in ["post_add", "post_remove", "post_clear"]:
-        instance.update_total()
+def handle_invoice_change(sender, instance, action, pk_set, **kwargs):
+    if action == "post_add":
+        Service.objects.filter(id__in=pk_set).update(billed=True)
+    elif action == "post_remove":
+        Service.objects.filter(id__in=pk_set).update(billed=False)
+    elif action == "post_clear":
+        instance .services.update(billed=False)
+    instance.update_total()
+
+
+@receiver(post_save, sender=Service)
+def handle_service_change(sender, instance, **kwargs):
+    invoice = instance.invoices.first()
+    if invoice:
+        invoice.update_total()
