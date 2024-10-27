@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import F, Sum
 
@@ -63,4 +64,6 @@ class Invoice(models.Model):
         verbose_name = "Facture"
 
     def clean(self):
-        ...
+        super().clean()
+        if self.due_date <= self.issue_date:
+            raise ValidationError({"due_date": "La date d'échéance ne peut pas être antérieure à la date d'émission"})
