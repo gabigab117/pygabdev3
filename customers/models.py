@@ -1,6 +1,8 @@
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.db.models import F, Sum
+from django.db.models import Sum
+from django.db.models.signals import m2m_changed
+from django.dispatch import receiver
 
 
 class Customer(models.Model):
@@ -34,15 +36,17 @@ class Project(models.Model):
 class Service(models.Model):
     project = models.ForeignKey(Project, on_delete=models.PROTECT, verbose_name="Projet", related_name="services")
     date = models.DateField(verbose_name="Date de réalisation")
-    time_spent = models.FloatField()
+    time_spent = models.FloatField(help_text="En centièmes", verbose_name="Temps passé")
     billed = models.BooleanField(verbose_name="Réglé", default=False)
     description = models.TextField(blank=True)
-    total = models.GeneratedField(expression=F("time_spent") * F("project__hourly_rate"),
-                                  output_field=models.DecimalField(decimal_places=2), db_persist=True,
-                                  verbose_name="Montant")
+    total = models.DecimalField(decimal_places=2, max_digits=7, blank=True)
 
     def __str__(self):
         return f"{self.project} - {self.billed}"
+
+    def save(self, *args, **kwargs):
+        self.total = self.time_spent * self.project.hourly_rate
+        super().save(*args, **kwargs)
 
 
 class Invoice(models.Model):
@@ -53,8 +57,7 @@ class Invoice(models.Model):
     due_date = models.DateField(verbose_name="Date de d'échéance")
     services = models.ManyToManyField(Service)
     paid = models.BooleanField(verbose_name="Payé", default=False)
-    total = models.GeneratedField(expression=Sum("services__total"), output_field=models.DecimalField(decimal_places=2),
-                                  db_persist=True)
+    total = models.DecimalField(decimal_places=2, max_digits=7, blank=True, null=True)
     pdf = models.FileField(upload_to="factures")
 
     def __str__(self):
@@ -67,3 +70,13 @@ class Invoice(models.Model):
         super().clean()
         if self.due_date <= self.issue_date:
             raise ValidationError({"due_date": "La date d'échéance ne peut pas être antérieure à la date d'émission"})
+
+    def update_total(self):
+        self.total = self.services.aggregate(total=Sum("total"))["total"] or 0
+        self.save()
+
+
+@receiver(m2m_changed, sender=Invoice.services.through)
+def update_invoice_total(sender, instance, action, **kwargs):
+    if action in ["post_add", "post_remove", "post_clear"]:
+        instance.update_total()
