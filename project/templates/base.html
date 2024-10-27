@@ -55,6 +55,10 @@
                         </ul>
                     </li>
                     <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'contact' %}">Contact</a></li>
+                    {% if request.user.is_superuser %}
+                    <li><a class="nav-link hover:text-custom-blue" href="{% url 'customers:dashboard' %}">Dashboard</a>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
             <a class="btn btn-ghost normal-case text-xl text-custom-blue">PyGabDev</a>
@@ -76,13 +80,17 @@
                     </details>
                 </li>
                 <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'contact' %}">Contact</a></li>
+                {% if request.user.is_superuser %}
+                <li><a class="nav-link hover:text-custom-blue" href="{% url 'customers:dashboard' %}">Dashboard</a></li>
+                {% endif %}
             </ul>
         </div>
         <div class="navbar-end">
             <div class="form-control">
                 <form action="{% url 'search' %}" method="get">
-                <input type="text" placeholder="Recherche"
-                       class="input input-bordered w-24 md:w-auto focus:ring-2 focus:ring-custom-blue" name="query"/>
+                    <input type="text" placeholder="Recherche"
+                           class="input input-bordered w-24 md:w-auto focus:ring-2 focus:ring-custom-blue"
+                           name="query"/>
                 </form>
             </div>
         </div>
