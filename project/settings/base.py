@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "wagtailcaptcha",
     "crispy_forms",
     "crispy_tailwind",
+    "customers",
 ]
 
 MIDDLEWARE = [
