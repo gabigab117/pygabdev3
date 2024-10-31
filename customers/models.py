@@ -49,6 +49,9 @@ class Service(models.Model):
     description = models.TextField(blank=True)
     total = models.DecimalField(decimal_places=2, max_digits=7, blank=True)
 
+    def get_absolute_url(self):
+        return reverse("customers:service", kwargs={"pk": self.pk})
+
     def __str__(self):
         return f"{self.project} - {self.billed} - {self.total}"
 

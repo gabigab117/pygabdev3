@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import dashboard_view, ProjectList, CreateProject, ProjectDetail, UpdateProject, DeleteProject
-
+from .views import dashboard_view, ProjectList, CreateProject, ProjectDetail, UpdateProject, DeleteProject, \
+    ServiceDetail
 
 app_name = "customers"
 urlpatterns = [
@@ -9,5 +9,6 @@ urlpatterns = [
     path("create-project/", CreateProject.as_view(), name="create-project"),
     path("project/<int:pk>/", ProjectDetail.as_view(), name="project"),
     path("update-project/<int:pk>/", UpdateProject.as_view(), name="update-project"),
-    path("delete-project/<int:pk>/", DeleteProject.as_view(), name="delete-project")
+    path("delete-project/<int:pk>/", DeleteProject.as_view(), name="delete-project"),
+    path("service/<int:pk>/", ServiceDetail.as_view(), name="service"),
 ]

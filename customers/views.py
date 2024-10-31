@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.admin.views.decorators import staff_member_required
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
@@ -67,3 +67,10 @@ class DeleteProject(DeleteView):
     success_url = reverse_lazy("customers:projects")
     template_name = "customers/project_delete_confirm.html"
     context_object_name = "project"
+
+
+@method_decorator(staff_member_required, name='dispatch')
+class ServiceDetail(DetailView):
+    model = Service
+    template_name = "customers/service.html"
+    context_object_name = "service"

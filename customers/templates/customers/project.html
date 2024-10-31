@@ -42,7 +42,7 @@ Projet {{ project.name }}
                     <tbody>
                     {% for service in services %}
                     <tr>
-                        <td>{{ service.date }}</td>
+                        <td><a href="{{ service.get_absolute_url }}">{{ service.date }}</a></td>
                         <td>{{ service.time_spent }}</td>
                         <td>{{ service.billed|yesno:"Oui,Non" }}</td>
                     </tr>
