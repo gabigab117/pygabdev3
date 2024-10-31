@@ -3,6 +3,7 @@ from django.db import models
 from django.db.models import Sum
 from django.db.models.signals import m2m_changed, post_save
 from django.dispatch import receiver
+from django.urls import reverse
 
 
 class Customer(models.Model):
@@ -35,6 +36,9 @@ class Project(models.Model):
 
     class Meta:
         verbose_name = "Projet"
+
+    def get_absolute_url(self):
+        return reverse("customers:project", kwargs={"pk": self.pk})
 
 
 class Service(models.Model):

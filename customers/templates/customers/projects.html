@@ -7,46 +7,59 @@ Projets
 {% block banner_text %}Liste des projets{% endblock %}
 
 {% block content %}
-
 <div class="text-justify">
-
     <div class="prose mx-auto text-custom-blue">
-
         <div class="mt-8 p-6 bg-[#f3d2c1] rounded-lg shadow-lg">
             <h3 class="text-2xl font-bold mb-4 text-center">Projets</h3>
 
-
             <div class="overflow-x-auto">
-  <table class="table">
-    <!-- head -->
-    <thead>
-      <tr>
+                <table class="table">
+                    <!-- head -->
+                    <thead>
+                        <tr>
+                            <th>Client</th>
+                            <th>Nom</th>
+                            <th>Taux</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for project in page_obj %}
+                        <tr>
+                            <td>{{ project.customer.name }}</td>
+                            <td><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></td>
+                            <td>{{ project.hourly_rate }} €</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
-        <th>Client</th>
-        <th>Nom</th>
-        <th>Taux</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for project in projects %}
-      <tr>
-        <td>{{ project.customer.name }}</td>
-        <td>{{ project.name }}</td>
-        <td>{{ project.hourly_rate }} €</td>
-      </tr>
-     {% endfor %}
-    </tbody>
-  </table>
-</div>
+            <!-- Pagination -->
+            <div class="mt-6 flex justify-center">
+                <div class="pagination">
+                    <span class="step-links flex items-center gap-4">
+                        {% if page_obj.has_previous %}
+                            <a href="?page=1" class="text-blue-600 hover:text-blue-800">&laquo; Premier</a>
+                            <a href="?page={{ page_obj.previous_page_number }}" class="text-blue-600 hover:text-blue-800">Précédent</a>
+                        {% endif %}
+
+                        <span class="current px-4 py-2 bg-white rounded">
+                            Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}
+                        </span>
+
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}" class="text-blue-600 hover:text-blue-800">Suivant</a>
+                            <a href="?page={{ page_obj.paginator.num_pages }}" class="text-blue-600 hover:text-blue-800">Dernier &raquo;</a>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+
+                <a href="{% url 'customers:create-project' %}" class="px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] !text-white hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110 inline-flex items-center">Nouveau projet</a>
 
 
 
         </div>
-
-
     </div>
-
-
 </div>
-
 {% endblock %}

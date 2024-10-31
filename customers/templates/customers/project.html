@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}
+Projet {{ project.name }}
+{% endblock %}
+
+{% block banner_title %}Projets{% endblock %}
+{% block banner_text %}{{ project.name }}{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <div class="prose mx-auto text-custom-blue">
+        <div class="mt-8 p-6 bg-[#f3d2c1] rounded-lg shadow-lg mx-auto">
+            <p>Pour <i>{{ project.customer.name }}</i></p>
+            <p>Taux à {{ project.hourly_rate }}€</p>
+            {% if project.description %}
+            <p>{{ project.description }}</p>
+            {% else %}
+            <p>Pas de description pour ce projet</p>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+{% endblock %}
