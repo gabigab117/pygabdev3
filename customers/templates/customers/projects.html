@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %}
+Projets
+{% endblock %}
+
+{% block banner_title %}Projets{% endblock %}
+{% block banner_text %}Liste des projets{% endblock %}
+
+{% block content %}
+
+<div class="text-justify">
+
+    <div class="prose mx-auto text-custom-blue">
+
+        <div class="mt-8 p-6 bg-[#f3d2c1] rounded-lg shadow-lg">
+            <h3 class="text-2xl font-bold mb-4 text-center">Projets</h3>
+
+
+            <div class="overflow-x-auto">
+  <table class="table">
+    <!-- head -->
+    <thead>
+      <tr>
+
+        <th>Client</th>
+        <th>Nom</th>
+        <th>Taux</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for project in projects %}
+      <tr>
+        <td>{{ project.customer.name }}</td>
+        <td>{{ project.name }}</td>
+        <td>{{ project.hourly_rate }} €</td>
+      </tr>
+     {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+{% endblock %}

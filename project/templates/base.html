@@ -56,8 +56,14 @@
                     </li>
                     <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'contact' %}">Contact</a></li>
                     {% if request.user.is_superuser %}
-                    <li><a class="nav-link hover:text-custom-blue" href="{% url 'customers:dashboard' %}">Dashboard</a>
+                    <li class="services-menu">
+                        <a class="nav-link hover:text-custom-blue" href="{% url 'customers:dashboard' %}">Dashboard</a>
+                        <ul class="p-2">
+                            <li><a class="nav-link hover:text-custom-blue" href="{% url 'customers:projects' %}">Projets</a></li>
+
+                        </ul>
                     </li>
+
                     {% endif %}
                 </ul>
             </div>
@@ -81,7 +87,15 @@
                 </li>
                 <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'contact' %}">Contact</a></li>
                 {% if request.user.is_superuser %}
-                <li><a class="nav-link hover:text-custom-blue" href="{% url 'customers:dashboard' %}">Dashboard</a></li>
+                <li class="services-menu">
+                    <details>
+                        <summary class="hover:text-custom-blue">Clients</summary>
+                        <ul class="p-2 bg-base-100 rounded-box shadow-lg">
+                            <li><a class="nav-link hover:text-custom-blue" href="{% url 'customers:dashboard' %}">Dashboard</a></li>
+                            <li><a class="nav-link hover:text-custom-blue" href="{% url 'customers:projects' %}">Projets</a></li>
+                        </ul>
+                    </details>
+
                 {% endif %}
             </ul>
         </div>
