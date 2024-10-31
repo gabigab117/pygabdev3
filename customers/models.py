@@ -56,6 +56,9 @@ class Service(models.Model):
         self.total = self.time_spent * self.project.hourly_rate
         super().save(*args, **kwargs)
 
+    class Meta:
+        ordering = ["-date", "project__customer"]
+
 
 class Invoice(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT, verbose_name="Client", related_name="invoices")

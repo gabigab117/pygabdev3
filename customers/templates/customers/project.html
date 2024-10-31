@@ -3,7 +3,7 @@
 Projet {{ project.name }}
 {% endblock %}
 
-{% block banner_title %}Projets{% endblock %}
+{% block banner_title %}Projet{% endblock %}
 {% block banner_text %}{{ project.name }}{% endblock %}
 
 {% block content %}
@@ -18,7 +18,47 @@ Projet {{ project.name }}
             <p>Pas de description pour ce projet</p>
             {% endif %}
 
+            <a href="{% url 'customers:update-project' pk=project.pk %}" class="mr-2 px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] !text-white hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110 inline-flex items-center">Modifier le projet</a>
+            {% if not project.services.all %}
+            <a href="{% url 'customers:delete-project' pk=project.pk %}" class="px-4 py-2 rounded-full text-sm font-medium bg-error !text-white hover:bg-error transition-all duration-300 ease-in-out hover:scale-110 inline-flex items-center">Supprimer le projet</a>
+            {% endif %}
+
         </div>
+        <div class="mt-8 p-6 bg-[#f3d2c1] rounded-lg shadow-lg mx-auto">
+            <h3>Services associés</h3>
+            {% if services %}
+
+
+            <div class="overflow-x-auto">
+                <table class="table">
+                    <!-- head -->
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Temps</th>
+                        <th>Facturé</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for service in services %}
+                    <tr>
+                        <td>{{ service.date }}</td>
+                        <td>{{ service.time_spent }}</td>
+                        <td>{{ service.billed|yesno:"Oui,Non" }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+
+            {% else %}
+            <p>Pas de services pour ce projet.</p>
+            {% endif %}
+
+
+        </div>
+
     </div>
 </div>
 {% endblock %}

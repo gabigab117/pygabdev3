@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 {% block title %}
-Création d'un projet
+{{ status }}
 {% endblock %}
 
 {% block banner_title %}Projets{% endblock %}
-{% block banner_text %}Créé un projet{% endblock %}
+{% block banner_text %}{{ status }}{% endblock %}
 
 {% block content %}
 <div class="text-center">
