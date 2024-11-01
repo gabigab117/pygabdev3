@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.admin.views.decorators import staff_member_required
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
+from .forms import ServiceForm
 from .models import Customer, Project, Service
 
 
@@ -74,3 +75,19 @@ class ServiceDetail(DetailView):
     model = Service
     template_name = "customers/service.html"
     context_object_name = "service"
+
+
+@staff_member_required
+def add_service_view(request, pk):
+    project = get_object_or_404(Project, pk=pk)
+    status = "Création d'un service"
+    if request.method == "POST":
+        form = ServiceForm(request.POST)
+        if form.is_valid():
+            service = form.save(commit=False)
+            service.project = project
+            service.save()
+            return redirect(project)
+    else:
+        form = ServiceForm()
+    return render(request, "customers/service_form.html", context={"form": form, "status": status})

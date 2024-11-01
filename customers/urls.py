@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import dashboard_view, ProjectList, CreateProject, ProjectDetail, UpdateProject, DeleteProject, \
-    ServiceDetail
+    ServiceDetail, add_service_view
 
 app_name = "customers"
 urlpatterns = [
@@ -11,4 +11,5 @@ urlpatterns = [
     path("update-project/<int:pk>/", UpdateProject.as_view(), name="update-project"),
     path("delete-project/<int:pk>/", DeleteProject.as_view(), name="delete-project"),
     path("service/<int:pk>/", ServiceDetail.as_view(), name="service"),
+    path("add-service/<int:pk>/", add_service_view, name="add-service"),
 ]

@@ -19,7 +19,7 @@ Projet {{ project.name }}
             {% endif %}
 
             <a href="{% url 'customers:update-project' pk=project.pk %}" class="mr-2 px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] !text-white hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110 inline-flex items-center">Modifier le projet</a>
-            {% if not project.services.all %}
+            {% if not project.has_services %}
             <a href="{% url 'customers:delete-project' pk=project.pk %}" class="px-4 py-2 rounded-full text-sm font-medium bg-error !text-white hover:bg-error transition-all duration-300 ease-in-out hover:scale-110 inline-flex items-center">Supprimer le projet</a>
             {% endif %}
 
@@ -55,6 +55,9 @@ Projet {{ project.name }}
             {% else %}
             <p>Pas de services pour ce projet.</p>
             {% endif %}
+
+            <a href="{% url 'customers:add-service' pk=project.pk %}" class="mr-2 px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] !text-white hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110 inline-flex items-center">Ajouter un service</a>
+
 
 
         </div>

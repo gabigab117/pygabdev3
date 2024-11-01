@@ -37,6 +37,9 @@ class Project(models.Model):
     class Meta:
         verbose_name = "Projet"
 
+    def has_services(self):
+        return self.services.exists()
+
     def get_absolute_url(self):
         return reverse("customers:project", kwargs={"pk": self.pk})
 
