@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Sum
-from django.db.models.signals import m2m_changed, post_save
+from django.db.models.signals import m2m_changed, post_save, pre_delete
 from django.dispatch import receiver
 from django.urls import reverse
 
@@ -92,6 +92,7 @@ class Invoice(models.Model):
 
     def clean(self):
         super().clean()
+
         if self.due_date <= self.issue_date:
             raise ValidationError({"due_date": "La date d'échéance ne peut pas être antérieure à la date d'émission"})
 
@@ -106,9 +107,15 @@ def handle_invoice_change(sender, instance, action, pk_set, **kwargs):
         Service.objects.filter(id__in=pk_set).update(billed=True)
     elif action == "post_remove":
         Service.objects.filter(id__in=pk_set).update(billed=False)
-    elif action == "post_clear":
-        instance .services.update(billed=False)
+    elif action == "pre_clear":
+        instance.services.update(billed=False)
     instance.update_total()
+
+
+@receiver(pre_delete, sender=Invoice)
+def handle_invoice_delete(sender, instance, **kwargs):
+    services = instance.services.all()
+    services.update(billed=False)
 
 
 @receiver(post_save, sender=Service)
