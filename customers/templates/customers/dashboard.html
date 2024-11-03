@@ -30,7 +30,7 @@ Dashboard
                     {% for customer in customers %}
                     <tr>
 
-                        <td>{{ customer.name }}</td>
+                        <td><a href="{{ customer.get_absolute_url }}">{{ customer.name }}</a></td>
                         {% if customer.has_unpaid %}
                         <td>
                             <div class="badge badge-warning gap-2">
@@ -73,6 +73,8 @@ Dashboard
                 </table>
             </div>
 
+            <a href="{% url 'customers:create-customer' %}"
+               class="inline-flex items-center mr-2 px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] !text-white hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110 mt-4">Ajouter un client</a>
         </div>
 
 

@@ -123,3 +123,43 @@ class DeleteService(DeleteView):
 
     def get_success_url(self):
         return reverse("customers:project", kwargs={"pk": self.object.project.pk})
+
+
+@method_decorator(staff_member_required, name="dispatch")
+class CustomerDetail(DetailView):
+    model = Customer
+    context_object_name = "customer"
+    template_name = "customers/customer.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["projects"] = self.object.projects.all()
+        return context
+
+
+@method_decorator(staff_member_required, name="dispatch")
+class UpdateCustomer(UpdateView):
+    model = Customer
+    template_name = "customers/customer_form.html"
+    fields = "__all__"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["status"] = f"Modifier le client {self.object.name}"
+        return context
+
+    def get_success_url(self):
+        return reverse("customers:customer", kwargs={"pk": self.object.pk})
+
+
+@method_decorator(staff_member_required, name="dispatch")
+class CreateCustomer(CreateView):
+    model = Customer
+    template_name = "customers/customer_form.html"
+    fields = "__all__"
+    success_url = reverse_lazy("customers:dashboard")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["status"] = f"Création d'un client"
+        return context

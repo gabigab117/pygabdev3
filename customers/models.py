@@ -24,6 +24,9 @@ class Customer(models.Model):
     class Meta:
         verbose_name = "Client"
 
+    def get_absolute_url(self):
+        return reverse("customers:customer", kwargs={"pk": self.pk})
+
 
 class Project(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.PROTECT, verbose_name="Client", related_name="projects")
