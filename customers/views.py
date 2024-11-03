@@ -4,7 +4,7 @@ from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
-from .forms import ServiceForm
+from .forms import ServiceForm, InvoiceForm
 from .models import Customer, Project, Service, Invoice
 
 
@@ -183,7 +183,7 @@ class InvoiceDetail(DetailView):
 class CreateInvoice(CreateView):
     template_name = "customers/invoice_form.html"
     model = Invoice
-    fields = "__all__"
+    form_class = InvoiceForm
     success_url = reverse_lazy("customers:invoices")
 
     def get_context_data(self, **kwargs):
@@ -195,6 +195,7 @@ class CreateInvoice(CreateView):
 @method_decorator(staff_member_required, name="dispatch")
 class UpdateInvoice(UpdateView):
     model = Invoice
+    form_class = InvoiceForm
     template_name = "customers/invoice_form.html"
     fields = "__all__"
 
