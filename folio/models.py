@@ -1,5 +1,4 @@
 from django.db import models
-from modelcluster.contrib.taggit import ClusterTaggableManager
 from wagtail import blocks
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail.fields import StreamField

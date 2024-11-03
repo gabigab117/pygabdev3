@@ -161,7 +161,7 @@ class CreateCustomer(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["status"] = f"Création d'un client"
+        context["status"] = "Création d'un client"
         return context
 
 
