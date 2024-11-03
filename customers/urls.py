@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import dashboard_view, ProjectList, CreateProject, ProjectDetail, UpdateProject, DeleteProject, \
-    ServiceDetail, CreateService, UpdateService, DeleteService, CustomerDetail, UpdateCustomer, CreateCustomer
+    ServiceDetail, CreateService, UpdateService, DeleteService, CustomerDetail, UpdateCustomer, CreateCustomer, \
+    InvoicesList, InvoiceDetail, CreateInvoice, UpdateInvoice, DeleteInvoice
 
 app_name = "customers"
 urlpatterns = [
@@ -17,4 +18,9 @@ urlpatterns = [
     path("customer/<int:pk>", CustomerDetail.as_view(), name="customer"),
     path("update-customer/<int:pk>", UpdateCustomer.as_view(), name="update-customer"),
     path("create-customer/", CreateCustomer.as_view(), name="create-customer"),
+    path("invoices/", InvoicesList.as_view(), name="invoices"),
+    path("invoice/<int:pk>/", InvoiceDetail.as_view(), name="invoice"),
+    path("create-invoice/", CreateInvoice.as_view(), name="create-invoice"),
+    path("update-invoice/<int:pk>/", UpdateInvoice.as_view(), name="update-invoice"),
+    path("delete-invoice/<int:pk>/", DeleteInvoice.as_view(), name="delete-invoice"),
 ]

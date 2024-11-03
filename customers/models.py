@@ -78,13 +78,17 @@ class Invoice(models.Model):
     services = models.ManyToManyField(Service, blank=True, related_name="invoices")
     paid = models.BooleanField(verbose_name="Payé", default=False)
     total = models.DecimalField(decimal_places=2, max_digits=7, blank=True, null=True)
-    pdf = models.FileField(upload_to="factures")
+    pdf = models.FileField(upload_to="factures", blank=True, null=True)
+
+    def get_absolute_url(self):
+        return reverse("customers:invoice", kwargs={"pk": self.pk})
 
     def __str__(self):
         return f"{self.customer} - {self.number} - {self.issue_date} - {self.paid}"
 
     class Meta:
         verbose_name = "Facture"
+        ordering = ["-issue_date"]
 
     def clean(self):
         super().clean()

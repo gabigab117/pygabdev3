@@ -5,7 +5,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
 from .forms import ServiceForm
-from .models import Customer, Project, Service
+from .models import Customer, Project, Service, Invoice
 
 
 @staff_member_required
@@ -163,3 +163,53 @@ class CreateCustomer(CreateView):
         context = super().get_context_data(**kwargs)
         context["status"] = f"Création d'un client"
         return context
+
+
+@method_decorator(staff_member_required, name="dispatch")
+class InvoicesList(ListView):
+    model = Invoice
+    template_name = "customers/invoices.html"
+    paginate_by = 10
+
+
+@method_decorator(staff_member_required, name="dispatch")
+class InvoiceDetail(DetailView):
+    model = Invoice
+    template_name = "customers/invoice.html"
+    context_object_name = "invoice"
+
+
+@method_decorator(staff_member_required, name="dispatch")
+class CreateInvoice(CreateView):
+    template_name = "customers/invoice_form.html"
+    model = Invoice
+    fields = "__all__"
+    success_url = reverse_lazy("customers:invoices")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["status"] = "Création d'une facture"
+        return context
+
+
+@method_decorator(staff_member_required, name="dispatch")
+class UpdateInvoice(UpdateView):
+    model = Invoice
+    template_name = "customers/invoice_form.html"
+    fields = "__all__"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["status"] = f"Mise à jour de la facture {self.object.number}, pour {self.object.customer}"
+        return context
+
+    def get_success_url(self):
+        return reverse("customers:invoice", kwargs={"pk": self.object.pk})
+
+
+@method_decorator(staff_member_required, name="dispatch")
+class DeleteInvoice(DeleteView):
+    model = Invoice
+    template_name = "customers/invoice_delete_confirm.html"
+    success_url = reverse_lazy("customers:invoices")
+    context_object_name = "invoice"
