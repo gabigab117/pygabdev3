@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block title %}
+Projet {{ project.name }}
+{% endblock %}
+
+{% block banner_title %}Projet{% endblock %}
+{% block banner_text %}{{ project.name }}{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <div class="prose mx-auto text-custom-blue">
+        <div class="mt-8 p-6 bg-[#f3d2c1] rounded-lg shadow-lg mx-auto">
+            <div class="space-y-4">
+                <!-- En-tête avec le client -->
+                <div>
+                    <span class="text-gray-600 font-medium">Client :</span>
+                    <span class="italic ml-1">{{ project.customer.name }}</span>
+                </div>
+
+                <!-- Taux horaire -->
+                <div>
+                    <span class="text-gray-600 font-medium">Taux horaire :</span>
+                    <span class="ml-1">{{ project.hourly_rate }}€</span>
+                </div>
+
+                <!-- Description -->
+                <div>
+                    <span class="text-gray-600 font-medium">Description :</span>
+                    {% if project.description %}
+                    <p class="mt-1">{{ project.description }}</p>
+                    {% else %}
+                    <p class="mt-1 text-gray-500 italic">Pas de description pour ce projet</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Boutons d'action -->
+            <div class="mt-6 flex gap-3">
+                <a href="{% url 'customers:update-project' pk=project.pk %}"
+                   class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] !text-white hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110">
+                    Modifier le projet
+                </a>
+
+                {% if not project.has_services %}
+                <a href="{% url 'customers:delete-project' pk=project.pk %}"
+                   class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-error !text-white hover:bg-error transition-all duration-300 ease-in-out hover:scale-110">
+                    Supprimer le projet
+                </a>
+                {% endif %}
+            </div>
+        </div>
+
+
+        <div class="mt-8 p-6 bg-[#f3d2c1] rounded-lg shadow-lg mx-auto">
+            <h2>Services associés</h2>
+            {% if services %}
+
+
+            <div class="overflow-x-auto">
+                <table class="table">
+                    <!-- head -->
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Temps</th>
+                        <th>Facturé</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for service in services %}
+                    <tr>
+                        <td><a href="{{ service.get_absolute_url }}">{{ service.date }}</a></td>
+                        <td>{{ service.time_spent }}</td>
+                        <td>{{ service.billed|yesno:"Oui,Non" }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+
+            {% else %}
+            <p>Pas de services pour ce projet.</p>
+            {% endif %}
+
+            <a href="{% url 'customers:add-service' pk=project.pk %}"
+               class="mr-2 px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] !text-white hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110 inline-flex items-center">Ajouter
+                un service</a>
+
+
+        </div>
+
+    </div>
+</div>
+{% endblock %}

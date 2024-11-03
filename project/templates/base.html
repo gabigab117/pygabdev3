@@ -54,7 +54,18 @@
                             <li><a class="nav-link hover:text-custom-blue">Youtube</a></li>
                         </ul>
                     </li>
-                    <li><a class="nav-link hover:text-custom-blue">Contact</a></li>
+                    <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'contact' %}">Contact</a></li>
+                    {% if request.user.is_superuser %}
+                    <li class="services-menu">
+                        <a class="nav-link hover:text-custom-blue" href="{% url 'customers:dashboard' %}">Dashboard</a>
+                        <ul class="p-2">
+                            <li><a class="nav-link hover:text-custom-blue" href="{% url 'customers:projects' %}">Projets</a></li>
+                            <li><a class="nav-link hover:text-custom-blue" href="{% url 'customers:invoices' %}">Factures</a></li>
+
+                        </ul>
+                    </li>
+
+                    {% endif %}
                 </ul>
             </div>
             <a class="btn btn-ghost normal-case text-xl text-custom-blue">PyGabDev</a>
@@ -75,14 +86,27 @@
                         </ul>
                     </details>
                 </li>
-                <li><a class="nav-link hover:text-custom-blue">Contact</a></li>
+                <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'contact' %}">Contact</a></li>
+                {% if request.user.is_superuser %}
+                <li class="services-menu">
+                    <details>
+                        <summary class="hover:text-custom-blue">Clients</summary>
+                        <ul class="p-2 bg-base-100 rounded-box shadow-lg">
+                            <li><a class="nav-link hover:text-custom-blue" href="{% url 'customers:dashboard' %}">Dashboard</a></li>
+                            <li><a class="nav-link hover:text-custom-blue" href="{% url 'customers:projects' %}">Projets</a></li>
+                            <li><a class="nav-link hover:text-custom-blue" href="{% url 'customers:invoices' %}">Factures</a></li>
+                        </ul>
+                    </details>
+
+                {% endif %}
             </ul>
         </div>
         <div class="navbar-end">
             <div class="form-control">
                 <form action="{% url 'search' %}" method="get">
-                <input type="text" placeholder="Recherche"
-                       class="input input-bordered w-24 md:w-auto focus:ring-2 focus:ring-custom-blue" name="query"/>
+                    <input type="text" placeholder="Recherche"
+                           class="input input-bordered w-24 md:w-auto focus:ring-2 focus:ring-custom-blue"
+                           name="query"/>
                 </form>
             </div>
         </div>

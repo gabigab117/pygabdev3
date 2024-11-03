@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     "wagtailcaptcha",
     "crispy_forms",
     "crispy_tailwind",
+    "customers",
+    "django_cleanup.apps.CleanupConfig",
 ]
 
 MIDDLEWARE = [

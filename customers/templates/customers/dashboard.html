@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block banner_title %}Tableau de Bord{% endblock %}
+{% block banner_text %}Vue d'ensemble{% endblock %}
+
+{% block content %}
+
+<div class="text-justify">
+
+    <div class="prose mx-auto text-custom-blue">
+
+        <div class="mt-8 p-6 bg-[#f3d2c1] rounded-lg shadow-lg">
+            <h3 class="text-2xl font-bold mb-4 text-center">Clients</h3>
+
+            <div class="overflow-x-auto">
+                <table class="table">
+                    <!-- head -->
+                    <thead>
+                    <tr>
+
+                        <th>Nom</th>
+                        <th>Paiements</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for customer in customers %}
+                    <tr>
+
+                        <td><a href="{{ customer.get_absolute_url }}">{{ customer.name }}</a></td>
+                        {% if customer.has_unpaid %}
+                        <td>
+                            <div class="badge badge-warning gap-2">
+                                <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        class="inline-block h-4 w-4 stroke-current">
+                                    <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                                Factures en attente
+                            </div>
+                        </td>
+                        {% else %}
+                        <td>
+                            <div class="badge badge-success gap-2">
+                                <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        class="inline-block h-4 w-4 stroke-current">
+                                    <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                                Tout est ok
+                            </div>
+                        </td>
+                        {% endif %}
+
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <a href="{% url 'customers:create-customer' %}"
+               class="inline-flex items-center mr-2 px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] !text-white hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110 mt-4">Ajouter un client</a>
+        </div>
+
+
+    </div>
+
+
+</div>
+
+{% endblock %}

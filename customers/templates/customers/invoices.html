@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% block title %}
+Factures
+{% endblock %}
+
+{% block banner_title %}Factures{% endblock %}
+{% block banner_text %}Liste des factures{% endblock %}
+
+{% block content %}
+<div class="text-justify">
+    <div class="prose mx-auto text-custom-blue">
+        <div class="mt-8 p-6 bg-[#f3d2c1] rounded-lg shadow-lg">
+            <h3 class="text-2xl font-bold mb-4 text-center">Factures</h3>
+
+            <div class="overflow-x-auto">
+                <table class="table">
+                    <!-- head -->
+                    <thead>
+                    <tr>
+                        <th>Client</th>
+                        <th>Numéro</th>
+                        <th>Date d'émission</th>
+                        <th>Date d'échéance</th>
+                        <th>Montant</th>
+                        <th>Statut</th>
+                        <th>PDF</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for invoice in page_obj %}
+                    <tr>
+                        <td>{{ invoice.customer.name }}</td>
+                        <td><a href="{{ invoice.get_absolute_url }}">{{ invoice.number }}</a></td>
+                        <td>{{ invoice.issue_date }}</td>
+                        <td>{{ invoice.due_date }}</td>
+                        <td>{{ invoice.total }}</td>
+
+                        {% if not invoice.paid %}
+                        <td>
+                            <div class="badge badge-warning gap-2">
+                                <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        class="inline-block h-4 w-4 stroke-current">
+                                    <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                                Attente de paiement
+                            </div>
+                        </td>
+                        {% else %}
+                        <td>
+                            <div class="badge badge-success gap-2">
+                                <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        class="inline-block h-4 w-4 stroke-current">
+                                    <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                                Payée
+                            </div>
+                        </td>
+                        {% endif %}
+
+
+                        <td><a href="{{ invoice.pdf.url }}" target="_blank">Télécharger</a></td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="mt-6 flex justify-center">
+                <div class="pagination">
+                    <span class="step-links flex items-center gap-4">
+                        {% if page_obj.has_previous %}
+                            <a href="?page=1" class="text-blue-600 hover:text-blue-800">&laquo; Premier</a>
+                            <a href="?page={{ page_obj.previous_page_number }}"
+                               class="text-blue-600 hover:text-blue-800">Précédent</a>
+                        {% endif %}
+
+                        <span class="current px-4 py-2 bg-white rounded">
+                            Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}
+                        </span>
+
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}" class="text-blue-600 hover:text-blue-800">Suivant</a>
+                            <a href="?page={{ page_obj.paginator.num_pages }}"
+                               class="text-blue-600 hover:text-blue-800">Dernier &raquo;</a>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+
+                        <a href="{% url 'customers:create-invoice' %}"
+                           class="px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] !text-white hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110 inline-flex items-center">Nouvelle facture</a>
+
+
+        </div>
+    </div>
+</div>
+{% endblock %}

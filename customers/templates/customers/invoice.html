@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %}
+Facture {{ invoice.number }}
+{% endblock %}
+
+{% block banner_title %}Facture{% endblock %}
+{% block banner_text %}{{ invoice.number }} - {{ invoice.customer.name }}{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <div class="prose mx-auto text-custom-blue">
+        <div class="mt-8 p-6 bg-[#f3d2c1] rounded-lg shadow-lg mx-auto">
+            <div class="space-y-4">
+
+                <div>
+                    <span class="text-gray-600 font-medium">Client :</span>
+                    <span class="italic ml-1">{{ invoice.customer.name }}</span>
+                </div>
+
+
+                <div>
+                    <span class="text-gray-600 font-medium">Numéro :</span>
+                    <span class="ml-1">{{ invoice.number }}</span>
+                </div>
+
+                <div>
+                    <span class="text-gray-600 font-medium">Date d'émission :</span>
+
+                    <p class="mt-1">{{ invoice.issue_date }}</p>
+
+
+                </div>
+
+                <div>
+                    <span class="text-gray-600 font-medium">Date d'échéance :</span>
+
+                    <p class="mt-1">{{ invoice.due_date }}</p>
+
+
+                </div>
+                <div>
+                    <span class="text-gray-600 font-medium">Montant :</span>
+
+                    <p class="mt-1">{{ invoice.total }}</p>
+
+
+                </div>
+                <div>
+                    <span class="text-gray-600 font-medium">PDF :</span>
+
+                    <p class="mt-1"><a href="{{ invoice.pdf.url }}" target="_blank">Télécharger</a></p>
+
+
+                </div>
+            </div>
+
+
+            <div class="mt-6 flex gap-3">
+                <a href="{% url 'customers:update-invoice' pk=invoice.pk %}"
+                   class="mr-2 inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] !text-white hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110">
+                    Modifier
+                </a>
+
+                <a href="{% url 'customers:delete-invoice' pk=invoice.pk %}"
+                   class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-error !text-white hover:bg-error transition-all duration-300 ease-in-out hover:scale-110">
+                    Supprimer
+                </a>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+{% endblock %}

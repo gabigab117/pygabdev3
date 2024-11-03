@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}
+Projet {{ service.name }}
+{% endblock %}
+
+{% block banner_title %}Service{% endblock %}
+{% block banner_text %}{{ service.date }}{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <div class="prose mx-auto text-custom-blue">
+        <div class="mt-8 p-6 bg-[#f3d2c1] rounded-lg shadow-lg mx-auto">
+            <p>Projet <i>{{ service.project.name }}</i> pour <b>{{ service.project.customer.name }}</b></p>
+            <p>{{ service.date }}</p>
+            <p>{{ service.time_spent }} H</p>
+            <p>{{ service.billed|yesno:"Facturé,Non facturé" }}</p>
+            {% if service.description %}
+            <p>{{ service.description }}</p>
+            {% else %}
+            <p>Pas de description pour cette tâche.</p>
+            {% endif %}
+
+            <a href="{% url 'customers:project' pk=service.project.pk %}"
+               class="mr-2 px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] !text-white hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110 inline-flex items-center">Retourner
+                au projet</a>
+
+            <a href="{% url 'customers:update-service' pk=service.pk %}"
+               class="mr-2 px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] !text-white hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110 inline-flex items-center">Modifier</a>
+
+            <a href="{% url 'customers:delete-service' pk=service.pk %}"
+               class="px-4 py-2 rounded-full text-sm font-medium bg-error !text-white hover:bg-error transition-all duration-300 ease-in-out hover:scale-110 inline-flex items-center">Supprimer</a>
+
+
+        </div>
+
+
+    </div>
+</div>
+{% endblock %}

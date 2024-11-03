@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}
+Supression de {{ invoice.number }}
+{% endblock %}
+
+{% block banner_title %}Factures{% endblock %}
+{% block banner_text %}Supression de {{ invoice.number }}{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <div class="prose mx-auto text-custom-blue">
+        <div class="mt-8 p-6 bg-[#f3d2c1] rounded-lg shadow-lg">
+           <form method="post">
+               {% csrf_token %}
+               <p>Voulez-vous vraiment supprimer la facture {{ invoice.number }} ?</p>
+               <input type="submit" value="Supprimer" class="px-4 py-2 rounded-full text-sm font-medium bg-error !text-white hover:bg-error transition-all duration-300 ease-in-out hover:scale-110 inline-flex items-center">
+           </form>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
