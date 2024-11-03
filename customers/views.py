@@ -1,6 +1,6 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404
 from django.contrib.admin.views.decorators import staff_member_required
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 
@@ -77,17 +77,49 @@ class ServiceDetail(DetailView):
     context_object_name = "service"
 
 
-@staff_member_required
-def add_service_view(request, pk):
-    project = get_object_or_404(Project, pk=pk)
-    status = "Création d'un service"
-    if request.method == "POST":
-        form = ServiceForm(request.POST)
-        if form.is_valid():
-            service = form.save(commit=False)
-            service.project = project
-            service.save()
-            return redirect(project)
-    else:
-        form = ServiceForm()
-    return render(request, "customers/service_form.html", context={"form": form, "status": status})
+@method_decorator(staff_member_required, name="dispatch")
+class CreateService(CreateView):
+    model = Service
+    template_name = "customers/service_form.html"
+    form_class = ServiceForm
+
+    def setup(self, request, *args, **kwargs):
+        super().setup(request, *args, **kwargs)
+        self.project = get_object_or_404(Project, pk=kwargs.get("pk"))
+
+    def form_valid(self, form):
+        form.instance.project = self.project
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["status"] = "Création d'un service"
+        return context
+
+    def get_success_url(self):
+        return reverse("customers:project", kwargs={"pk": self.project.pk})
+
+
+@method_decorator(staff_member_required, name="dispatch")
+class UpdateService(UpdateView):
+    model = Service
+    template_name = "customers/service_form.html"
+    form_class = ServiceForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["status"] = f"Mise du service en date du {self.object.date}, projet {self.object.project.name}"
+        return context
+
+    def get_success_url(self):
+        return reverse("customers:project", kwargs={"pk": self.object.project.pk})
+
+
+@method_decorator(staff_member_required, name="dispatch")
+class DeleteService(DeleteView):
+    model = Service
+    context_object_name = "service"
+    template_name = "customers/service_delete_confirm.html"
+
+    def get_success_url(self):
+        return reverse("customers:project", kwargs={"pk": self.object.project.pk})
