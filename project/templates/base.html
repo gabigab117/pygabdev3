@@ -68,11 +68,11 @@
                     {% endif %}
                 </ul>
             </div>
-            <a class="btn btn-ghost normal-case text-xl text-custom-blue">PyGabDev</a>
+            <a class="btn btn-ghost normal-case text-xl text-custom-blue" href="{% slugurl 'index' %}">PyGabDev</a>
         </div>
         <div class="navbar-center hidden lg:flex">
             <ul class="menu menu-horizontal px-1">
-                <li><a class="nav-link hover:text-custom-blue">Accueil</a></li>
+                <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'index' %}">Accueil</a></li>
                 <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'projets' %}">Projets</a></li>
                 <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'blog' %}">Blog</a></li>
                 <li class="services-menu">
@@ -128,8 +128,8 @@
 
 <footer class="footer footer-center p-10 text-base-content rounded mt-8 bg-[#f3d2c1]">
     <nav class="grid grid-flow-col gap-4">
-        <a class="nav-link link link-hover hover:text-custom-blue">À propos</a>
-        <a class="nav-link link link-hover hover:text-custom-blue">Contact</a>
+        <a class="nav-link link link-hover hover:text-custom-blue" href="{% slugurl 'legal' %}">À propos</a>
+        <a class="nav-link link link-hover hover:text-custom-blue" href="{% slugurl 'contact' %}">Contact</a>
     </nav>
     <nav>
         <div class="grid grid-flow-col gap-4">
