@@ -1,4 +1,5 @@
 from wagtail.fields import RichTextField
+from wagtail.admin.panels import FieldPanel
 
 from wagtail.models import Page
 
@@ -8,3 +9,12 @@ class GenericPage(Page):
 
     class Meta:
         abstract = True
+
+
+class LegalPage(GenericPage):
+    body = RichTextField()
+
+    content_panels = GenericPage.content_panels + [
+        FieldPanel("header"),
+        FieldPanel("body")
+    ]
