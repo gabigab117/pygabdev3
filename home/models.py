@@ -3,6 +3,8 @@ from wagtail.fields import RichTextField
 
 
 from core.models import GenericPage
+from blog.models import BlogPage
+from folio.models import FolioPage
 
 
 class HomePage(GenericPage):
@@ -12,3 +14,9 @@ class HomePage(GenericPage):
         FieldPanel('header'),
         FieldPanel('body')
     ]
+
+    def get_context(self, request, *args, **kwargs):
+        context = super().get_context(request, *args, **kwargs)
+        context["last_article"] = BlogPage.objects.live().order_by("-date").first()
+        context["project"] = FolioPage.objects.live().order_by("-date").first()
+        return context
