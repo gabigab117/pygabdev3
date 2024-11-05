@@ -2,8 +2,7 @@ from .base import *
 
 DEBUG = env.bool("DEBUG")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env("SECRET_KEY")
+
 
 # HTTPS settings
 SESSION_COOKIE_SECURE = True
