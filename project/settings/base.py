@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "crispy_tailwind",
     "customers",
     "django_cleanup.apps.CleanupConfig",
+    "django.contrib.sitemaps",
 ]
 
 MIDDLEWARE = [
