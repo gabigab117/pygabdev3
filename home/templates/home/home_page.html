@@ -1,11 +1,99 @@
 {% extends 'base.html' %}
 {% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
 
 {% block content %}
-<div class="text-justify">
-    <div class="prose mx-auto text-justify text-custom-blue">
-    {{ page.body|richtext }}
-    </div>
-</div>
+  <div class="container mx-auto px-4 space-y-16">
 
+
+
+    <div class="max-w-4xl mx-auto flex justify-center gap-6 mb-8">
+        <a href="{% slugurl 'blog' %}" class="mr-2 group relative inline-flex items-center overflow-hidden rounded-full border-2 border-[#f582ae] px-8 py-3 focus:outline-none">
+          <span class="absolute inset-x-0 top-0 h-full -translate-y-full bg-[#f582ae] transition-transform group-hover:translate-y-0"></span>
+          
+          <span class="relative flex items-center gap-2 text-[#f582ae] transition-colors group-hover:text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2 2 0 00-2-2h-2" />
+            </svg>
+            Blog
+          </span>
+        </a>
+  
+        <a href="{% slugurl 'projet' %}" class="group relative inline-flex items-center overflow-hidden rounded-full border-2 border-[#f582ae] px-8 py-3 focus:outline-none">
+          <span class="absolute inset-x-0 top-0 h-full -translate-y-full bg-[#f582ae] transition-transform group-hover:translate-y-0"></span>
+          
+          <span class="relative flex items-center gap-2 text-[#f582ae] transition-colors group-hover:text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            </svg>
+            Projets
+          </span>
+        </a>
+      </div>
+
+
+
+
+
+    <!-- Contenu Principal -->
+    <div class="prose max-w-4xl mx-auto text-justify text-custom-blue mb-2">{{ page.body|richtext }}</div>
+
+    <!-- Séparateur -->
+    <hr class="my-8 border-0 h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent" />
+
+    <!-- Cards -->
+    <div class="max-w-5xl mx-auto">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-12">
+        <!-- Dernière Publication -->
+        <div class="space-y-6">
+          <h2 class="text-xl font-semibold text-center text-custom-blue">Dernière Publication</h2>
+          <div class="card bg-[#f3d2c1] w-full shadow-xl mx-auto transition duration-300 ease-in-out hover:scale-105 hover:-rotate-1 hover:shadow-2xl">
+            <figure class="px-10 pt-10">
+              {% image last_article.main_image original class='rounded-xl' alt=last_article.main_image.title %}
+            </figure>
+            <div class="card-body items-center text-center text-custom-blue">
+              <h3 class="card-title">{{ last_article.title }}</h3>
+              <p>{{ last_article.header|richtext }}</p>
+              <p>
+                <i>Par {{ last_article.owner }}</i>
+              </p>
+              <p>Le {{ last_article.date }}</p>
+              <div class="card-actions justify-end">
+                <a href="{% pageurl last_article %}" class="px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] !text-white hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110 inline-flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>Lire
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dernier Projet -->
+        <div class="space-y-6">
+          <h2 class="text-xl font-semibold text-center text-custom-blue">Dernier Projet</h2>
+          <div class="card bg-[#f3d2c1] w-full shadow-xl mx-auto transition duration-300 ease-in-out hover:scale-105 hover:-rotate-1 hover:shadow-2xl">
+            <figure class="px-10 pt-10">
+              {% image project.main_image original class='rounded-xl' alt=project.main_image.title %}
+            </figure>
+            <div class="card-body items-center text-center text-custom-blue">
+              <h3 class="card-title">{{ project.title }}</h3>
+              <p>{{ project.header|richtext }}</p>
+              <p>
+                <i>Par {{ last_article.owner }}</i>
+              </p>
+              <p>Le {{ project.date }}</p>
+              <div class="card-actions justify-end">
+                <a href="{% pageurl project %}" class="px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] !text-white hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110 inline-flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>Lire
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
