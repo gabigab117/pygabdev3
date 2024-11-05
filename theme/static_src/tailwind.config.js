@@ -55,4 +55,8 @@ module.exports = {
         require('@tailwindcss/aspect-ratio'),
         require('daisyui')
     ],
+     // Configuration de DaisyUI pour n'utiliser que le thème clair
+     daisyui: {
+        themes: ["light"],
+     },
 }
