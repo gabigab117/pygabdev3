@@ -5,8 +5,6 @@ from account.models import CustomUser
 
 
 class CustomUserAdmin(UserAdmin):
-    # add_form = SignUpForm
-    # form = CustomUserChangeForm
     model = CustomUser
     list_display = ("email", "is_staff", "is_active",)
     list_filter = ("email", "is_staff", "is_active",)
