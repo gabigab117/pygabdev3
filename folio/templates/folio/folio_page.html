@@ -5,8 +5,6 @@
 {% block content %}
   <div class="text-justify">
     <div class="prose mx-auto text-custom-blue">
-      {% image page.main_image original class='rounded-xl' alt=page.main_image.title %}
-
       {% if page.youtube or page.github or page.production %}
         <div class="mt-8 p-6 bg-[#f3d2c1] rounded-lg shadow-lg">
           <h2 class="text-2xl font-bold mb-4">Liens du projet</h2>
@@ -38,6 +36,8 @@
           </div>
         </div>
       {% endif %}
+
+      {% image page.main_image original class='rounded-xl' alt=page.main_image.title %}
 
       {{ page.body }}
     </div>
