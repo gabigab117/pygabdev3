@@ -12,9 +12,9 @@ class ServiceForm(forms.ModelForm):
 
 
 class InvoiceForm(forms.ModelForm):
-    issue_date = forms.DateField(widget=forms.SelectDateWidget)
-    due_date = forms.DateField(widget=forms.SelectDateWidget)
-    delivery_date = forms.DateField(widget=forms.SelectDateWidget)
+    issue_date = forms.DateField(widget=forms.DateInput(attrs={"type": "date"}), label="Date d'émission")
+    due_date = forms.DateField(widget=forms.DateInput(attrs={"type": "date"}), label="Date d'échéance")
+    delivery_date = forms.DateField(widget=forms.DateInput(attrs={"type": "date"}), label="Date de livraison")
 
     class Meta:
         model = Invoice
