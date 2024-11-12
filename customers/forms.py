@@ -4,7 +4,7 @@ from customers.models import Service, Invoice
 
 
 class ServiceForm(forms.ModelForm):
-    date = forms.DateField(widget=forms.SelectDateWidget)
+    date = forms.DateField(widget=forms.DateInput(attrs={"type": "date"}))
 
     class Meta:
         model = Service
