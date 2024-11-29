@@ -1,4 +1,5 @@
 from django import forms
+from django.db.models import Q
 
 from customers.models import Service, Invoice
 
@@ -23,3 +24,11 @@ class InvoiceForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["services"].queryset = Service.objects.filter(billed=False)
+
+
+class InvoiceUpdateForm(InvoiceForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["services"].queryset = Service.objects.filter(
+            Q(billed=False) | Q(invoices=self.instance)
+        )
