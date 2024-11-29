@@ -197,7 +197,6 @@ class UpdateInvoice(UpdateView):
     model = Invoice
     form_class = InvoiceForm
     template_name = "customers/invoice_form.html"
-    fields = "__all__"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
