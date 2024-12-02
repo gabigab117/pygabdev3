@@ -1,5 +1,26 @@
+import datetime
+from django.contrib.auth import get_user_model
+from django.core.files.uploadedfile import SimpleUploadedFile
 import pytest
 from .factories import CustomerFactory, ProjectFactory, ServiceFactory, InvoiceFactory
+
+
+User = get_user_model()
+
+
+@pytest.fixture
+def today():
+    return datetime.date.today()
+
+
+@pytest.fixture
+def pdf1():
+    return SimpleUploadedFile("test.pdf", b"content")
+
+
+@pytest.fixture
+def admin():
+    return User.objects.create_superuser(username="gabigab", email="g@g.com", password="Test_60000", is_superuser=True)
 
 
 @pytest.fixture
