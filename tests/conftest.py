@@ -14,8 +14,10 @@ def today():
 
 
 @pytest.fixture
-def pdf1():
-    return SimpleUploadedFile("test.pdf", b"content")
+def pdf1(tmp_path):
+    pdf_path = tmp_path / "test.pdf"
+    pdf_path.write_bytes(b"contenu du PDF")
+    return pdf_path
 
 
 @pytest.fixture
