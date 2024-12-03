@@ -1,7 +1,24 @@
 from django.urls import path
-from .views import dashboard_view, ProjectList, CreateProject, ProjectDetail, UpdateProject, DeleteProject, \
-    ServiceDetail, CreateService, UpdateService, DeleteService, CustomerDetail, UpdateCustomer, CreateCustomer, \
-    InvoicesList, InvoiceDetail, CreateInvoice, UpdateInvoice, DeleteInvoice
+from .views import (
+    dashboard_view,
+    ProjectList,
+    CreateProject,
+    ProjectDetail,
+    UpdateProject,
+    DeleteProject,
+    ServiceDetail,
+    CreateService,
+    UpdateService,
+    DeleteService,
+    CustomerDetail,
+    UpdateCustomer,
+    CreateCustomer,
+    InvoicesList,
+    InvoiceDetail,
+    CreateInvoice,
+    UpdateInvoice,
+    DeleteInvoice,
+)
 
 app_name = "customers"
 urlpatterns = [

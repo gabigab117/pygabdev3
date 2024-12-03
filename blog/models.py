@@ -13,7 +13,7 @@ from django.db import models
 
 class BlogIndexPage(GenericPage):
     content_panels = GenericPage.content_panels + [
-        FieldPanel('header'),
+        FieldPanel("header"),
     ]
 
     def get_context(self, request, *args, **kwargs):
@@ -24,25 +24,32 @@ class BlogIndexPage(GenericPage):
 
 
 class BlogPage(GenericPage):
-    main_image = models.ForeignKey(Image, on_delete=models.PROTECT, verbose_name="Image principale", related_name="+")
+    main_image = models.ForeignKey(
+        Image,
+        on_delete=models.PROTECT,
+        verbose_name="Image principale",
+        related_name="+",
+    )
     date = models.DateField(verbose_name="Date de publication")
-    body = StreamField([
-        ("paragraphe", blocks.RichTextBlock()),
-        ("code", CodeBlock()),
-    ], use_json_field=True)
+    body = StreamField(
+        [
+            ("paragraphe", blocks.RichTextBlock()),
+            ("code", CodeBlock()),
+        ],
+        use_json_field=True,
+    )
     tags = ClusterTaggableManager(through=BlogTaggedPage, blank=True)
 
     search_fields = GenericPage.search_fields + [
         index.SearchField("header"),
-        index.SearchField("body")
+        index.SearchField("body"),
     ]
 
     content_panels = GenericPage.content_panels + [
-        MultiFieldPanel([
-            FieldPanel("header"),
-            FieldPanel("date"),
-            FieldPanel("main_image")],
-            heading="En-tête"),
+        MultiFieldPanel(
+            [FieldPanel("header"), FieldPanel("date"), FieldPanel("main_image")],
+            heading="En-tête",
+        ),
         FieldPanel("body"),
-        FieldPanel("tags")
+        FieldPanel("tags"),
     ]

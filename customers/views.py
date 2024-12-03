@@ -2,7 +2,13 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.admin.views.decorators import staff_member_required
 from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
-from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
+from django.views.generic import (
+    ListView,
+    CreateView,
+    DetailView,
+    UpdateView,
+    DeleteView,
+)
 
 from .forms import ServiceForm, InvoiceForm, InvoiceUpdateForm
 from .models import Customer, Project, Service, Invoice
@@ -14,7 +20,7 @@ def dashboard_view(request):
     return render(request, "customers/dashboard.html", context={"customers": customers})
 
 
-@method_decorator(staff_member_required, name='dispatch')
+@method_decorator(staff_member_required, name="dispatch")
 class ProjectList(ListView):
     model = Project
     template_name = "customers/projects.html"
@@ -22,7 +28,7 @@ class ProjectList(ListView):
     ordering = ["-id"]
 
 
-@method_decorator(staff_member_required, name='dispatch')
+@method_decorator(staff_member_required, name="dispatch")
 class CreateProject(CreateView):
     model = Project
     template_name = "customers/project_form.html"
@@ -35,7 +41,7 @@ class CreateProject(CreateView):
         return context
 
 
-@method_decorator(staff_member_required, name='dispatch')
+@method_decorator(staff_member_required, name="dispatch")
 class ProjectDetail(DetailView):
     model = Project
     template_name = "customers/project.html"
@@ -47,7 +53,7 @@ class ProjectDetail(DetailView):
         return context
 
 
-@method_decorator(staff_member_required, name='dispatch')
+@method_decorator(staff_member_required, name="dispatch")
 class UpdateProject(UpdateView):
     model = Project
     template_name = "customers/project_form.html"
@@ -62,7 +68,7 @@ class UpdateProject(UpdateView):
         return context
 
 
-@method_decorator(staff_member_required, name='dispatch')
+@method_decorator(staff_member_required, name="dispatch")
 class DeleteProject(DeleteView):
     model = Project
     success_url = reverse_lazy("customers:projects")
@@ -70,7 +76,7 @@ class DeleteProject(DeleteView):
     context_object_name = "project"
 
 
-@method_decorator(staff_member_required, name='dispatch')
+@method_decorator(staff_member_required, name="dispatch")
 class ServiceDetail(DetailView):
     model = Service
     template_name = "customers/service.html"
@@ -108,7 +114,9 @@ class UpdateService(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["status"] = f"Mise du service en date du {self.object.date}, projet {self.object.project.name}"
+        context["status"] = (
+            f"Mise du service en date du {self.object.date}, projet {self.object.project.name}"
+        )
         return context
 
     def get_success_url(self):
@@ -200,7 +208,9 @@ class UpdateInvoice(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["status"] = f"Mise à jour de la facture {self.object.number}, pour {self.object.customer}"
+        context["status"] = (
+            f"Mise à jour de la facture {self.object.number}, pour {self.object.customer}"
+        )
         return context
 
     def get_success_url(self):

@@ -12,7 +12,9 @@ class Customer(models.Model):
     address = models.CharField(max_length=200, verbose_name="Adresse", help_text="Rue")
     zip_code = models.CharField(max_length=20, verbose_name="Code postal")
     city = models.CharField(max_length=100, verbose_name="Ville")
-    created_at = models.DateField(verbose_name="Création de la fiche", auto_now_add=True)
+    created_at = models.DateField(
+        verbose_name="Création de la fiche", auto_now_add=True
+    )
 
     @property
     def has_unpaid(self):
@@ -29,7 +31,12 @@ class Customer(models.Model):
 
 
 class Project(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.PROTECT, verbose_name="Client", related_name="projects")
+    customer = models.ForeignKey(
+        Customer,
+        on_delete=models.PROTECT,
+        verbose_name="Client",
+        related_name="projects",
+    )
     name = models.CharField(verbose_name="Nom", max_length=100)
     hourly_rate = models.IntegerField(verbose_name="Taux horaire")
     description = models.TextField(blank=True)
@@ -48,7 +55,12 @@ class Project(models.Model):
 
 
 class Service(models.Model):
-    project = models.ForeignKey(Project, on_delete=models.PROTECT, verbose_name="Projet", related_name="services")
+    project = models.ForeignKey(
+        Project,
+        on_delete=models.PROTECT,
+        verbose_name="Projet",
+        related_name="services",
+    )
     date = models.DateField(verbose_name="Date de réalisation")
     time_spent = models.FloatField(help_text="En centièmes", verbose_name="Temps passé")
     billed = models.BooleanField(verbose_name="Facturé", default=False)
@@ -70,7 +82,12 @@ class Service(models.Model):
 
 
 class Invoice(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.PROTECT, verbose_name="Client", related_name="invoices")
+    customer = models.ForeignKey(
+        Customer,
+        on_delete=models.PROTECT,
+        verbose_name="Client",
+        related_name="invoices",
+    )
     number = models.IntegerField(unique=True, verbose_name="Numéro")
     issue_date = models.DateField(verbose_name="Date d'émission")
     delivery_date = models.DateField(verbose_name="Date de livraison")
@@ -94,7 +111,11 @@ class Invoice(models.Model):
         super().clean()
 
         if self.due_date <= self.issue_date:
-            raise ValidationError({"due_date": "La date d'échéance ne peut pas être antérieure à la date d'émission"})
+            raise ValidationError(
+                {
+                    "due_date": "La date d'échéance ne peut pas être antérieure à la date d'émission"
+                }
+            )
 
     def update_total(self):
         self.total = self.services.aggregate(total=Sum("total"))["total"] or 0

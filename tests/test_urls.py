@@ -30,7 +30,7 @@ def test_create_invoice_url(client: Client, admin, customer_1, service_1, today,
         "delivery_date": today,
         "due_date": today + datetime.timedelta(days=15),
         "services": [service_1.id],
-        "pdf": pdf1
+        "pdf": pdf1,
     }
 
     response = client.post(reverse("customers:create-invoice"), data=data)

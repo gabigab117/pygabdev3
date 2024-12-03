@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     "folio",
     "tag",
     "contact",
-    'django_recaptcha',
+    "django_recaptcha",
     "wagtailcaptcha",
     "crispy_forms",
     "crispy_tailwind",
@@ -156,30 +156,41 @@ WAGTAILADMIN_BASE_URL = "http://gabrieltrouve.fr"
 # This can be omitted to allow all files, but note that this may present a security risk
 # if untrusted users are allowed to upload files -
 # see https://docs.wagtail.org/en/stable/advanced_topics/deploying.html#user-uploaded-files
-WAGTAILDOCS_EXTENSIONS = ['csv', 'docx', 'key', 'odt', 'pdf', 'pptx', 'rtf', 'txt', 'xlsx', 'zip']
+WAGTAILDOCS_EXTENSIONS = [
+    "csv",
+    "docx",
+    "key",
+    "odt",
+    "pdf",
+    "pptx",
+    "rtf",
+    "txt",
+    "xlsx",
+    "zip",
+]
 
-TAILWIND_APP_NAME = 'theme'
+TAILWIND_APP_NAME = "theme"
 INTERNAL_IPS = ["127.0.0.1"]
 
 AUTH_USER_MODEL = "account.CustomUser"
 
 # Emails
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = env('EMAIL_ID')
-EMAIL_HOST_PASSWORD = env('EMAIL_PW')
-DEFAULT_FROM_EMAIL = 'Contact PyGabDev<gabrieltrouve5@gmail.com>'
+EMAIL_HOST_USER = env("EMAIL_ID")
+EMAIL_HOST_PASSWORD = env("EMAIL_PW")
+DEFAULT_FROM_EMAIL = "Contact PyGabDev<gabrieltrouve5@gmail.com>"
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 CRISPY_TEMPLATE_PACK = "tailwind"
 
 # Recaptcha
-RECAPTCHA_PUBLIC_KEY = env('RECAPTCHA_PUBLIC_KEY')
-RECAPTCHA_PRIVATE_KEY = env('RECAPTCHA_PRIVATE_KEY')
+RECAPTCHA_PUBLIC_KEY = env("RECAPTCHA_PUBLIC_KEY")
+RECAPTCHA_PRIVATE_KEY = env("RECAPTCHA_PRIVATE_KEY")
 
-WAGTAIL_CODE_BLOCK_THEME = 'solarizedlight'
+WAGTAIL_CODE_BLOCK_THEME = "solarizedlight"
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env("SECRET_KEY")

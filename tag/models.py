@@ -5,11 +5,12 @@ from wagtail.models import Page
 
 
 class BlogTaggedPage(TaggedItemBase):
-    content_object = ParentalKey("blog.BlogPage", related_name="tagged_items", on_delete=models.CASCADE)
+    content_object = ParentalKey(
+        "blog.BlogPage", related_name="tagged_items", on_delete=models.CASCADE
+    )
 
 
 class BlogTagIndexPage(Page):
-
     def get_context(self, request):
         from blog.models import BlogPage
 

@@ -11,7 +11,7 @@ from core.models import GenericPage
 
 class FolioIndexPage(GenericPage):
     content_panels = GenericPage.content_panels + [
-        FieldPanel('header'),
+        FieldPanel("header"),
     ]
 
     def get_context(self, request, *args, **kwargs):
@@ -22,12 +22,20 @@ class FolioIndexPage(GenericPage):
 
 
 class FolioPage(GenericPage):
-    main_image = models.ForeignKey(Image, on_delete=models.PROTECT, verbose_name="Image principale", related_name="+")
+    main_image = models.ForeignKey(
+        Image,
+        on_delete=models.PROTECT,
+        verbose_name="Image principale",
+        related_name="+",
+    )
     date = models.DateField(verbose_name="Date de publication")
-    body = StreamField([
-        ("paragraphe", blocks.RichTextBlock()),
-        ("code", CodeBlock()),
-    ], use_json_field=True)
+    body = StreamField(
+        [
+            ("paragraphe", blocks.RichTextBlock()),
+            ("code", CodeBlock()),
+        ],
+        use_json_field=True,
+    )
     youtube = models.URLField(verbose_name="Lien Youtube", blank=True)
     github = models.URLField(verbose_name="Lien GitHub", blank=True)
     production = models.URLField(verbose_name="Lien du Projet", blank=True)
@@ -38,18 +46,13 @@ class FolioPage(GenericPage):
     ]
 
     content_panels = GenericPage.content_panels + [
-        MultiFieldPanel([
-            FieldPanel("header"),
-            FieldPanel("date"),
-            FieldPanel("main_image")],
-            heading="En-tête"),
-        MultiFieldPanel([
-            FieldPanel("body")],
-            heading="Corps"),
-        MultiFieldPanel([
-            FieldPanel("youtube"),
-            FieldPanel("github"),
-            FieldPanel("production")],
-            heading="Liens")
-
+        MultiFieldPanel(
+            [FieldPanel("header"), FieldPanel("date"), FieldPanel("main_image")],
+            heading="En-tête",
+        ),
+        MultiFieldPanel([FieldPanel("body")], heading="Corps"),
+        MultiFieldPanel(
+            [FieldPanel("youtube"), FieldPanel("github"), FieldPanel("production")],
+            heading="Liens",
+        ),
     ]

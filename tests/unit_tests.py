@@ -15,7 +15,9 @@ def test_total_invoices(invoice_1_with_services, invoice_2_with_service):
     assert invoice_2_with_service.total == 30
 
 
-def test_if_services_in_invoices_are_billed(invoice_1_with_services, invoice_2_with_service, service_1, service_2):
+def test_if_services_in_invoices_are_billed(
+    invoice_1_with_services, invoice_2_with_service, service_1, service_2
+):
     service_1.refresh_from_db()
     service_2.refresh_from_db()
     assert service_1.billed

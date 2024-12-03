@@ -11,8 +11,8 @@ class HomePage(GenericPage):
     body = RichTextField(blank=True)
 
     content_panels = GenericPage.content_panels + [
-        FieldPanel('header'),
-        FieldPanel('body')
+        FieldPanel("header"),
+        FieldPanel("body"),
     ]
 
     def get_context(self, request, *args, **kwargs):

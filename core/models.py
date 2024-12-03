@@ -16,5 +16,5 @@ class LegalPage(GenericPage):
 
     content_panels = GenericPage.content_panels + [
         FieldPanel("header"),
-        FieldPanel("body")
+        FieldPanel("body"),
     ]
