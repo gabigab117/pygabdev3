@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 import os
 import sys
-from project.settings.base import env
 
+from project.settings.base import env
 
 if __name__ == "__main__":
     os.environ.setdefault(

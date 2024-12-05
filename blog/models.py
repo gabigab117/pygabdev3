@@ -1,14 +1,14 @@
+from django.db import models
+from modelcluster.contrib.taggit import ClusterTaggableManager
 from wagtail import blocks
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail.fields import StreamField
 from wagtail.images.models import Image
 from wagtail.search import index
 from wagtailcodeblock.blocks import CodeBlock
-from modelcluster.contrib.taggit import ClusterTaggableManager
 
 from core.models import GenericPage
 from tag.models import BlogTaggedPage
-from django.db import models
 
 
 class BlogIndexPage(GenericPage):

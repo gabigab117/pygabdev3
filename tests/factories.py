@@ -1,5 +1,6 @@
 from factory.django import DjangoModelFactory
-from customers.models import Customer, Project, Service, Invoice
+
+from customers.models import Customer, Invoice, Project, Service
 
 
 class CustomerFactory(DjangoModelFactory):

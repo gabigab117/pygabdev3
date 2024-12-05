@@ -1,17 +1,17 @@
-from django.shortcuts import render, get_object_or_404
 from django.contrib.admin.views.decorators import staff_member_required
-from django.urls import reverse_lazy, reverse
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.generic import (
-    ListView,
     CreateView,
-    DetailView,
-    UpdateView,
     DeleteView,
+    DetailView,
+    ListView,
+    UpdateView,
 )
 
-from .forms import ServiceForm, InvoiceForm, InvoiceUpdateForm
-from .models import Customer, Project, Service, Invoice
+from .forms import InvoiceForm, InvoiceUpdateForm, ServiceForm
+from .models import Customer, Invoice, Project, Service
 
 
 @staff_member_required

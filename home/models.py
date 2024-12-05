@@ -1,9 +1,8 @@
 from wagtail.admin.panels import FieldPanel
 from wagtail.fields import RichTextField
 
-
-from core.models import GenericPage
 from blog.models import BlogPage
+from core.models import GenericPage
 from folio.models import FolioPage
 
 

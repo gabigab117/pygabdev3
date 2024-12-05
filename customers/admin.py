@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from customers.models import Customer, Project, Service, Invoice
+from customers.models import Customer, Invoice, Project, Service
 
 
 class ProjectInline(admin.StackedInline):

@@ -1,7 +1,7 @@
 from django import forms
 from django.db.models import Q
 
-from customers.models import Service, Invoice
+from customers.models import Invoice, Service
 
 
 class ServiceForm(forms.ModelForm):

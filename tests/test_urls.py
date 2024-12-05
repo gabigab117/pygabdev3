@@ -1,7 +1,8 @@
 import datetime
-from django.urls import reverse
+
 import pytest
 from django.test import Client
+from django.urls import reverse
 
 from customers.models import Invoice
 

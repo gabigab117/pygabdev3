@@ -1,9 +1,11 @@
 import datetime
+
+import pytest
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import SimpleUploadedFile
-import pytest
-from .factories import CustomerFactory, ProjectFactory, ServiceFactory, InvoiceFactory
 
+from .factories import CustomerFactory, InvoiceFactory, ProjectFactory, ServiceFactory
 
 User = get_user_model()
 
@@ -14,10 +16,27 @@ def today():
 
 
 @pytest.fixture
-def pdf1(tmp_path):
-    pdf_path = tmp_path / "test.pdf"
-    pdf_path.write_bytes(b"contenu du PDF")
-    return pdf_path
+def media_root(tmpdir):
+    """
+    Fixture pour rediriger MEDIA_ROOT vers un répertoire temporaire,
+    et restaurer sa valeur initiale après le test.
+    Le mieux est de modifier MEDIA_ROOT, car si une vue upload un fichier, celui-ci sera toujours uploadé dans media
+    """
+    # Sauvegarder la valeur initiale de MEDIA_ROOT
+    original_media_root = settings.MEDIA_ROOT
+    
+    # Rediriger MEDIA_ROOT vers le répertoire temporaire
+    settings.MEDIA_ROOT = tmpdir
+
+    # Fournir le répertoire temporaire au test
+    yield tmpdir
+
+    # Restaurer la valeur initiale de MEDIA_ROOT
+    settings.MEDIA_ROOT = original_media_root
+
+@pytest.fixture
+def pdf1(media_root):
+    return SimpleUploadedFile("test.pdf", b"content")
 
 
 @pytest.fixture
