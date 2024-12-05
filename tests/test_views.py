@@ -8,21 +8,21 @@ from customers.models import Invoice
 
 
 @pytest.mark.django_db
-def test_dashboard_url(client: Client, admin):
+def test_dashboard_view(client: Client, admin):
     client.force_login(admin)
     response = client.get(reverse("customers:dashboard"))
     assert response.status_code == 200
 
 
 @pytest.mark.django_db
-def test_projects_url(client: Client, admin):
+def test_projects_view(client: Client, admin):
     client.force_login(admin)
     response = client.get(reverse("customers:projects"))
     assert response.status_code == 200
 
 
 @pytest.mark.django_db
-def test_create_invoice_url(client: Client, admin, customer_1, service_1, today, pdf1):
+def test_create_invoice_view(client: Client, admin, customer_1, service_1, today, pdf1):
     client.force_login(admin)
     data = {
         "customer": customer_1.id,
@@ -38,3 +38,23 @@ def test_create_invoice_url(client: Client, admin, customer_1, service_1, today,
     assert response.status_code == 302
     assert Invoice.objects.filter(number=1).exists()
     assert response.url == reverse("customers:invoices")
+
+
+@pytest.mark.django_db
+def test_update_invoice_view(client: Client, admin, today, pdf1, invoice_1_with_services, customer_2, service_4):
+    client.force_login(admin)
+    data = {
+        "customer": customer_2.id,
+        "number": 1,
+        "issue_date": today,
+        "delivery_date": today,
+        "due_date": today + datetime.timedelta(days=16),
+        "services": [service_4.id],
+        "pdf": pdf1,
+    }
+
+    response = client.post(reverse("customers:update-invoice", kwargs={"pk": invoice_1_with_services.pk}), data=data)
+   
+    assert response.status_code == 302
+    assert Invoice.objects.filter(number=1).exists()
+    assert response.url == reverse("customers:invoice", kwargs={"pk": invoice_1_with_services.pk})
