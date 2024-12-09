@@ -13,6 +13,7 @@
         {% if current_site and current_site.site_name %}- {{ current_site.site_name }}{% endif %}
         {% endblock %}
     </title>
+    <script src="https://unpkg.com/htmx.org@2.0.3" integrity="sha384-0895/pl2MU10Hqc6jd4RvrthNlDiE9U1tWmX7WRESftEDRosgxNsQG/Ze9YMRzHq" crossorigin="anonymous"></script>
     {% if page.search_description %}
     <meta name="description" content="{{ page.search_description }}"/>
     {% endif %}
@@ -61,6 +62,7 @@
                         <ul class="p-2">
                             <li><a class="nav-link hover:text-custom-blue" href="{% url 'customers:projects' %}">Projets</a></li>
                             <li><a class="nav-link hover:text-custom-blue" href="{% url 'customers:invoices' %}">Factures</a></li>
+                            <li><a class="nav-link hover:text-custom-blue" href="{% url 'customers:search' %}">Recherche</a></li>
 
                         </ul>
                     </li>
@@ -95,6 +97,7 @@
                             <li><a class="nav-link hover:text-custom-blue" href="{% url 'customers:dashboard' %}">Dashboard</a></li>
                             <li><a class="nav-link hover:text-custom-blue" href="{% url 'customers:projects' %}">Projets</a></li>
                             <li><a class="nav-link hover:text-custom-blue" href="{% url 'customers:invoices' %}">Factures</a></li>
+                            <li><a class="nav-link hover:text-custom-blue" href="{% url 'customers:search' %}">Recherche</a></li>
                         </ul>
                     </details>
 

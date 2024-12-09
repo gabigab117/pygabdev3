@@ -19,6 +19,8 @@ from .views import (
     UpdateProject,
     UpdateService,
     dashboard_view,
+    search_view,
+    search_results_view,
 )
 
 app_name = "customers"
@@ -41,4 +43,6 @@ urlpatterns = [
     path("create-invoice/", CreateInvoice.as_view(), name="create-invoice"),
     path("update-invoice/<int:pk>/", UpdateInvoice.as_view(), name="update-invoice"),
     path("delete-invoice/<int:pk>/", DeleteInvoice.as_view(), name="delete-invoice"),
+    path("search/", search_view, name="search"),
+    path("search/results/", search_results_view, name="search-results"),
 ]

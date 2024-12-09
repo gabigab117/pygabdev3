@@ -1,0 +1,173 @@
+<div class="text-justify">
+    <div class="prose mx-auto text-custom-blue">
+      <!-- Clients -->
+      <div class="mt-8 p-6 bg-[#f3d2c1] rounded-lg shadow-lg">
+        <h2 class="text-2xl font-bold mb-4 text-center">Clients</h2>
+        {% if customers %}
+        <div class="overflow-x-auto">
+          <table class="table">
+            <!-- head -->
+            <thead>
+              <tr>
+                <th>Nom</th>
+                <th>Paiements</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for customer in customers %}
+                <tr>
+                  <td>
+                    <a href="{{ customer.get_absolute_url }}">{{ customer.name }}</a>
+                  </td>
+                  {% if customer.has_unpaid %}
+                    <td>
+                      <div class="badge badge-warning gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-4 w-4 stroke-current">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>Factures en attente
+                      </div>
+                    </td>
+                  {% else %}
+                    <td>
+                      <div class="badge badge-success gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-4 w-4 stroke-current">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>Tout est ok
+                      </div>
+                    </td>
+                  {% endif %}
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        Pas de résultats
+        {% endif %}
+      </div>
+
+      <!-- Projets -->
+      <div class="mt-8 p-6 bg-[#f3d2c1] rounded-lg shadow-lg">
+        <h2 class="text-2xl font-bold mb-4 text-center">Projets</h2>
+        {% if projects %}
+        <div class="overflow-x-auto">
+          <table class="table">
+            <!-- head -->
+            <thead>
+              <tr>
+                <th>Client</th>
+                <th>Nom</th>
+                <th>Taux</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for project in projects %}
+                <tr>
+                  <td>{{ project.customer.name }}</td>
+                  <td>
+                    <a href="{{ project.get_absolute_url }}">{{ project.name }}</a>
+                  </td>
+                  <td>{{ project.hourly_rate }} €</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        Pas de résultats
+        {% endif %}
+      </div>
+
+      <!-- Services -->
+      <div class="mt-8 p-6 bg-[#f3d2c1] rounded-lg shadow-lg mx-auto">
+        <h2 class="text-2xl font-bold mb-4 text-center">Services</h2>
+        {% if services %}
+        <div class="overflow-x-auto">
+          <table class="table">
+            <!-- head -->
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Temps</th>
+                <th>Facturé</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for service in services %}
+                <tr>
+                  <td>
+                    <a href="{{ service.get_absolute_url }}">{{ service.date }}</a>
+                  </td>
+                  <td>{{ service.time_spent }}</td>
+                  <td>{{ service.billed|yesno:'Oui,Non' }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        Pas de résultats
+        {% endif %}
+      </div>
+
+      <!-- Invoices -->
+      <div class="mt-8 p-6 bg-[#f3d2c1] rounded-lg shadow-lg">
+        <h2 class="text-2xl font-bold mb-4 text-center">Factures</h2>
+        {% if invoices %}
+        <div class="overflow-x-auto">
+          <table class="table">
+            <!-- head -->
+            <thead>
+              <tr>
+                <th>Client</th>
+                <th>Numéro</th>
+                <th>Date d'émission</th>
+                <th>Date d'échéance</th>
+                <th>Montant</th>
+                <th>Statut</th>
+                <th>PDF</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for invoice in invoices %}
+                <tr>
+                  <td>{{ invoice.customer.name }}</td>
+                  <td>
+                    <a href="{{ invoice.get_absolute_url }}">{{ invoice.number }}</a>
+                  </td>
+                  <td>{{ invoice.issue_date }}</td>
+                  <td>{{ invoice.due_date }}</td>
+                  <td>{{ invoice.total }}</td>
+
+                  {% if not invoice.paid %}
+                    <td>
+                      <div class="badge badge-warning gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-4 w-4 stroke-current">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>Attente de paiement
+                      </div>
+                    </td>
+                  {% else %}
+                    <td>
+                      <div class="badge badge-success gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-4 w-4 stroke-current">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>Payée
+                      </div>
+                    </td>
+                  {% endif %}
+
+                  <td>
+                    <a href="{{ invoice.pdf.url }}" target="_blank">Télécharger</a>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        Pas de résultats
+        {% endif %}
+      </div>
+    </div>
+  </div>

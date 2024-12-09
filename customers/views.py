@@ -223,3 +223,32 @@ class DeleteInvoice(DeleteView):
     template_name = "customers/invoice_delete_confirm.html"
     success_url = reverse_lazy("customers:invoices")
     context_object_name = "invoice"
+
+
+@staff_member_required
+def search_view(request):
+    customers = Customer.objects.none()
+    projects = Project.objects.none()
+    services = Service.objects.none()
+    invoices = Invoice.objects.none()
+    context = {"customers": customers, "projects": projects, "services": services, "invoices": invoices}
+    return render(request, "customers/search.html", context=context)
+
+
+@staff_member_required
+def search_results_view(request):
+    query = request.GET.get("search", "")
+
+    customers = Customer.objects.none()
+    projects = Project.objects.none()
+    services = Service.objects.none()
+    invoices = Invoice.objects.none()
+
+    if query:
+        customers = Customer.objects.filter(name__icontains=query)
+        projects = Project.objects.filter(customer__name__icontains=query)
+        services = Service.objects.filter(project__customer__name__icontains=query)
+        invoices = Invoice.objects.filter(customer__name__icontains=query)
+    
+    context = {"customers": customers, "projects": projects, "services": services, "invoices": invoices}
+    return render(request, "customers/search_results.html", context=context)
