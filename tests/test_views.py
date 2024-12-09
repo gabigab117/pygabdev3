@@ -23,6 +23,15 @@ def test_projects_view(client: Client, admin):
 
 @pytest.mark.django_db
 def test_create_invoice_view(client: Client, admin, customer_1, service_1, today, pdf1):
+    """
+    Scenario: Create a new invoice
+        Given I am an authenticated administrator
+            And I have a customer and service
+        When I submit a new invoice form with valid data
+            And include a service and PDF file
+        Then the invoice should be created successfully
+            And I should be redirected to the invoices list
+    """
     client.force_login(admin)
     data = {
         "customer": customer_1.id,
@@ -42,6 +51,15 @@ def test_create_invoice_view(client: Client, admin, customer_1, service_1, today
 
 @pytest.mark.django_db
 def test_update_invoice_view(client: Client, admin, today, pdf1, invoice_1_with_services, customer_2, service_4):
+    """
+    Scenario: Update an existing invoice
+        Given I am an authenticated administrator
+            And I have an existing invoice
+        When I submit updated invoice data
+            And change the customer and service
+        Then the invoice should be updated successfully
+            And I should be redirected to the invoice detail page
+    """
     client.force_login(admin)
     data = {
         "customer": customer_2.id,
@@ -62,6 +80,14 @@ def test_update_invoice_view(client: Client, admin, today, pdf1, invoice_1_with_
 
 @pytest.mark.django_db
 def test_create_service_view(client: Client, project_1, admin, today):
+    """
+    Scenario: Create a new service
+        Given I am an authenticated administrator
+            And I have a project
+        When I submit a new service form with time data
+        Then the service should be created successfully
+            And I should be redirected to the appropriate page
+    """
     client.force_login(admin)
     data = {
         "date": today,
@@ -75,6 +101,15 @@ def test_create_service_view(client: Client, project_1, admin, today):
 
 @pytest.mark.django_db
 def test_update_service_view(client: Client, service_1: Service, admin, today):
+    """
+    Scenario: Update an existing service
+        Given I am an authenticated administrator
+            And I have an existing service
+        When I submit updated service time data
+        Then the service should be updated successfully
+            And the time spent should be modified
+            And I should be redirected to the appropriate page
+    """
     client.force_login(admin)
     data = {
         "date": today - datetime.timedelta(days=-1),

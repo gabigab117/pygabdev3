@@ -124,6 +124,22 @@ class Invoice(models.Model):
 
 @receiver(m2m_changed, sender=Invoice.services.through)
 def handle_invoice_change(sender, instance, action, pk_set, **kwargs):
+    """
+    Signal handler that manages the relationship between Invoice and Service models.
+    
+    This handler performs the following operations:
+    - When services are added to an invoice, marks them as billed
+    - When services are removed from an invoice, marks them as unbilled
+    - When all services are cleared from an invoice, marks them all as unbilled
+    - Updates the invoice total after any changes to its services
+    
+    Args:
+        sender: The model class sending the signal (Invoice.services.through)
+        instance: The Invoice instance being modified
+        action: String indicating the type of m2m change ('post_add', 'post_remove', 'pre_clear')
+        pk_set: Set of primary keys of the Service objects being added/removed
+        **kwargs: Additional signal arguments
+    """
     if action == "post_add":
         Service.objects.filter(id__in=pk_set).update(billed=True)
     elif action == "post_remove":
@@ -135,12 +151,34 @@ def handle_invoice_change(sender, instance, action, pk_set, **kwargs):
 
 @receiver(pre_delete, sender=Invoice)
 def handle_invoice_delete(sender, instance, **kwargs):
+    """
+    Signal handler that manages cleanup when an Invoice is deleted.
+    
+    Ensures that all services associated with the invoice are marked as unbilled
+    before the invoice is deleted, preventing orphaned billed services.
+    
+    Args:
+        sender: The model class sending the signal (Invoice)
+        instance: The Invoice instance being deleted
+        **kwargs: Additional signal arguments
+    """
     services = instance.services.all()
     services.update(billed=False)
 
 
 @receiver(post_save, sender=Service)
 def handle_service_change(sender, instance, **kwargs):
+    """
+    Signal handler that updates invoice totals when a service is modified.
+    
+    When a service is saved (created or updated), this handler ensures that
+    invoice containing this service has its total recalculated.
+    
+    Args:
+        sender: The model class sending the signal (Service)
+        instance: The Service instance that was saved
+        **kwargs: Additional signal arguments
+    """
     invoice = instance.invoices.first()
     if invoice:
         invoice.update_total()
