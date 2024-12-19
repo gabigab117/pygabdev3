@@ -40,3 +40,4 @@ Bienvenue sur mon application personnelle, conçue avec **Django Wagtail**, pour
 - **Backend** : Django.
 - **Frontend** : Tailwind CSS pour un design moderne et épuré.
 - **Base de données** : SQLite (en développement, configurable).
+- Ici j'ai laissé les fichiers Docker, mais ils ne sont pas utilisés (pour le moment).
