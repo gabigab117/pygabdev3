@@ -49,7 +49,7 @@ class ProjectDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["services"] = Service.objects.filter(project=self.object)
+        context["services"] = Service.objects.filter(project=self.object, billed=False)
         return context
 
 
