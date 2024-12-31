@@ -1,4 +1,5 @@
 from django.contrib.admin.views.decorators import staff_member_required
+from django.db.models import Sum
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
@@ -141,7 +142,9 @@ class CustomerDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["projects"] = self.object.projects.all()
+        projects = self.object.projects.all()
+        context["projects"] = projects
+        context["total_unbilled_services"] = Service.objects.filter(project__in=projects, billed=False).aggregate(total_sum=Sum("total"))["total_sum"] or 0
         return context
 
 
