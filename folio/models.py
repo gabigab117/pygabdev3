@@ -13,6 +13,7 @@ class FolioIndexPage(GenericPage):
     content_panels = GenericPage.content_panels + [
         FieldPanel("header"),
     ]
+    subpage_types = ["folio.FolioPage"]
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
