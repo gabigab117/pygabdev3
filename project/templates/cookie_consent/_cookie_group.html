@@ -53,15 +53,20 @@
     <p class="cookie-group-description">{{ cookie_group.description }}</p>
   {% endif %}
   
-  <!-- Boutons Accepter/Refuser -->
-  <div class="cookie-buttons">
-    <a href="{{ cookie_group.accept_url }}" class="cookie-button accept">
-      Accepter
-    </a>
-    <a href="{{ cookie_group.decline_url }}" class="cookie-button decline">
-      Refuser
-    </a>
-  </div>
+<!-- Bouton Accepter -->
+<form action="{% url "cookie_consent_accept" cookie_group.varname %}"
+      method="POST" style="display:inline-block;">
+    {% csrf_token %}
+    <button class="cookie-button accept" type="submit">Accepter</button>
+</form>
+
+<!-- Bouton Refuser -->
+<form action="{% url "cookie_consent_decline" cookie_group.varname %}"
+      method="POST" style="display:inline-block;">
+    {% csrf_token %}
+    <button  class="cookie-button decline" type="submit">Refuser</button>
+</form>
+
   
   <!-- Liste des cookies du groupe -->
   {% if cookie_group.cookie_set.all %}
