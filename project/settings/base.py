@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "django_cleanup.apps.CleanupConfig",
     "django.contrib.sitemaps",
     "django_extensions",
+    "cookie_consent",
 ]
 
 MIDDLEWARE = [

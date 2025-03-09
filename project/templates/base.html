@@ -1,8 +1,17 @@
-{% load static wagtailcore_tags wagtailuserbar tailwind_tags %}
+{% load static wagtailcore_tags wagtailuserbar tailwind_tags cookie_consent_tags %}
 
 <!DOCTYPE html>
 <html lang="fr" class="h-full">
 <head>
+    {% if request|cookie_group_accepted:"analytics" %}
+    <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MPJ4JSR2');</script>
+    <!-- End Google Tag Manager -->
+    {% endif %}
     <meta charset="utf-8"/>
     <title>
         {% block title %}
@@ -29,6 +38,26 @@
 </head>
 
 <body class="flex flex-col min-h-full">
+    {% if request|cookie_group_accepted:"analytics" %}
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MPJ4JSR2"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    {% endif %}
+    {% url "cookie_consent_cookie_group_list" as url_cookies %}
+
+<template id="cookie-consent__cookie-bar">
+  <div class="cookie-bar">
+    Ce site utilise des cookies pour améliorer votre expérience. Acceptez-vous leur utilisation ?
+    <button type="button" class="cookie-consent__accept">Accepter</button>
+    <button type="button" class="cookie-consent__decline">Refuser</button>
+    <a href="{{ url_cookies }}">Plus d’infos</a>
+  </div>
+</template>
+
+{% all_cookie_groups 'cookie-consent__cookie-groups' %}
+
+
 {% wagtailuserbar %}
 <header class="shadow-md">
     <div class="navbar container mx-auto">
@@ -156,6 +185,20 @@
     </aside>
 </footer>
 
+
+{% static "cookie_consent/cookiebar.module.js" as cookiebar_src %}
+{% url 'cookie_consent_status' as status_url %}
+<script type="module">
+  import {showCookieBar} from '{{ cookiebar_src }}';
+  showCookieBar({
+    statusUrl: '{{ status_url|escapejs }}',
+    templateSelector: '#cookie-consent__cookie-bar',
+    cookieGroupsSelector: '#cookie-consent__cookie-groups',
+    onShow: () => document.querySelector('body').classList.add('with-cookie-bar'),
+    onAccept: () => document.querySelector('body').classList.remove('with-cookie-bar'),
+    onDecline: () => document.querySelector('body').classList.remove('with-cookie-bar'),
+  });
+</script>
 
 </body>
 </html>
