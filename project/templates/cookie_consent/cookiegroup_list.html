@@ -1,0 +1,47 @@
+{% extends "cookie_consent/base.html" %}
+{% load static tailwind_tags cookie_consent_tags %}
+
+{% block body %}
+<style>
+  /* Styles simples pour la mise en page */
+  .container {
+    width: 90%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: sans-serif;
+  }
+  h1 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #1D4ED8; /* Bleu */
+    margin-bottom: 20px;
+  }
+  p {
+    color: #374151; /* Gris foncé */
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+  .cookie-group {
+    border: 1px solid #E5E7EB; /* Bordure gris clair */
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #FFFFFF;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+  }
+</style>
+
+<div class="container">
+  <h1>Liste des cookies</h1>
+  <p>
+    Voici la liste des catégories de cookies utilisées sur notre site et la raison pour laquelle nous les utilisons.
+  </p>
+
+  {% for cookie_group in object_list %}
+    <div class="cookie-group">
+      {% include "cookie_consent/_cookie_group.html" %}
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

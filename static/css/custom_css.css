@@ -64,3 +64,20 @@ text-white {
   display: flex;
   justify-content: center;
 }
+
+.cookie-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #f3d2c1; /* ou la couleur de ton choix */
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 9999; /* pour être sûr que la bannière passe devant le reste */
+  }
+  .cookie-bar button,
+  .cookie-bar a {
+    margin: 0 0.5rem;
+  }
+  

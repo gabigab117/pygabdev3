@@ -1,0 +1,76 @@
+<style>
+  .cookie-group-details {
+    margin-bottom: 20px;
+    font-family: sans-serif;
+  }
+  .cookie-group-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #1F2937; /* Gris foncé */
+    margin-bottom: 8px;
+  }
+  .cookie-group-description {
+    color: #4B5563; /* Gris moyen */
+    margin-bottom: 12px;
+  }
+  .cookie-buttons {
+    margin-top: 12px;
+  }
+  .cookie-button {
+    display: inline-block;
+    padding: 8px 16px;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-right: 8px;
+    transition: background-color 0.2s;
+  }
+  .cookie-button.accept {
+    background-color: #10B981; /* Vert moyen */
+  }
+  .cookie-button.accept:hover {
+    background-color: #059669;
+  }
+  .cookie-button.decline {
+    background-color: #EF4444; /* Rouge moyen */
+  }
+  .cookie-button.decline:hover {
+    background-color: #DC2626;
+  }
+  .cookie-list {
+    list-style-type: disc;
+    margin-top: 16px;
+    margin-left: 20px;
+  }
+  .cookie-list li {
+    margin-bottom: 4px;
+  }
+</style>
+
+<div class="cookie-group-details">
+  <h2 class="cookie-group-title">{{ cookie_group.name }}</h2>
+  {% if cookie_group.description %}
+    <p class="cookie-group-description">{{ cookie_group.description }}</p>
+  {% endif %}
+  
+  <!-- Boutons Accepter/Refuser -->
+  <div class="cookie-buttons">
+    <a href="{{ cookie_group.accept_url }}" class="cookie-button accept">
+      Accepter
+    </a>
+    <a href="{{ cookie_group.decline_url }}" class="cookie-button decline">
+      Refuser
+    </a>
+  </div>
+  
+  <!-- Liste des cookies du groupe -->
+  {% if cookie_group.cookie_set.all %}
+    <ul class="cookie-list">
+      {% for cookie in cookie_group.cookie_set.all %}
+        <li>
+          <strong>{{ cookie.name }}</strong>{% if cookie.description %}: {{ cookie.description }}{% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</div>
