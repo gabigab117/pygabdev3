@@ -145,12 +145,48 @@
     </div>
 </header>
 
-<div class="py-16 text-center bg-[#fef6e4] banner-border">
-    <h1 class="text-4xl font-bold mb-4 text-custom-blue">{% block banner_title %}{{ page.title }}{% endblock %}</h1>
-    <hr class="elegant-hr">
-    <p class="text-xl text-custom-blue mt-4">{% block banner_text %}{{ page.header|richtext }}{% endblock %}</p>
-    <hr class="elegant-hr">
-</div>
+
+
+
+<div class="relative py-16 overflow-hidden bg-gradient-to-r from-[#fef6e4] to-[#f9f1e1]">
+    <!-- Éléments décoratifs -->
+    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-custom-blue to-transparent opacity-30"></div>
+    <div class="absolute -left-10 top-10 w-40 h-40 rounded-full bg-custom-blue opacity-5 animate-pulse"></div>
+    <div class="absolute -right-10 bottom-10 w-60 h-60 rounded-full bg-custom-blue opacity-5 animate-pulse [animation-duration:8s]"></div>
+    
+    <div class="container mx-auto px-4 relative z-10">
+      <div class="max-w-3xl mx-auto text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-6 text-custom-blue leading-tight shadow-sm">
+          {% block banner_title %}{{ page.title }}{% endblock %}
+        </h1>
+        
+        <div class="flex items-center justify-center my-4">
+          <div class="h-px w-16 bg-gradient-to-r from-transparent via-custom-blue to-transparent opacity-50"></div>
+          <div class="mx-4">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-custom-blue opacity-70">
+              <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+            </svg>
+          </div>
+          <div class="h-px w-16 bg-gradient-to-r from-custom-blue via-custom-blue to-transparent opacity-50"></div>
+        </div>
+        
+        <p class="text-xl text-custom-blue/90 mt-4 leading-relaxed max-w-2xl mx-auto">
+          {% block banner_text %}{{ page.header|richtext }}{% endblock %}
+        </p>
+        
+        <div class="flex items-center justify-center mt-6">
+          <div class="h-px w-24 bg-gradient-to-r from-transparent via-custom-blue to-transparent opacity-30"></div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Bordure décorative du bas -->
+    <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-custom-blue to-transparent opacity-30"></div>
+  </div>
+
+
+
+
 
 <main class="container mx-auto px-4 py-8 flex-grow mt-8 max-w-3xl">
     {% block content %}{% endblock %}
