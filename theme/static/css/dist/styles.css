@@ -4671,10 +4671,6 @@ details.collapse summary::-webkit-details-marker {
   top: 0px;
 }
 
-.z-\[1\] {
-  z-index: 1;
-}
-
 .z-10 {
   z-index: 10;
 }

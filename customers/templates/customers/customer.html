@@ -64,7 +64,10 @@
 
         <div class="mt-8 p-6 bg-[#f3d2c1] rounded-lg shadow-lg mx-auto">
             {% if total_unbilled_services %}
-            Total des services non facturés : {{ total_unbilled_services }}
+            <ul>
+            <li>Total des services non facturés : {{ total_unbilled_services }}</li>
+            <li>Total heures : {{ total_hours_unbilled }}</li>
+            </ul>
             {% else %}
             <p>Pas de services non facturés pour ce client.</p>
             {% endif %}
