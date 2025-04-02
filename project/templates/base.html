@@ -71,7 +71,7 @@
                     </svg>
                 </div>
                 <ul tabindex="0"
-                    class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                    class="menu menu-sm dropdown-content mt-3 z-[50] p-2 shadow bg-base-100 rounded-box w-52">
                     <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'index' %}">Accueil</a></li>
                     <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'projets' %}">Projets</a></li>
                     <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'blog' %}">Blog</a></li>
@@ -102,14 +102,14 @@
             <a class="btn btn-ghost normal-case text-xl text-custom-blue" href="{% slugurl 'index' %}">PyGabDev</a>
         </div>
         <div class="navbar-center hidden lg:flex">
-            <ul class="menu menu-horizontal px-1">
+            <ul class="menu menu-horizontal px-1 z-[50]">
                 <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'index' %}">Accueil</a></li>
                 <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'projets' %}">Projets</a></li>
                 <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'blog' %}">Blog</a></li>
                 <li class="services-menu">
                     <details>
                         <summary class="hover:text-custom-blue">Réseaux</summary>
-                        <ul class="p-2 bg-base-100 rounded-box shadow-lg">
+                        <ul class="p-2 bg-base-100 rounded-box shadow-lg z-[50]">
                             <li><a class="nav-link hover:text-custom-blue" href="https://github.com/gabigab117" target="_blank">GitHub</a></li>
                             <li><a class="nav-link hover:text-custom-blue" href="https://x.com/GabrielTrouve" target="_blank">X</a></li>
                             <li><a class="nav-link hover:text-custom-blue" href="https://www.linkedin.com/in/gabriel-trouv%C3%A9-b6a2bb159/" target="_blank">Linkedin</a></li>
@@ -122,7 +122,7 @@
                 <li class="services-menu">
                     <details>
                         <summary class="hover:text-custom-blue">Clients</summary>
-                        <ul class="p-2 bg-base-100 rounded-box shadow-lg">
+                        <ul class="p-2 bg-base-100 rounded-box shadow-lg z-[50]">
                             <li><a class="nav-link hover:text-custom-blue" href="{% url 'customers:dashboard' %}">Dashboard</a></li>
                             <li><a class="nav-link hover:text-custom-blue" href="{% url 'customers:projects' %}">Projets</a></li>
                             <li><a class="nav-link hover:text-custom-blue" href="{% url 'customers:invoices' %}">Factures</a></li>

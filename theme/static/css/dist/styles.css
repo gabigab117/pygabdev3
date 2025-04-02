@@ -4671,12 +4671,16 @@ details.collapse summary::-webkit-details-marker {
   top: 0px;
 }
 
+.z-\[1\] {
+  z-index: 1;
+}
+
 .z-10 {
   z-index: 10;
 }
 
-.z-\[1\] {
-  z-index: 1;
+.z-\[50\] {
+  z-index: 50;
 }
 
 .-mx-4 {
@@ -5421,6 +5425,10 @@ details.collapse summary::-webkit-details-marker {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+.opacity-10 {
+  opacity: 0.1;
+}
+
 .opacity-30 {
   opacity: 0.3;
 }
@@ -5431,10 +5439,6 @@ details.collapse summary::-webkit-details-marker {
 
 .opacity-70 {
   opacity: 0.7;
-}
-
-.opacity-10 {
-  opacity: 0.1;
 }
 
 .shadow {
