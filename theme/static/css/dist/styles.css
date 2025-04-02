@@ -4655,20 +4655,8 @@ details.collapse summary::-webkit-details-marker {
   bottom: 0px;
 }
 
-.-left-10 {
-  left: -2.5rem;
-}
-
-.-right-10 {
-  right: -2.5rem;
-}
-
 .bottom-0 {
   bottom: 0px;
-}
-
-.bottom-10 {
-  bottom: 2.5rem;
 }
 
 .left-0 {
@@ -4681,10 +4669,6 @@ details.collapse summary::-webkit-details-marker {
 
 .top-0 {
   top: 0px;
-}
-
-.top-10 {
-  top: 2.5rem;
 }
 
 .z-10 {
@@ -4825,20 +4809,12 @@ details.collapse summary::-webkit-details-marker {
   height: 1rem;
 }
 
-.h-40 {
-  height: 10rem;
-}
-
 .h-5 {
   height: 1.25rem;
 }
 
 .h-6 {
   height: 1.5rem;
-}
-
-.h-60 {
-  height: 15rem;
 }
 
 .h-full {
@@ -4869,10 +4845,6 @@ details.collapse summary::-webkit-details-marker {
   width: 1rem;
 }
 
-.w-40 {
-  width: 10rem;
-}
-
 .w-5 {
   width: 1.25rem;
 }
@@ -4883,10 +4855,6 @@ details.collapse summary::-webkit-details-marker {
 
 .w-6 {
   width: 1.5rem;
-}
-
-.w-60 {
-  width: 15rem;
 }
 
 .w-full {
@@ -4936,16 +4904,6 @@ details.collapse summary::-webkit-details-marker {
 
 .transform {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
-@keyframes pulse {
-  50% {
-    opacity: .5;
-  }
-}
-
-.animate-pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 .cursor-not-allowed {
@@ -5192,10 +5150,21 @@ details.collapse summary::-webkit-details-marker {
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
+.from-custom-blue {
+  --tw-gradient-from: #001858 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(0 24 88 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
 .from-transparent {
   --tw-gradient-from: transparent var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(0 0 0 / 0) var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.via-custom-blue {
+  --tw-gradient-to: rgb(0 24 88 / 0)  var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), #001858 var(--tw-gradient-via-position), var(--tw-gradient-to);
 }
 
 .via-gray-500 {
@@ -5398,6 +5367,15 @@ details.collapse summary::-webkit-details-marker {
   color: rgb(37 99 235 / var(--tw-text-opacity));
 }
 
+.text-custom-blue {
+  --tw-text-opacity: 1;
+  color: rgb(0 24 88 / var(--tw-text-opacity));
+}
+
+.text-custom-blue\/90 {
+  color: rgb(0 24 88 / 0.9);
+}
+
 .text-error {
   --tw-text-opacity: 1;
   color: var(--fallback-er,oklch(var(--er)/var(--tw-text-opacity)));
@@ -5447,16 +5425,16 @@ details.collapse summary::-webkit-details-marker {
   opacity: 0.3;
 }
 
-.opacity-5 {
-  opacity: 0.05;
-}
-
 .opacity-50 {
   opacity: 0.5;
 }
 
 .opacity-70 {
   opacity: 0.7;
+}
+
+.opacity-10 {
+  opacity: 0.1;
 }
 
 .shadow {
@@ -5474,12 +5452,6 @@ details.collapse summary::-webkit-details-marker {
 .shadow-md {
   --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
-.shadow-sm {
-  --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
@@ -5533,10 +5505,6 @@ details.collapse summary::-webkit-details-marker {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.\[animation-duration\:8s\] {
-  animation-duration: 8s;
-}
-
 .last\:mb-0:last-child {
   margin-bottom: 0px;
 }
@@ -5578,6 +5546,11 @@ details.collapse summary::-webkit-details-marker {
   color: rgb(30 64 175 / var(--tw-text-opacity));
 }
 
+.hover\:text-custom-blue:hover {
+  --tw-text-opacity: 1;
+  color: rgb(0 24 88 / var(--tw-text-opacity));
+}
+
 .hover\:opacity-80:hover {
   opacity: 0.8;
 }
@@ -5597,6 +5570,11 @@ details.collapse summary::-webkit-details-marker {
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
+.focus\:ring-custom-blue:focus {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(0 24 88 / var(--tw-ring-opacity));
 }
 
 .group:hover .group-hover\:translate-y-0 {
