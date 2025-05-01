@@ -144,8 +144,43 @@ class CustomerDetail(DetailView):
         context = super().get_context_data(**kwargs)
         projects = self.object.projects.all()
         context["projects"] = projects
-        context["total_unbilled_services"] = Service.objects.filter(project__in=projects, billed=False).aggregate(total_sum=Sum("total"))["total_sum"] or 0
-        context["total_hours_unbilled"] = Service.objects.filter(project__in=projects, billed=False).aggregate(total_hours=Sum("time_spent"))["total_hours"] or 0
+        
+        # Services non facturés pour ce client
+        unbilled_services = Service.objects.filter(
+            project__in=projects, 
+            billed=False
+        )
+        
+        # Calcul des totaux
+        context["total_unbilled_services"] = unbilled_services.aggregate(
+            total_sum=Sum("total")
+        )["total_sum"] or 0
+        
+        context["total_hours_unbilled"] = unbilled_services.aggregate(
+            total_hours=Sum("time_spent")
+        )["total_hours"] or 0
+        
+        # Calcul des heures par projet
+        projects_hours = []
+        for project in projects:
+            project_unbilled = unbilled_services.filter(project=project)
+            hours = project_unbilled.aggregate(
+                total=Sum('time_spent')
+            )['total'] or 0
+            
+            amount = project_unbilled.aggregate(
+                total=Sum('total')
+            )['total'] or 0
+            
+            if hours > 0:  # Ajouter seulement si le projet a des heures non facturées
+                projects_hours.append({
+                    'project': project,
+                    'hours': hours,
+                    'amount': amount
+                })
+        
+        context["projects_hours"] = projects_hours
+        
         return context
 
 

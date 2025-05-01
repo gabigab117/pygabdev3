@@ -63,11 +63,35 @@
         </div>
 
         <div class="mt-8 p-6 bg-[#f3d2c1] rounded-lg shadow-lg mx-auto">
+            <h3 class="text-lg font-bold mb-4">Services non facturés</h3>
             {% if total_unbilled_services %}
-            <ul>
-            <li>Total des services non facturés : {{ total_unbilled_services }}</li>
-            <li>Total heures : {{ total_hours_unbilled }}</li>
-            </ul>
+            <div class="mb-4">
+                <ul class="list-disc list-inside">
+                    <li>Total des services non facturés : {{ total_unbilled_services }} €</li>
+                    <li>Total heures : {{ total_hours_unbilled }}</li>
+                </ul>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="table table-zebra w-full">
+                    <thead>
+                        <tr>
+                            <th>Projet</th>
+                            <th>Heures non facturées</th>
+                            <th>Montant</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for project_stats in projects_hours %}
+                        <tr>
+                            <td><a href="{{ project_stats.project.get_absolute_url }}" class="text-blue-600 hover:underline">{{ project_stats.project.name }}</a></td>
+                            <td>{{ project_stats.hours }}</td>
+                            <td>{{ project_stats.amount }} €</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
             {% else %}
             <p>Pas de services non facturés pour ce client.</p>
             {% endif %}

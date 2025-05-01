@@ -9,16 +9,3 @@
 {% block banner_text %}
   Clients - Projets - Services - Factures
 {% endblock %}
-
-{% block content %}
-  <div class="flex justify-center">
-    <form>
-      {% csrf_token %}
-      <input class="input input-bordered input-info w-full max-w-xs" type="search" name="search" placeholder="Client" hx-get="{% url 'customers:search-results' %}" hx-trigger="keyup changed, search" hx-target="#search-results" hx-indicator=".htmx-indicator" />
-    </form>
-  </div>
-
-  <div id="search-results">
-    {% include 'customers/search_results.html' %}
-  </div>
-{% endblock %}
