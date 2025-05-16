@@ -14,7 +14,7 @@ env = environ.Env()
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
+environ.Env.read_env(os.path.join(os.path.dirname(BASE_DIR), ".env"))
 
 from django.core.wsgi import get_wsgi_application
 
