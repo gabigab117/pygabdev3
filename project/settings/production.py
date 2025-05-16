@@ -8,6 +8,9 @@ ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 SECURE_SSL_REDIRECT = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+
 
 # HSTS settings
 SECURE_HSTS_SECONDS = 31536000  # 1 year
@@ -17,14 +20,8 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": env("DB_NAME"),
-        "USER": env("DB_USER"),
-        "PASSWORD": env("DB_PASSWORD"),
-        "HOST": env("DB_HOST"),
-        "OPTIONS": {
-            "sql_mode": "STRICT_TRANS_TABLES",
-        },
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / env("DB_NAME", default="db.sqlite3"),
     }
 }
 
