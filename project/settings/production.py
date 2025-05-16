@@ -1,6 +1,4 @@
 from .base import *
-import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
 
 DEBUG = env.bool("DEBUG")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
@@ -50,10 +48,3 @@ STORAGES = {
     },
 }
 
-sentry_sdk.init(
-    dsn=env("DSN"),
-    # Add data like request headers and IP for users,
-    # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
-    send_default_pii=True,
-    integrations=[DjangoIntegration()],
-)
