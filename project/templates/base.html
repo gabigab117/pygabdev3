@@ -238,7 +238,10 @@
   });
 </script>
 <!-- 100% privacy-first analytics -->
+{% if not request.path|slice:":10" == '/customers' %}
+<!-- 100% privacy-first analytics -->
 <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+{% endif %}
 
 </body>
 </html>
