@@ -68,7 +68,7 @@
             <div class="mb-4">
                 <ul class="list-disc list-inside">
                     <li>Total des services non facturés : {{ total_unbilled_services }} €</li>
-                    <li>Total heures : {{ total_hours_unbilled }}</li>
+                    <li>Total heures : {{ total_hours_unbilled|floatformat:2 }}</li>
                 </ul>
             </div>
             
