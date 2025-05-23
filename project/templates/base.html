@@ -238,7 +238,7 @@
   });
 </script>
 <!-- 100% privacy-first analytics -->
-{% if not request.path|slice:":10" == '/customers' and not request.path|slice:":6" == '/admin' and not request.in_preview_panel %}
+{% if not request.path|slice:":10" == '/customers' and not request.path|slice:":6" == '/admin' and not request.in_preview_panel|default:False and not request.is_preview|default:False %}
 <!-- 100% privacy-first analytics -->
 <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
 {% endif %}
