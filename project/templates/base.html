@@ -238,7 +238,7 @@
   });
 </script>
 <!-- 100% privacy-first analytics -->
-{% if not request.path|startswith:'/customers' and not request.path|startswith:'/admin' %}
+{% if not request.path|slice:":10" == '/customers' and not request.path|slice:":6" == '/admin' %}
 <!-- 100% privacy-first analytics -->
 <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
 {% endif %}
