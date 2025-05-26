@@ -27,6 +27,9 @@
     <meta name="description" content="{{ page.search_description }}"/>
     {% endif %}
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    {% if page %}
+  <link rel="canonical" href="{{ page.full_url }}" />
+    {% endif %}
 
     {% if request.in_preview_panel %}
     <base target="_blank">
