@@ -4,6 +4,9 @@ DEBUG = env.bool("DEBUG")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 
 
+WAGTAILSITEMAPS_CANONICAL_URL = 'https://pygab.dev'
+
+
 # HTTPS settings
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
