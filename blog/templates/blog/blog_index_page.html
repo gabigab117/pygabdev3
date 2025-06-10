@@ -3,35 +3,139 @@
 {% load wagtailimages_tags %}
 
 {% block content %}
-<div class="text-justify">
-    <!-- <div class="prose mx-auto text-justify text-custom-blue">-->
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-12">
-        {% for post in blogpages %}
-        <div class="card bg-[#f3d2c1] shadow-xl mx-auto w-full transition duration-300 ease-in-out hover:scale-105 hover:-rotate-1 hover:shadow-2xl">
-            <figure class="px-10 pt-10">
-                {% image post.main_image original class="rounded-xl" alt=post.main_image.title %}
-            </figure>
-            <div class="card-body items-center text-center text-custom-blue">
-                <h2 class="card-title">{{ post.title }}</h2>
-                <p>{{ post.header|richtext }}</p>
-                <p><i>Par {{ post.owner }}</i></p>
-                <p>Le {{ post.date }}</p>
-                <div class="card-actions justify-end">
-                    <a href="{% pageurl post %}"
-                       class="px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] text-white! hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110 inline-flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24"
-                             stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                        </svg>
-                        Lire
-                    </a>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
 
-</div>
+
+  
+  <!-- Introduction de la page blog -->
+  <div class="text-center mb-12">
+    <h2 class="text-3xl font-bold text-gray-900 mb-4">Articles récents</h2>
+    <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+      Découvrez mes derniers articles sur le développement web, Django, Python et les technologies modernes.
+    </p>
+  </div>
+
+  <!-- Grille des articles -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {% for post in blogpages %}
+    <article class="group">
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+        
+        <!-- Image de l'article -->
+        {% if post.main_image %}
+        <div class="relative overflow-hidden">
+          <a href="{% pageurl post %}">
+            {% image post.main_image width-400 class='w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105' alt=post.main_image.title %}
+            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          </a>
+        </div>
+        {% endif %}
+        
+        <!-- Contenu de la carte -->
+        <div class="p-6">
+          <!-- Métadonnées -->
+          <div class="flex items-center gap-3 text-sm text-gray-500 mb-3">
+            <div class="flex items-center gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              {{ post.date|date:"d M Y" }}
+            </div>
+            <span>•</span>
+            <div class="flex items-center gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+              {{ post.owner }}
+            </div>
+          </div>
+          
+          <!-- Titre -->
+          <h3 class="text-lg font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors line-clamp-2">
+            <a href="{% pageurl post %}">
+              {{ post.title }}
+            </a>
+          </h3>
+          
+          <!-- Extrait -->
+          <div class="text-gray-600 mb-4 text-sm leading-relaxed line-clamp-3">
+            {{ post.header|richtext|striptags|truncatewords:20 }}
+          </div>
+          
+          <!-- Bouton de lecture -->
+          <div class="flex justify-between items-center">
+            <a href="{% pageurl post %}" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold text-sm group/link">
+              Lire l'article
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform group-hover/link:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+            
+            <!-- Badge de catégorie (optionnel) -->
+            {% if post.categories.all %}
+            <div class="flex gap-1">
+              {% for category in post.categories.all|slice:":1" %}
+              <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded-full">
+                {{ category.name }}
+              </span>
+              {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </article>
+    {% empty %}
+    <!-- Message si aucun article -->
+    <div class="col-span-full text-center py-12">
+      <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2 2 0 00-2-2h-2" />
+        </svg>
+      </div>
+      <h3 class="text-lg font-medium text-gray-900 mb-2">Aucun article pour le moment</h3>
+      <p class="text-gray-600">Les premiers articles seront bientôt disponibles.</p>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Pagination (si nécessaire) -->
+  {% if is_paginated %}
+  <div class="flex justify-center mt-12">
+    <nav class="flex items-center gap-2">
+      {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}" class="px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-md transition-colors">
+        Précédent
+      </a>
+      {% endif %}
+      
+      <span class="px-3 py-2 text-sm font-medium text-gray-700">
+        Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}
+      </span>
+      
+      {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}" class="px-3 py-2 text-sm font-medium text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-md transition-colors">
+        Suivant
+      </a>
+      {% endif %}
+    </nav>
+  </div>
+  {% endif %}
+
+  <!-- Section call-to-action -->
+  <div class="bg-gray-50 rounded-2xl p-8 mt-16 text-center">
+    <h3 class="text-xl font-bold text-gray-900 mb-4">Vous avez une question ?</h3>
+    <p class="text-gray-600 mb-6 max-w-2xl mx-auto">
+      N'hésitez pas à me contacter si vous souhaitez discuter d'un projet, 
+      d'une collaboration ou simplement échanger sur le développement web.
+    </p>
+    <a href="{% slugurl 'contact' %}" class="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold">
+      Me contacter
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+      </svg>
+    </a>
+  </div>
+
+
 
 {% endblock %}
