@@ -166,3 +166,5 @@ theme/static_src/node_modules/
 
 # Logs npm (où qu'ils soient dans le projet)
 npm-debug.log
+
+**/.DS_Store
