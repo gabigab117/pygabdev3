@@ -23,7 +23,7 @@
           </p>
           <p>Le {{ last_article.date }}</p>
           <div class="card-actions justify-end">
-            <a href="{% pageurl last_article %}" class="px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] !text-white hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110 inline-flex items-center">
+            <a href="{% pageurl last_article %}" class="px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] text-white! hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110 inline-flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>Lire
@@ -48,7 +48,7 @@
           </p>
           <p>Le {{ project.date }}</p>
           <div class="card-actions justify-end">
-            <a href="{% pageurl project %}" class="px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] !text-white hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110 inline-flex items-center">
+            <a href="{% pageurl project %}" class="px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] text-white! hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110 inline-flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>Lire
@@ -61,7 +61,7 @@
 </div>
 
 <!-- Séparateur -->
-<hr class="my-8 border-0 h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent" />
+<hr class="my-8 border-0 h-px bg-linear-to-r from-transparent via-gray-500 to-transparent" />
 
     <div class="max-w-4xl mx-auto flex justify-center gap-6 mb-8">
         <a href="{% slugurl 'blog' %}" class="mr-2 group relative inline-flex items-center overflow-hidden rounded-full border-2 border-[#f582ae] px-8 py-3 focus:outline-none">

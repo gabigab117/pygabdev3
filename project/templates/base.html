@@ -74,7 +74,7 @@
                     </svg>
                 </div>
                 <ul tabindex="0"
-                    class="menu menu-sm dropdown-content mt-3 z-[50] p-2 shadow bg-base-100 rounded-box w-52">
+                    class="menu menu-sm dropdown-content mt-3 z-50 p-2 shadow bg-base-100 rounded-box w-52">
                     <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'index' %}">Accueil</a></li>
                     <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'projets' %}">Projets</a></li>
                     <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'blog' %}">Blog</a></li>
@@ -105,14 +105,14 @@
             <a class="btn btn-ghost normal-case text-xl text-custom-blue" href="{% slugurl 'index' %}">PyGabDev</a>
         </div>
         <div class="navbar-center hidden lg:flex">
-            <ul class="menu menu-horizontal px-1 z-[50]">
+            <ul class="menu menu-horizontal px-1 z-50">
                 <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'index' %}">Accueil</a></li>
                 <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'projets' %}">Projets</a></li>
                 <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'blog' %}">Blog</a></li>
                 <li class="services-menu">
                     <details>
                         <summary class="hover:text-custom-blue">Réseaux</summary>
-                        <ul class="p-2 bg-base-100 rounded-box shadow-lg z-[50]">
+                        <ul class="p-2 bg-base-100 rounded-box shadow-lg z-50">
                             <li><a class="nav-link hover:text-custom-blue" href="https://github.com/gabigab117" target="_blank">GitHub</a></li>
                             <li><a class="nav-link hover:text-custom-blue" href="https://x.com/GabrielTrouve" target="_blank">X</a></li>
                             <li><a class="nav-link hover:text-custom-blue" href="https://www.linkedin.com/in/gabriel-trouv%C3%A9-b6a2bb159/" target="_blank">Linkedin</a></li>
@@ -125,7 +125,7 @@
                 <li class="services-menu">
                     <details>
                         <summary class="hover:text-custom-blue">Clients</summary>
-                        <ul class="p-2 bg-base-100 rounded-box shadow-lg z-[50]">
+                        <ul class="p-2 bg-base-100 rounded-box shadow-lg z-50">
                             <li><a class="nav-link hover:text-custom-blue" href="{% url 'customers:dashboard' %}">Dashboard</a></li>
                             <li><a class="nav-link hover:text-custom-blue" href="{% url 'customers:projects' %}">Projets</a></li>
                             <li><a class="nav-link hover:text-custom-blue" href="{% url 'customers:invoices' %}">Factures</a></li>
@@ -151,9 +151,9 @@
 
 
 
-<div class="relative py-16 overflow-hidden bg-gradient-to-r from-[#fef6e4] to-[#f9f1e1]">
+<div class="relative py-16 overflow-hidden bg-linear-to-r from-[#fef6e4] to-[#f9f1e1]">
     <!-- Éléments décoratifs -->
-    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-custom-blue to-transparent opacity-10"></div>
+    <div class="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-custom-blue to-transparent opacity-10"></div>
     
     <div class="container mx-auto px-4 relative z-10">
       <div class="max-w-3xl mx-auto text-center">
@@ -162,13 +162,13 @@
         </h1>
         
         <div class="flex items-center justify-center my-4">
-          <div class="h-px w-16 bg-gradient-to-r from-transparent via-custom-blue to-transparent opacity-50"></div>
+          <div class="h-px w-16 bg-linear-to-r from-transparent via-custom-blue to-transparent opacity-50"></div>
           <div class="mx-4">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-custom-blue opacity-70">
               <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
             </svg>
           </div>
-          <div class="h-px w-16 bg-gradient-to-r from-custom-blue via-custom-blue to-transparent opacity-50"></div>
+          <div class="h-px w-16 bg-linear-to-r from-custom-blue via-custom-blue to-transparent opacity-50"></div>
         </div>
         
         <p class="text-xl text-custom-blue/90 mt-4 leading-relaxed max-w-2xl mx-auto">
@@ -176,24 +176,24 @@
         </p>
         
         <div class="flex items-center justify-center mt-6">
-          <div class="h-px w-24 bg-gradient-to-r from-transparent via-custom-blue to-transparent opacity-30"></div>
+          <div class="h-px w-24 bg-linear-to-r from-transparent via-custom-blue to-transparent opacity-30"></div>
         </div>
       </div>
     </div>
     
     <!-- Bordure décorative du bas -->
-    <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-custom-blue to-transparent opacity-10"></div>
+    <div class="absolute bottom-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-custom-blue to-transparent opacity-10"></div>
   </div>
 
 
 
 
 
-<main class="container mx-auto px-4 py-8 flex-grow mt-8 max-w-3xl">
+<main class="container mx-auto px-4 py-8 grow mt-8 max-w-3xl">
     {% block content %}{% endblock %}
 </main>
 
-<hr class="my-8 border-0 h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent">
+<hr class="my-8 border-0 h-px bg-linear-to-r from-transparent via-gray-500 to-transparent">
 
 <footer class="footer footer-center p-10 text-base-content rounded mt-8 bg-[#f3d2c1]">
     <nav class="grid grid-flow-col gap-4">

@@ -57,12 +57,12 @@ Facture {{ invoice.number }}
 
             <div class="mt-6 flex gap-3">
                 <a href="{% url 'customers:update-invoice' pk=invoice.pk %}"
-                   class="mr-2 inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] !text-white hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110">
+                   class="mr-2 inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] text-white! hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110">
                     Modifier
                 </a>
 
                 <a href="{% url 'customers:delete-invoice' pk=invoice.pk %}"
-                   class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-error !text-white hover:bg-error transition-all duration-300 ease-in-out hover:scale-110">
+                   class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-error text-white! hover:bg-error transition-all duration-300 ease-in-out hover:scale-110">
                     Supprimer
                 </a>
 

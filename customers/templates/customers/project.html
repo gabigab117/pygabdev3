@@ -37,19 +37,19 @@ Projet {{ project.name }}
             <!-- Boutons d'action -->
             <div class="mt-6 flex gap-3">
                 <a href="{% url 'customers:update-project' pk=project.pk %}"
-                   class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] !text-white hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110">
+                   class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] text-white! hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110">
                     Modifier le projet
                 </a>
 
                 {% if not project.has_services %}
                 <a href="{% url 'customers:delete-project' pk=project.pk %}"
-                   class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-error !text-white hover:bg-error transition-all duration-300 ease-in-out hover:scale-110">
+                   class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-error text-white! hover:bg-error transition-all duration-300 ease-in-out hover:scale-110">
                     Supprimer le projet
                 </a>
                 {% endif %}
 
                 <a href="{% url 'customers:projects' %}"
-                   class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-[#8bd3dd] !text-white hover:bg-[#6ac4d0] transition-all duration-300 ease-in-out hover:scale-110">
+                   class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-[#8bd3dd] text-white! hover:bg-[#6ac4d0] transition-all duration-300 ease-in-out hover:scale-110">
                     Retour aux projets
                 </a>
             </div>
@@ -89,7 +89,7 @@ Projet {{ project.name }}
             {% endif %}
 
             <a href="{% url 'customers:add-service' pk=project.pk %}"
-               class="mr-2 px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] !text-white hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110 inline-flex items-center">Ajouter
+               class="mr-2 px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] text-white! hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110 inline-flex items-center">Ajouter
                 un service</a>
 
 
