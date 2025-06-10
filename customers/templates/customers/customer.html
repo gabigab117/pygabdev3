@@ -8,9 +8,9 @@
 
 {% block content %}
 <div class="text-center">
-    <div class="prose mx-auto text-custom-blue">
-        <div class="mt-8 p-6 bg-[#f3d2c1] rounded-lg shadow-lg mx-auto">
-            <h2 class="text-xl font-bold mb-4">{{ customer.name }}</h2>
+    <div class="space-y-8">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+            <h2 class="text-xl font-bold mb-4 text-gray-900">{{ customer.name }}</h2>
             <div class="space-y-2">
                 <p class="text-gray-700"><span class="font-medium">SIRET:</span> {{ customer.siret }}</p>
                 <p class="text-gray-700"><span class="font-medium">Adresse:</span> {{ customer.address }}</p>
@@ -19,15 +19,12 @@
             </div>
 
             <a href="{% url 'customers:update-customer' pk=customer.pk %}"
-               class="inline-flex items-center mr-2 px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] text-white! hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110 mt-4">Modifier</a>
+               class="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm mt-4">Modifier</a>
         </div>
 
-
-        <div class="mt-8 p-6 bg-[#f3d2c1] rounded-lg shadow-lg mx-auto">
-            <h3>Projets associés</h3>
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+            <h3 class="text-lg font-bold mb-4 text-gray-900">Projets associés</h3>
             {% if projects %}
-
-
             <div class="overflow-x-auto">
                 <table class="table">
                     <!-- head -->
@@ -35,38 +32,31 @@
                     <tr>
                         <th>Nom</th>
                         <th>Taux</th>
-
                     </tr>
                     </thead>
                     <tbody>
                     {% for project in projects %}
                     <tr>
-
-                        <td><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></td>
+                        <td><a href="{{ project.get_absolute_url }}" class="text-blue-600 hover:text-blue-700">{{ project.name }}</a></td>
                         <td>{{ project.hourly_rate }}</td>
                     </tr>
                     {% endfor %}
                     </tbody>
                 </table>
             </div>
-
-
             {% else %}
-            <p>Pas de projets pour ce client.</p>
+            <p class="text-gray-600">Pas de projets pour ce client.</p>
             {% endif %}
 
             <a href="{% url 'customers:create-project' %}"
-               class="mr-2 px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] text-white! hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110 inline-flex items-center">Ajouter
-                un projet</a>
-
-
+               class="inline-flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors font-medium text-sm mt-4">Ajouter un projet</a>
         </div>
 
-        <div class="mt-8 p-6 bg-[#f3d2c1] rounded-lg shadow-lg mx-auto">
-            <h3 class="text-lg font-bold mb-4">Services non facturés</h3>
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+            <h3 class="text-lg font-bold mb-4 text-gray-900">Services non facturés</h3>
             {% if total_unbilled_services %}
             <div class="mb-4">
-                <ul class="list-disc list-inside">
+                <ul class="list-disc list-inside text-gray-700">
                     <li>Total des services non facturés : {{ total_unbilled_services }} €</li>
                     <li>Total heures : {{ total_hours_unbilled|floatformat:2 }}</li>
                 </ul>
@@ -84,7 +74,7 @@
                     <tbody>
                         {% for project_stats in projects_hours %}
                         <tr>
-                            <td><a href="{{ project_stats.project.get_absolute_url }}" class="text-blue-600 hover:underline">{{ project_stats.project.name }}</a></td>
+                            <td><a href="{{ project_stats.project.get_absolute_url }}" class="text-blue-600 hover:text-blue-700">{{ project_stats.project.name }}</a></td>
                             <td>{{ project_stats.hours }}</td>
                             <td>{{ project_stats.amount }} €</td>
                         </tr>
@@ -93,10 +83,9 @@
                 </table>
             </div>
             {% else %}
-            <p>Pas de services non facturés pour ce client.</p>
+            <p class="text-gray-600">Pas de services non facturés pour ce client.</p>
             {% endif %}
         </div>
-
     </div>
 </div>
 {% endblock %}

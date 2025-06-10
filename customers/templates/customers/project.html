@@ -7,94 +7,118 @@ Projet {{ project.name }}
 {% block banner_text %}{{ project.name }}{% endblock %}
 
 {% block content %}
-<div class="text-center">
-    <div class="prose mx-auto text-custom-blue">
-        <div class="mt-8 p-6 bg-[#f3d2c1] rounded-lg shadow-lg mx-auto">
-            <div class="space-y-4">
-                <!-- En-tête avec le client -->
-                <div>
-                    <span class="text-gray-600 font-medium">Client :</span>
-                    <span class="italic ml-1">{{ project.customer.name }}</span>
-                </div>
-
-                <!-- Taux horaire -->
-                <div>
-                    <span class="text-gray-600 font-medium">Taux horaire :</span>
-                    <span class="ml-1">{{ project.hourly_rate }}€</span>
-                </div>
-
-                <!-- Description -->
-                <div>
-                    <span class="text-gray-600 font-medium">Description :</span>
-                    {% if project.description %}
-                    <p class="mt-1">{{ project.description }}</p>
-                    {% else %}
-                    <p class="mt-1 text-gray-500 italic">Pas de description pour ce projet</p>
-                    {% endif %}
-                </div>
+<div class="max-w-4xl mx-auto space-y-8">
+    <!-- Informations du projet -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div>
+                <span class="text-sm font-medium text-gray-500">Client</span>
+                <p class="text-lg font-semibold text-gray-900">{{ project.customer.name }}</p>
             </div>
 
-            <!-- Boutons d'action -->
-            <div class="mt-6 flex gap-3">
-                <a href="{% url 'customers:update-project' pk=project.pk %}"
-                   class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] text-white! hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110">
-                    Modifier le projet
-                </a>
+            <div>
+                <span class="text-sm font-medium text-gray-500">Taux horaire</span>
+                <p class="text-lg font-semibold text-gray-900">{{ project.hourly_rate }}€</p>
+            </div>
 
-                {% if not project.has_services %}
-                <a href="{% url 'customers:delete-project' pk=project.pk %}"
-                   class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-error text-white! hover:bg-error transition-all duration-300 ease-in-out hover:scale-110">
-                    Supprimer le projet
-                </a>
+            <div class="md:col-span-2">
+                <span class="text-sm font-medium text-gray-500">Description</span>
+                {% if project.description %}
+                <p class="text-gray-900 mt-1">{{ project.description }}</p>
+                {% else %}
+                <p class="text-gray-500 italic mt-1">Pas de description pour ce projet</p>
                 {% endif %}
-
-                <a href="{% url 'customers:projects' %}"
-                   class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-[#8bd3dd] text-white! hover:bg-[#6ac4d0] transition-all duration-300 ease-in-out hover:scale-110">
-                    Retour aux projets
-                </a>
             </div>
         </div>
 
+        <!-- Actions -->
+        <div class="flex gap-3 pt-6 border-t border-gray-200">
+            <a href="{% url 'customers:projects' %}" class="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium">
+                Retour
+            </a>
+            
+            <a href="{% url 'customers:update-project' pk=project.pk %}" class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                </svg>
+                Modifier
+            </a>
 
-        <div class="mt-8 p-6 bg-[#f3d2c1] rounded-lg shadow-lg mx-auto">
-            <h2>Services associés</h2>
-            {% if services %}
-
-
-            <div class="overflow-x-auto">
-                <table class="table">
-                    <!-- head -->
-                    <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Temps</th>
-                        <th>Facturé</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for service in services %}
-                    <tr>
-                        <td><a href="{{ service.get_absolute_url }}">{{ service.date }}</a></td>
-                        <td>{{ service.time_spent }}</td>
-                        <td>{{ service.billed|yesno:"Oui,Non" }}</td>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-
-
-            {% else %}
-            <p>Pas de services pour ce projet.</p>
+            {% if not project.has_services %}
+            <a href="{% url 'customers:delete-project' pk=project.pk %}" class="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+                Supprimer
+            </a>
             {% endif %}
+        </div>
+    </div>
 
-            <a href="{% url 'customers:add-service' pk=project.pk %}"
-               class="mr-2 px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] text-white! hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110 inline-flex items-center">Ajouter
-                un service</a>
-
-
+    <!-- Services associés -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold text-gray-900">Services associés</h2>
+            <a href="{% url 'customers:add-service' pk=project.pk %}" class="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+                Ajouter un service
+            </a>
         </div>
 
+        {% if services %}
+        <div class="overflow-x-auto">
+            <table class="table w-full">
+                <thead>
+                <tr>
+                    <th class="text-gray-700">Date</th>
+                    <th class="text-gray-700">Temps</th>
+                    <th class="text-gray-700">Facturé</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for service in services %}
+                <tr class="hover:bg-gray-50">
+                    <td>
+                        <a href="{{ service.get_absolute_url }}" class="text-blue-600 hover:text-blue-700 font-medium">
+                            {{ service.date }}
+                        </a>
+                    </td>
+                    <td class="font-medium">{{ service.time_spent }}</td>
+                    <td>
+                        {% if service.billed %}
+                        <div class="badge badge-success gap-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-3 w-3 stroke-current">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Oui
+                        </div>
+                        {% else %}
+                        <div class="badge badge-warning gap-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-3 w-3 stroke-current">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Non
+                        </div>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="text-center py-8">
+            <div class="text-gray-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V9a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                </svg>
+                <p class="text-lg font-medium mb-2">Aucun service</p>
+                <p>Commencez par ajouter votre premier service à ce projet.</p>
+            </div>
+        </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

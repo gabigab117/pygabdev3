@@ -119,6 +119,7 @@ class UpdateService(UpdateView):
         context["status"] = (
             f"Mise du service en date du {self.object.date}, projet {self.object.project.name}"
         )
+        context["project"] = self.object.project
         return context
 
     def get_success_url(self):

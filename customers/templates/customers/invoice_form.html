@@ -8,16 +8,27 @@
 {% block banner_text %}{{ status }}{% endblock %}
 
 {% block content %}
-<div class="text-center">
-    <div class="prose mx-auto text-custom-blue">
-        <div class="mt-8 p-6 bg-[#f3d2c1] rounded-lg shadow-lg">
-           <form method="post" enctype="multipart/form-data">
-               {% csrf_token %}
-               {{ form|crispy }}
-               <input type="submit" value="Envoyer" class="px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] text-white! hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110 inline-flex items-center">
-           </form>
+<div class="max-w-2xl mx-auto">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
+        <form method="post" enctype="multipart/form-data" class="space-y-6">
+            {% csrf_token %}
+            
+            <div class="space-y-4">
+                {{ form|crispy }}
+            </div>
 
-        </div>
+            <div class="flex gap-3 pt-6 border-t border-gray-200">
+                <a href="{% url 'customers:invoices' %}" class="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium text-center">
+                    Annuler
+                </a>
+                <button type="submit" class="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium flex items-center justify-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    Enregistrer
+                </button>
+            </div>
+        </form>
     </div>
 </div>
 {% endblock %}

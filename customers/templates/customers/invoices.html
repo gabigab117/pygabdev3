@@ -7,106 +7,111 @@ Factures
 {% block banner_text %}Liste des factures{% endblock %}
 
 {% block content %}
-<div class="text-justify">
-    <div class="prose mx-auto text-custom-blue">
-        <div class="mt-8 p-6 bg-[#f3d2c1] rounded-lg shadow-lg">
-            <h3 class="text-2xl font-bold mb-4 text-center">Factures</h3>
-
-            <div class="overflow-x-auto">
-                <table class="table">
-                    <!-- head -->
-                    <thead>
-                    <tr>
-                        <th>Client</th>
-                        <th>Numéro</th>
-                        <th>Date d'émission</th>
-                        <th>Date d'échéance</th>
-                        <th>Montant</th>
-                        <th>Statut</th>
-                        <th>PDF</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for invoice in page_obj %}
-                    <tr>
-                        <td>{{ invoice.customer.name }}</td>
-                        <td><a href="{{ invoice.get_absolute_url }}">{{ invoice.number }}</a></td>
-                        <td>{{ invoice.issue_date }}</td>
-                        <td>{{ invoice.due_date }}</td>
-                        <td>{{ invoice.total }}</td>
-
-                        {% if not invoice.paid %}
-                        <td>
-                            <div class="badge badge-warning gap-2">
-                                <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        class="inline-block h-4 w-4 stroke-current">
-                                    <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M6 18L18 6M6 6l12 12"></path>
-                                </svg>
-                                Attente de paiement
-                            </div>
-                        </td>
-                        {% else %}
-                        <td>
-                            <div class="badge badge-success gap-2">
-                                <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        class="inline-block h-4 w-4 stroke-current">
-                                    <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M6 18L18 6M6 6l12 12"></path>
-                                </svg>
-                                Payée
-                            </div>
-                        </td>
-                        {% endif %}
-
-
-                        <td><a href="{{ invoice.pdf.url }}" target="_blank">Télécharger</a></td>
-                    </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Pagination -->
-            <div class="mt-6 flex justify-center">
-                <div class="pagination">
-                    <span class="step-links flex items-center gap-4">
-                        {% if page_obj.has_previous %}
-                            <a href="?page=1" class="text-blue-600 hover:text-blue-800">&laquo; Premier</a>
-                            <a href="?page={{ page_obj.previous_page_number }}"
-                               class="text-blue-600 hover:text-blue-800">Précédent</a>
-                        {% endif %}
-
-                        <span class="current px-4 py-2 bg-white rounded">
-                            Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}
-                        </span>
-
-                        {% if page_obj.has_next %}
-                            <a href="?page={{ page_obj.next_page_number }}" class="text-blue-600 hover:text-blue-800">Suivant</a>
-                            <a href="?page={{ page_obj.paginator.num_pages }}"
-                               class="text-blue-600 hover:text-blue-800">Dernier &raquo;</a>
-                        {% endif %}
-                    </span>
-                </div>
-            </div>
-
-                        <a href="{% url 'customers:create-invoice' %}"
-                           class="px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] text-white! hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110 inline-flex items-center">Nouvelle facture</a>
-
-
+<div class="space-y-8">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-2xl font-bold text-gray-900">Factures</h3>
+            <a href="{% url 'customers:create-invoice' %}" class="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+                Nouvelle facture
+            </a>
         </div>
+
+        <div class="overflow-x-auto">
+            <table class="table w-full">
+                <thead>
+                <tr>
+                    <th class="text-gray-700">Client</th>
+                    <th class="text-gray-700">Numéro</th>
+                    <th class="text-gray-700">Date d'émission</th>
+                    <th class="text-gray-700">Date d'échéance</th>
+                    <th class="text-gray-700">Montant</th>
+                    <th class="text-gray-700">Statut</th>
+                    <th class="text-gray-700">PDF</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for invoice in page_obj %}
+                <tr class="hover:bg-gray-50">
+                    <td class="font-medium">{{ invoice.customer.name }}</td>
+                    <td>
+                        <a href="{{ invoice.get_absolute_url }}" class="text-blue-600 hover:text-blue-700 font-medium">
+                            {{ invoice.number }}
+                        </a>
+                    </td>
+                    <td>{{ invoice.issue_date }}</td>
+                    <td>{{ invoice.due_date }}</td>
+                    <td class="font-semibold">{{ invoice.total }}</td>
+                    
+                    {% if not invoice.paid %}
+                    <td>
+                        <div class="badge badge-warning gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-4 w-4 stroke-current">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Dûe
+                        </div>
+                    </td>
+                    {% else %}
+                    <td>
+                        <div class="badge badge-success gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-4 w-4 stroke-current">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            Ok
+                        </div>
+                    </td>
+                    {% endif %}
+
+                    <td>
+                        <a href="{{ invoice.pdf.url }}" target="_blank" class="inline-flex items-center gap-1 text-blue-600 hover:text-blue-700">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Télécharger
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center py-8">
+                        <div class="text-gray-500">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            <p class="text-lg font-medium mb-2">Aucune facture</p>
+                            <p>Commencez par créer votre première facture.</p>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        {% if page_obj.paginator.num_pages > 1 %}
+        <div class="mt-6 flex justify-center">
+            <div class="join">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1" class="join-item btn btn-outline">«</a>
+                    <a href="?page={{ page_obj.previous_page_number }}" class="join-item btn btn-outline">‹</a>
+                {% endif %}
+                
+                <button class="join-item btn btn-active">{{ page_obj.number }}</button>
+                
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}" class="join-item btn btn-outline">›</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}" class="join-item btn btn-outline">»</a>
+                {% endif %}
+            </div>
+        </div>
+        <div class="text-center mt-2 text-sm text-gray-500">
+            Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}
+        </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
