@@ -2,10 +2,10 @@
 {% load wagtailcore_tags %}
 
 {% block content %}
-<div class="text-justify">
-    <div class="prose mx-auto text-justify text-custom-blue">
-    {{ page.body|richtext }}
+
+    <div class="prose prose-lg max-w-none text-justify">
+        {{ page.body|richtext }}
     </div>
-</div>
+
 
 {% endblock %}

@@ -1,173 +1,232 @@
-<div class="text-justify">
-    <div class="prose mx-auto text-custom-blue">
-      <!-- Clients -->
-      <div class="mt-8 p-6 bg-[#f3d2c1] rounded-lg shadow-lg">
-        <h2 class="text-2xl font-bold mb-4 text-center">Clients</h2>
-        {% if customers %}
-        <div class="overflow-x-auto">
-          <table class="table">
-            <!-- head -->
-            <thead>
-              <tr>
-                <th>Nom</th>
-                <th>Paiements</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for customer in customers %}
-                <tr>
-                  <td>
-                    <a href="{{ customer.get_absolute_url }}">{{ customer.name }}</a>
-                  </td>
-                  {% if customer.has_unpaid %}
-                    <td>
-                      <div class="badge badge-warning gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-4 w-4 stroke-current">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>Factures en attente
-                      </div>
-                    </td>
-                  {% else %}
-                    <td>
-                      <div class="badge badge-success gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-4 w-4 stroke-current">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>Tout est ok
-                      </div>
-                    </td>
-                  {% endif %}
-                </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-        {% else %}
-        Pas de résultats
-        {% endif %}
-      </div>
-
-      <!-- Projets -->
-      <div class="mt-8 p-6 bg-[#f3d2c1] rounded-lg shadow-lg">
-        <h2 class="text-2xl font-bold mb-4 text-center">Projets</h2>
-        {% if projects %}
-        <div class="overflow-x-auto">
-          <table class="table">
-            <!-- head -->
-            <thead>
-              <tr>
-                <th>Client</th>
-                <th>Nom</th>
-                <th>Taux</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for project in projects %}
-                <tr>
-                  <td>{{ project.customer.name }}</td>
-                  <td>
-                    <a href="{{ project.get_absolute_url }}">{{ project.name }}</a>
-                  </td>
-                  <td>{{ project.hourly_rate }} €</td>
-                </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-        {% else %}
-        Pas de résultats
-        {% endif %}
-      </div>
-
-      <!-- Services -->
-      <div class="mt-8 p-6 bg-[#f3d2c1] rounded-lg shadow-lg mx-auto">
-        <h2 class="text-2xl font-bold mb-4 text-center">Services</h2>
-        {% if services %}
-        <div class="overflow-x-auto">
-          <table class="table">
-            <!-- head -->
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Temps</th>
-                <th>Facturé</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for service in services %}
-                <tr>
-                  <td>
-                    <a href="{{ service.get_absolute_url }}">{{ service.date }}</a>
-                  </td>
-                  <td>{{ service.time_spent }}</td>
-                  <td>{{ service.billed|yesno:'Oui,Non' }}</td>
-                </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-        {% else %}
-        Pas de résultats
-        {% endif %}
-      </div>
-
-      <!-- Invoices -->
-      <div class="mt-8 p-6 bg-[#f3d2c1] rounded-lg shadow-lg">
-        <h2 class="text-2xl font-bold mb-4 text-center">Factures</h2>
-        {% if invoices %}
-        <div class="overflow-x-auto">
-          <table class="table">
-            <!-- head -->
-            <thead>
-              <tr>
-                <th>Client</th>
-                <th>Numéro</th>
-                <th>Date d'émission</th>
-                <th>Date d'échéance</th>
-                <th>Montant</th>
-                <th>Statut</th>
-                <th>PDF</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for invoice in invoices %}
-                <tr>
-                  <td>{{ invoice.customer.name }}</td>
-                  <td>
-                    <a href="{{ invoice.get_absolute_url }}">{{ invoice.number }}</a>
-                  </td>
-                  <td>{{ invoice.issue_date }}</td>
-                  <td>{{ invoice.due_date }}</td>
-                  <td>{{ invoice.total }}</td>
-
-                  {% if not invoice.paid %}
-                    <td>
-                      <div class="badge badge-warning gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-4 w-4 stroke-current">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>Attente de paiement
-                      </div>
-                    </td>
-                  {% else %}
-                    <td>
-                      <div class="badge badge-success gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-4 w-4 stroke-current">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>Payée
-                      </div>
-                    </td>
-                  {% endif %}
-
-                  <td>
-                    <a href="{{ invoice.pdf.url }}" target="_blank">Télécharger</a>
-                  </td>
-                </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-        {% else %}
-        Pas de résultats
-        {% endif %}
+<div class="space-y-8">
+  <!-- Clients -->
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+    <h2 class="text-2xl font-bold mb-6 text-gray-900">Clients</h2>
+    {% if customers %}
+    <div class="overflow-x-auto">
+      <table class="table w-full">
+        <thead>
+          <tr>
+            <th class="text-gray-700">Nom</th>
+            <th class="text-gray-700">Paiements</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for customer in customers %}
+            <tr class="hover:bg-gray-50">
+              <td>
+                <a href="{{ customer.get_absolute_url }}" class="text-blue-600 hover:text-blue-700 font-medium">
+                  {{ customer.name }}
+                </a>
+              </td>
+              {% if customer.has_unpaid %}
+                <td>
+                  <div class="badge badge-warning gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-3 w-3 stroke-current">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    En attente
+                  </div>
+                </td>
+              {% else %}
+                <td>
+                  <div class="badge badge-success gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-3 w-3 stroke-current">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    OK
+                  </div>
+                </td>
+              {% endif %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="text-center py-8">
+      <div class="text-gray-500">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg>
+        <p class="text-lg font-medium mb-2">Aucun client trouvé</p>
+        <p>Aucun client ne correspond à votre recherche.</p>
       </div>
     </div>
+    {% endif %}
   </div>
+
+  <!-- Projets -->
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+    <h2 class="text-2xl font-bold mb-6 text-gray-900">Projets</h2>
+    {% if projects %}
+    <div class="overflow-x-auto">
+      <table class="table w-full">
+        <thead>
+          <tr>
+            <th class="text-gray-700">Client</th>
+            <th class="text-gray-700">Nom</th>
+            <th class="text-gray-700">Taux horaire</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for project in projects %}
+            <tr class="hover:bg-gray-50">
+              <td class="font-medium">{{ project.customer.name }}</td>
+              <td>
+                <a href="{{ project.get_absolute_url }}" class="text-blue-600 hover:text-blue-700 font-medium">
+                  {{ project.name }}
+                </a>
+              </td>
+              <td class="font-semibold">{{ project.hourly_rate }} €</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="text-center py-8">
+      <div class="text-gray-500">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+        </svg>
+        <p class="text-lg font-medium mb-2">Aucun projet trouvé</p>
+        <p>Aucun projet ne correspond à votre recherche.</p>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- Services -->
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+    <h2 class="text-2xl font-bold mb-6 text-gray-900">Services</h2>
+    {% if services %}
+    <div class="overflow-x-auto">
+      <table class="table w-full">
+        <thead>
+          <tr>
+            <th class="text-gray-700">Date</th>
+            <th class="text-gray-700">Temps</th>
+            <th class="text-gray-700">Facturé</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for service in services %}
+            <tr class="hover:bg-gray-50">
+              <td>
+                <a href="{{ service.get_absolute_url }}" class="text-blue-600 hover:text-blue-700 font-medium">
+                  {{ service.date }}
+                </a>
+              </td>
+              <td class="font-medium">{{ service.time_spent }}</td>
+              <td>
+                {% if service.billed %}
+                <div class="badge badge-success gap-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-3 w-3 stroke-current">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Oui
+                </div>
+                {% else %}
+                <div class="badge badge-warning gap-1">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-3 w-3 stroke-current">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  Non
+                </div>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="text-center py-8">
+      <div class="text-gray-500">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V9a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+        </svg>
+        <p class="text-lg font-medium mb-2">Aucun service trouvé</p>
+        <p>Aucun service ne correspond à votre recherche.</p>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- Factures -->
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+    <h2 class="text-2xl font-bold mb-6 text-gray-900">Factures</h2>
+    {% if invoices %}
+    <div class="overflow-x-auto">
+      <table class="table w-full">
+        <thead>
+          <tr>
+            <th class="text-gray-700">Client</th>
+            <th class="text-gray-700">Numéro</th>
+            <th class="text-gray-700">Date d'émission</th>
+            <th class="text-gray-700">Date d'échéance</th>
+            <th class="text-gray-700">Montant</th>
+            <th class="text-gray-700">Statut</th>
+            <th class="text-gray-700">PDF</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for invoice in invoices %}
+            <tr class="hover:bg-gray-50">
+              <td class="font-medium">{{ invoice.customer.name }}</td>
+              <td>
+                <a href="{{ invoice.get_absolute_url }}" class="text-blue-600 hover:text-blue-700 font-medium">
+                  {{ invoice.number }}
+                </a>
+              </td>
+              <td>{{ invoice.issue_date }}</td>
+              <td>{{ invoice.due_date }}</td>
+              <td class="font-semibold">{{ invoice.total }}</td>
+
+              {% if not invoice.paid %}
+                <td>
+                  <div class="badge badge-warning gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-3 w-3 stroke-current">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Impayée
+                  </div>
+                </td>
+              {% else %}
+                <td>
+                  <div class="badge badge-success gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block h-3 w-3 stroke-current">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    Payée
+                  </div>
+                </td>
+              {% endif %}
+
+              <td>
+                <a href="{{ invoice.pdf.url }}" target="_blank" class="inline-flex items-center gap-1 text-blue-600 hover:text-blue-700">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  Télécharger
+                </a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="text-center py-8">
+      <div class="text-gray-500">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+        <p class="text-lg font-medium mb-2">Aucune facture trouvée</p>
+        <p>Aucune facture ne correspond à votre recherche.</p>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>

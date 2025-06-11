@@ -5,7 +5,7 @@
 <head>
     {% if request|cookie_group_accepted:"analytics" %}
     <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
@@ -28,223 +28,322 @@
     {% endif %}
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     {% if page %}
-  <link rel="canonical" href="{{ page.full_url }}" />
+    <link rel="canonical" href="{{ page.full_url }}" />
     {% endif %}
 
     {% if request.in_preview_panel %}
     <base target="_blank">
     {% endif %}
     <link rel="icon" href="{% static 'logos/favicon.ico' %}"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     {% tailwind_css %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/custom_css.css' %}">
-
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 50%;
+            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .logo-gradient {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8, #1e40af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-gradient {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+        .search-focus:focus {
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            border-color: #3b82f6;
+        }
+    </style>
 </head>
 
-<body class="flex flex-col min-h-full">
+<body class="flex flex-col min-h-full bg-white text-gray-900 leading-relaxed">
     {% if request|cookie_group_accepted:"analytics" %}
     <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MPJ4JSR2"
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MPJ4JSR2"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     {% endif %}
     {% url "cookie_consent_cookie_group_list" as url_cookies %}
 
-<template id="cookie-consent__cookie-bar">
-  <div class="cookie-bar">
-    Ce site utilise des cookies pour améliorer votre expérience. Acceptez-vous leur utilisation ?
-    <button type="button" class="cookie-consent__accept">Accepter</button>
-    <button type="button" class="cookie-consent__decline">Refuser</button>
-    <a href="{{ url_cookies }}">Plus d’infos</a>
-  </div>
-</template>
-
-{% all_cookie_groups 'cookie-consent__cookie-groups' %}
-
-
-{% wagtailuserbar %}
-<header class="shadow-md">
-    <div class="navbar container mx-auto">
-        <div class="navbar-start">
-            <div class="dropdown">
-                <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                         stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M4 6h16M4 12h8m-8 6h16"/>
-                    </svg>
-                </div>
-                <ul tabindex="0"
-                    class="menu menu-sm dropdown-content mt-3 z-[50] p-2 shadow bg-base-100 rounded-box w-52">
-                    <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'index' %}">Accueil</a></li>
-                    <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'projets' %}">Projets</a></li>
-                    <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'blog' %}">Blog</a></li>
-                    <li class="services-menu">
-                        <a class="hover:text-custom-blue">Réseaux</a>
-                        <ul class="p-2">
-                            <li><a class="nav-link hover:text-custom-blue" href="https://github.com/gabigab117" target="_blank">GitHub</a></li>
-                            <li><a class="nav-link hover:text-custom-blue" href="https://x.com/GabrielTrouve" target="_blank">X</a></li>
-                            <li><a class="nav-link hover:text-custom-blue" href="https://www.linkedin.com/in/gabriel-trouv%C3%A9-b6a2bb159/" target="_blank">Linkedin</a></li>
-                            <li><a class="nav-link hover:text-custom-blue" href="https://www.youtube.com/@gabrieltrouve2801" target="_blank">Youtube</a></li>
-                        </ul>
-                    </li>
-                    <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'contact' %}">Contact</a></li>
-                    {% if request.user.is_superuser %}
-                    <li class="services-menu">
-                        <a class="nav-link hover:text-custom-blue" href="{% url 'customers:dashboard' %}">Dashboard</a>
-                        <ul class="p-2">
-                            <li><a class="nav-link hover:text-custom-blue" href="{% url 'customers:projects' %}">Projets</a></li>
-                            <li><a class="nav-link hover:text-custom-blue" href="{% url 'customers:invoices' %}">Factures</a></li>
-                            <li><a class="nav-link hover:text-custom-blue" href="{% url 'customers:search' %}">Recherche</a></li>
-
-                        </ul>
-                    </li>
-
-                    {% endif %}
-                </ul>
-            </div>
-            <a class="btn btn-ghost normal-case text-xl text-custom-blue" href="{% slugurl 'index' %}">PyGabDev</a>
-        </div>
-        <div class="navbar-center hidden lg:flex">
-            <ul class="menu menu-horizontal px-1 z-[50]">
-                <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'index' %}">Accueil</a></li>
-                <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'projets' %}">Projets</a></li>
-                <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'blog' %}">Blog</a></li>
-                <li class="services-menu">
-                    <details>
-                        <summary class="hover:text-custom-blue">Réseaux</summary>
-                        <ul class="p-2 bg-base-100 rounded-box shadow-lg z-[50]">
-                            <li><a class="nav-link hover:text-custom-blue" href="https://github.com/gabigab117" target="_blank">GitHub</a></li>
-                            <li><a class="nav-link hover:text-custom-blue" href="https://x.com/GabrielTrouve" target="_blank">X</a></li>
-                            <li><a class="nav-link hover:text-custom-blue" href="https://www.linkedin.com/in/gabriel-trouv%C3%A9-b6a2bb159/" target="_blank">Linkedin</a></li>
-                            <li><a class="nav-link hover:text-custom-blue" href="https://www.youtube.com/@gabrieltrouve2801" target="_blank">Youtube</a></li>
-                        </ul>
-                    </details>
-                </li>
-                <li><a class="nav-link hover:text-custom-blue" href="{% slugurl 'contact' %}">Contact</a></li>
-                {% if request.user.is_superuser %}
-                <li class="services-menu">
-                    <details>
-                        <summary class="hover:text-custom-blue">Clients</summary>
-                        <ul class="p-2 bg-base-100 rounded-box shadow-lg z-[50]">
-                            <li><a class="nav-link hover:text-custom-blue" href="{% url 'customers:dashboard' %}">Dashboard</a></li>
-                            <li><a class="nav-link hover:text-custom-blue" href="{% url 'customers:projects' %}">Projets</a></li>
-                            <li><a class="nav-link hover:text-custom-blue" href="{% url 'customers:invoices' %}">Factures</a></li>
-                            <li><a class="nav-link hover:text-custom-blue" href="{% url 'customers:search' %}">Recherche</a></li>
-                        </ul>
-                    </details>
-
-                {% endif %}
-            </ul>
-        </div>
-        <div class="navbar-end">
-            <div class="form-control">
-                <form action="{% url 'search' %}" method="get">
-                    <input type="text" placeholder="Recherche"
-                           class="input input-bordered w-24 md:w-auto focus:ring-2 focus:ring-custom-blue"
-                           name="query"/>
-                </form>
-            </div>
-        </div>
-    </div>
-</header>
-
-
-
-
-<div class="relative py-16 overflow-hidden bg-gradient-to-r from-[#fef6e4] to-[#f9f1e1]">
-    <!-- Éléments décoratifs -->
-    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-custom-blue to-transparent opacity-10"></div>
-    
-    <div class="container mx-auto px-4 relative z-10">
-      <div class="max-w-3xl mx-auto text-center">
-        <h1 class="text-4xl md:text-5xl font-bold mb-6 text-custom-blue leading-tight">
-          {% block banner_title %}{{ page.title }}{% endblock %}
-        </h1>
-        
-        <div class="flex items-center justify-center my-4">
-          <div class="h-px w-16 bg-gradient-to-r from-transparent via-custom-blue to-transparent opacity-50"></div>
-          <div class="mx-4">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-custom-blue opacity-70">
-              <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
-            </svg>
+    <template id="cookie-consent__cookie-bar">
+      <div class="fixed bottom-0 left-0 right-0 bg-white p-4 shadow-lg z-50 border-t">
+        <div class="container mx-auto max-w-4xl flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p class="text-sm">Ce site utilise des cookies pour améliorer votre expérience.</p>
+          <div class="flex gap-3">
+            <button type="button" class="cookie-consent__accept btn btn-sm btn-neutral">Accepter</button>
+            <button type="button" class="cookie-consent__decline btn btn-sm btn-outline">Refuser</button>
+            <a href="{{ url_cookies }}" class="btn btn-sm btn-ghost">Plus d'infos</a>
           </div>
-          <div class="h-px w-16 bg-gradient-to-r from-custom-blue via-custom-blue to-transparent opacity-50"></div>
-        </div>
-        
-        <p class="text-xl text-custom-blue/90 mt-4 leading-relaxed max-w-2xl mx-auto">
-          {% block banner_text %}{{ page.header|richtext }}{% endblock %}
-        </p>
-        
-        <div class="flex items-center justify-center mt-6">
-          <div class="h-px w-24 bg-gradient-to-r from-transparent via-custom-blue to-transparent opacity-30"></div>
         </div>
       </div>
-    </div>
-    
-    <!-- Bordure décorative du bas -->
-    <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-custom-blue to-transparent opacity-10"></div>
-  </div>
+    </template>
 
+    {% all_cookie_groups 'cookie-consent__cookie-groups' %}
+    {% wagtailuserbar %}
 
-
-
-
-<main class="container mx-auto px-4 py-8 flex-grow mt-8 max-w-3xl">
-    {% block content %}{% endblock %}
-</main>
-
-<hr class="my-8 border-0 h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent">
-
-<footer class="footer footer-center p-10 text-base-content rounded mt-8 bg-[#f3d2c1]">
-    <nav class="grid grid-flow-col gap-4">
-        <a class="nav-link link link-hover hover:text-custom-blue" href="{% slugurl 'legal' %}">À propos</a>
-        <a class="nav-link link link-hover hover:text-custom-blue" href="{% slugurl 'contact' %}">Contact</a>
-    </nav>
-    <nav>
-        <div class="grid grid-flow-col gap-4">
-            <a aria-label="Réseau X de Gabriel Trouvé" href="https://twitter.com/GabrielTrouve" target="_blank"
-               class="hover:opacity-80 transition-opacity transform hover:scale-110">
-                <img src="{% static 'logos/x.png' %}" width="40" height="auto" alt="X">
+    <!-- Header moderne et professionnel -->
+    <header class="bg-white/95 backdrop-blur-md border-b border-gray-200/50 sticky top-0 z-40 shadow-sm">
+      <div class="container mx-auto px-4">
+        <div class="flex items-center justify-between h-16">
+          <!-- Logo et navigation mobile -->
+          <div class="flex items-center">
+            <!-- Mobile dropdown -->
+            <div class="dropdown lg:hidden mr-3">
+              <div tabindex="0" role="button" class="btn btn-ghost btn-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16"/>
+                </svg>
+              </div>
+              <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-50 p-3 shadow-xl bg-white rounded-xl w-52 border border-gray-100">
+                <li><a href="{% slugurl 'index' %}" class="p-3 rounded-lg hover:bg-gray-50">Accueil</a></li>
+                <li><a href="{% slugurl 'projets' %}" class="p-3 rounded-lg hover:bg-gray-50">Projets</a></li>
+                <li><a href="{% slugurl 'blog' %}" class="p-3 rounded-lg hover:bg-gray-50">Blog</a></li>
+                <li>
+                  <details>
+                    <summary class="p-3 rounded-lg hover:bg-gray-50">Réseaux</summary>
+                    <ul class="p-2 space-y-1">
+                      <li><a href="https://github.com/gabigab117" target="_blank" class="block p-2 rounded hover:bg-gray-50">GitHub</a></li>
+                      <li><a href="https://x.com/GabrielTrouve" target="_blank" class="block p-2 rounded hover:bg-gray-50">X</a></li>
+                      <li><a href="https://www.linkedin.com/in/gabriel-trouv%C3%A9-b6a2bb159/" target="_blank" class="block p-2 rounded hover:bg-gray-50">LinkedIn</a></li>
+                      <li><a href="https://www.youtube.com/@gabrieltrouve2801" target="_blank" class="block p-2 rounded hover:bg-gray-50">YouTube</a></li>
+                    </ul>
+                  </details>
+                </li>
+                <li><a href="{% slugurl 'contact' %}" class="p-3 rounded-lg hover:bg-gray-50">Contact</a></li>
+                {% if request.user.is_superuser %}
+                <li>
+                  <details>
+                    <summary class="p-3 rounded-lg hover:bg-gray-50">Clients</summary>
+                    <ul class="p-2 space-y-1">
+                      <li><a href="{% url 'customers:dashboard' %}" class="block p-2 rounded hover:bg-gray-50">Dashboard</a></li>
+                      <li><a href="{% url 'customers:projects' %}" class="block p-2 rounded hover:bg-gray-50">Projets</a></li>
+                      <li><a href="{% url 'customers:invoices' %}" class="block p-2 rounded hover:bg-gray-50">Factures</a></li>
+                      <li><a href="{% url 'customers:search' %}" class="block p-2 rounded hover:bg-gray-50">Recherche</a></li>
+                    </ul>
+                  </details>
+                </li>
+                {% endif %}
+              </ul>
+            </div>
+            
+            <!-- Logo -->
+            <a href="{% slugurl 'index' %}" class="flex items-center space-x-2 group">
+              <div class="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center transform group-hover:scale-105 transition-transform duration-200">
+                <span class="text-white font-bold text-sm">PG</span>
+              </div>
+              <span class="text-xl font-bold logo-gradient">PyGabDev</span>
             </a>
-            <a aria-label="Réseau Linkedin de Gabriel Trouvé"
-               href="https://www.linkedin.com/in/gabriel-trouv%C3%A9-b6a2bb159/" target="_blank"
-               class="hover:opacity-80 transition-opacity transform hover:scale-110">
-                <img src="{% static 'logos/l.png' %}" width="40" height="auto" alt="LinkedIn">
-            </a>
-            <a aria-label="GitHub de Gabriel Trouvé" href="https://github.com/gabigab117" target="_blank"
-               class="hover:opacity-80 transition-opacity transform hover:scale-110">
-                <img src="{% static 'logos/g.png' %}" width="40" height="auto" alt="GitHub">
-            </a>
-            <a aria-label="YouTube de Gabriel Trouvé" href="https://www.youtube.com/@gabrieltrouve2801" target="_blank"
-               class="hover:opacity-80 transition-opacity transform hover:scale-110">
-                <img src="{% static 'logos/y.webp' %}" width="40" height="auto" alt="YouTube">
-            </a>
+          </div>
+          
+          <!-- Navigation desktop -->
+          <nav class="hidden lg:flex items-center space-x-8">
+            <a href="{% slugurl 'index' %}" class="nav-link text-gray-700 hover:text-blue-600 font-medium py-2">Accueil</a>
+            <a href="{% slugurl 'projets' %}" class="nav-link text-gray-700 hover:text-blue-600 font-medium py-2">Projets</a>
+            <a href="{% slugurl 'blog' %}" class="nav-link text-gray-700 hover:text-blue-600 font-medium py-2">Blog</a>
+            
+            <!-- Dropdown Réseaux -->
+            <div class="dropdown dropdown-hover">
+              <div tabindex="0" role="button" class="nav-link text-gray-700 hover:text-blue-600 font-medium py-2 flex items-center gap-1">
+                Réseaux
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+              <ul tabindex="0" class="dropdown-content z-50 menu p-3 shadow-xl bg-white rounded-xl w-52 border border-gray-100">
+                <li><a href="https://github.com/gabigab117" target="_blank" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50">
+                  <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                  GitHub
+                </a></li>
+                <li><a href="https://x.com/GabrielTrouve" target="_blank" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50">
+                  <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" /></svg>
+                  X (Twitter)
+                </a></li>
+                <li><a href="https://www.linkedin.com/in/gabriel-trouv%C3%A9-b6a2bb159/" target="_blank" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50">
+                  <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z"/></svg>
+                  LinkedIn
+                </a></li>
+                <li><a href="https://www.youtube.com/@gabrieltrouve2801" target="_blank" class="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50">
+                  <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s0 3.255-.418 4.814a2.504 2.504 0 0 1-1.768 1.768c-1.56.419-7.814.419-7.814.419s-6.255 0-7.814-.419a2.505 2.505 0 0 1-1.768-1.768C2 15.255 2 12 2 12s0-3.255.417-4.814a2.507 2.507 0 0 1 1.768-1.768C5.744 5 11.998 5 11.998 5s6.255 0 7.814.418ZM15.194 12 10 15V9l5.194 3Z"/></svg>
+                  YouTube
+                </a></li>
+              </ul>
+            </div>
+            
+            <a href="{% slugurl 'contact' %}" class="nav-link text-gray-700 hover:text-blue-600 font-medium py-2">Contact</a>
+            
+            {% if request.user.is_superuser %}
+            <!-- Dropdown Clients -->
+            <div class="dropdown dropdown-hover">
+              <div tabindex="0" role="button" class="nav-link text-gray-700 hover:text-blue-600 font-medium py-2 flex items-center gap-1">
+                Clients
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+              <ul tabindex="0" class="dropdown-content z-50 menu p-3 shadow-xl bg-white rounded-xl w-52 border border-gray-100">
+                <li><a href="{% url 'customers:dashboard' %}" class="p-3 rounded-lg hover:bg-gray-50">Dashboard</a></li>
+                <li><a href="{% url 'customers:projects' %}" class="p-3 rounded-lg hover:bg-gray-50">Projets</a></li>
+                <li><a href="{% url 'customers:invoices' %}" class="p-3 rounded-lg hover:bg-gray-50">Factures</a></li>
+                <li><a href="{% url 'customers:search' %}" class="p-3 rounded-lg hover:bg-gray-50">Recherche</a></li>
+              </ul>
+            </div>
+            {% endif %}
+          </nav>
+          
+          <!-- Recherche -->
+          <div class="flex items-center">
+            <form action="{% url 'search' %}" method="get" class="relative">
+              <input type="text" 
+                     placeholder="Rechercher..." 
+                     name="query" 
+                     class="search-focus w-64 pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none transition-all duration-200 bg-gray-50 focus:bg-white" />
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </form>
+          </div>
         </div>
-    </nav>
-    <aside>
-        <p>PyGabDev © 2024 - Tous droits réservés</p>
-    </aside>
-</footer>
+      </div>
+    </header>
+
+<div class="bg-white pt-8">
+    <!-- Introduction -->
+  <div class="bg-gradient-to-br from-blue-50 via-white to-indigo-50 rounded-2xl p-8 md:p-12 text-center max-w-4xl mx-auto mt-8">
+    <h2 class="text-3xl font-bold text-gray-900 mb-6">
+      {% block banner_title %}{{ page.title }}{% endblock %}
+    </h2>
+    <p class="text-xl text-gray-600 leading-relaxed mb-8">
+      {% block banner_text %}
+      {% if page.header %}
+      <div class="prose prose-xl mx-auto text-gray-600 max-w-3xl">
+      {{ page.header|richtext }}
+      </div>
+      {% endif %}
+      {% endblock %}
+    </p>
+    
+    <div class="flex flex-wrap justify-center gap-3 mt-4">
+      {% block extra_intro %}{% endblock %}
+    </div>
+  </div>
+</div>
 
 
-{% static "cookie_consent/cookiebar.module.js" as cookiebar_src %}
-{% url 'cookie_consent_status' as status_url %}
-<script type="module">
-  import {showCookieBar} from '{{ cookiebar_src }}';
-  showCookieBar({
-    statusUrl: '{{ status_url|escapejs }}',
-    templateSelector: '#cookie-consent__cookie-bar',
-    cookieGroupsSelector: '#cookie-consent__cookie-groups',
-    onShow: () => document.querySelector('body').classList.add('with-cookie-bar'),
-    onAccept: () => document.querySelector('body').classList.remove('with-cookie-bar'),
-    onDecline: () => document.querySelector('body').classList.remove('with-cookie-bar'),
-  });
-</script>
-<!-- 100% privacy-first analytics -->
-{% if not request.path|slice:":10" == '/customers' and not request.path|slice:":6" == '/admin' and not request.in_preview_panel|default:False and not request.is_preview|default:False %}
-<!-- 100% privacy-first analytics -->
-<script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
-{% endif %}
 
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-16 grow max-w-4xl">
+      {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer moderne -->
+    <footer class="bg-gray-900 text-white">
+      <div class="container mx-auto px-4 py-16">
+        <div class="max-w-6xl mx-auto">
+          <!-- Footer principal -->
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+            <!-- Logo et description -->
+            <div class="md:col-span-2">
+              <div class="flex items-center space-x-2 mb-4">
+                <div class="w-8 h-8 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg flex items-center justify-center">
+                  <span class="text-white font-bold text-sm">PG</span>
+                </div>
+                <span class="text-xl font-bold">PyGabDev</span>
+              </div>
+              <p class="text-gray-400 mb-6 max-w-md">
+                Développeur web passionné, spécialisé en Django et Python. 
+                Je crée des solutions web modernes et performantes.
+              </p>
+              <!-- Social Links -->
+              <div class="flex space-x-4">
+                <a href="https://github.com/gabigab117" target="_blank" aria-label="GitHub" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors">
+                  <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                  </svg>
+                </a>
+                <a href="https://x.com/GabrielTrouve" target="_blank" aria-label="Twitter" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors">
+                  <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                  </svg>
+                </a>
+                <a href="https://www.linkedin.com/in/gabriel-trouv%C3%A9-b6a2bb159/" target="_blank" aria-label="LinkedIn" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors">
+                  <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z"/>
+                  </svg>
+                </a>
+                <a href="https://www.youtube.com/@gabrieltrouve2801" target="_blank" aria-label="YouTube" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors">
+                  <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.746 22 12 22 12s0 3.255-.418 4.814a2.504 2.504 0 0 1-1.768 1.768c-1.56.419-7.814.419-7.814.419s-6.255 0-7.814-.419a2.505 2.505 0 0 1-1.768-1.768C2 15.255 2 12 2 12s0-3.255.417-4.814a2.507 2.507 0 0 1 1.768-1.768C5.744 5 11.998 5 11.998 5s6.255 0 7.814.418ZM15.194 12 10 15V9l5.194 3Z"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+            
+            <!-- Navigation -->
+            <div>
+              <h3 class="text-lg font-semibold mb-4">Navigation</h3>
+              <ul class="space-y-2">
+                <li><a href="{% slugurl 'index' %}" class="text-gray-400 hover:text-white transition-colors">Accueil</a></li>
+                <li><a href="{% slugurl 'projets' %}" class="text-gray-400 hover:text-white transition-colors">Projets</a></li>
+                <li><a href="{% slugurl 'blog' %}" class="text-gray-400 hover:text-white transition-colors">Blog</a></li>
+                <li><a href="{% slugurl 'contact' %}" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+              </ul>
+            </div>
+            
+            <!-- Légal -->
+            <div>
+              <h3 class="text-lg font-semibold mb-4">Légal</h3>
+              <ul class="space-y-2">
+                <li><a href="{% slugurl 'legal' %}" class="text-gray-400 hover:text-white transition-colors">Mentions légales</a></li>
+                <li><a href="{{ url_cookies }}" class="text-gray-400 hover:text-white transition-colors">Cookies</a></li>
+              </ul>
+            </div>
+          </div>
+          
+          <!-- Copyright -->
+          <div class="border-t border-gray-800 pt-8 text-center">
+            <p class="text-gray-400">© 2024 PyGabDev. Tous droits réservés.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    {% static "cookie_consent/cookiebar.module.js" as cookiebar_src %}
+    {% url 'cookie_consent_status' as status_url %}
+    <script type="module">
+      import {showCookieBar} from '{{ cookiebar_src }}';
+      showCookieBar({
+        statusUrl: '{{ status_url|escapejs }}',
+        templateSelector: '#cookie-consent__cookie-bar',
+        cookieGroupsSelector: '#cookie-consent__cookie-groups',
+        onShow: () => document.querySelector('body').classList.add('with-cookie-bar'),
+        onAccept: () => document.querySelector('body').classList.remove('with-cookie-bar'),
+        onDecline: () => document.querySelector('body').classList.remove('with-cookie-bar'),
+      });
+    </script>
+    
+    {% if not request.path|slice:":10" == '/customers' and not request.path|slice:":6" == '/admin' and not request.in_preview_panel|default:False and not request.is_preview|default:False %}
+    <!-- 100% privacy-first analytics -->
+    <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+    {% endif %}
 </body>
 </html>

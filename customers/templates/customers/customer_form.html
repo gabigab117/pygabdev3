@@ -9,15 +9,14 @@
 
 {% block content %}
 <div class="text-center">
-    <div class="prose mx-auto text-custom-blue">
-        <div class="mt-8 p-6 bg-[#f3d2c1] rounded-lg shadow-lg">
-           <form method="post">
-               {% csrf_token %}
-               {{ form|crispy }}
-               <input type="submit" value="Envoyer" class="px-4 py-2 rounded-full text-sm font-medium bg-[#f582ae] !text-white hover:bg-[#f36a9f] transition-all duration-300 ease-in-out hover:scale-110 inline-flex items-center">
-           </form>
-
-        </div>
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+       <form method="post" class="space-y-6">
+           {% csrf_token %}
+           {{ form|crispy }}
+           <button type="submit" class="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold">
+               Envoyer
+           </button>
+       </form>
     </div>
 </div>
 {% endblock %}
