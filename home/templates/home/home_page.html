@@ -2,22 +2,12 @@
 {% load wagtailcore_tags %}
 {% load wagtailimages_tags %}
 
-{% block content %}
 
-<!-- Section principale -->
-<div class="max-w-6xl mx-auto space-y-16">
 
-  <!-- Introduction avec gradient et badges -->
-  <div class="bg-gradient-to-br from-blue-50 via-white to-indigo-50 rounded-2xl p-8 md:p-12 text-center max-w-4xl mx-auto">
-    <h2 class="text-3xl font-bold text-gray-900 mb-6">
-      Développeur Web & Formateur
-    </h2>
-    <p class="text-xl text-gray-600 leading-relaxed mb-8">
-      Je crée des applications web modernes avec Django et Python, 
-      et je partage mes connaissances à travers des articles et des formations.
-    </p>
+
     
     <!-- Badges technologies -->
+    {% block extra_intro %}
     <div class="flex flex-wrap justify-center gap-3">
       <span class="px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">Django</span>
       <span class="px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium">Python</span>
@@ -25,10 +15,12 @@
       <span class="px-4 py-2 bg-red-100 text-red-800 rounded-full text-sm font-medium">Wagtail</span>
       <span class="px-4 py-2 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium">Tailwind CSS</span>
     </div>
-  </div>
+
+  {% endblock %}
+  {% block content %}
 
   <!-- Articles et Projets -->
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
     
     <!-- Dernière Publication -->
     <div class="space-y-6">
@@ -140,7 +132,7 @@
   </div>
 
   <!-- Séparateur élégant -->
-  <div class="flex items-center justify-center">
+  <div class="flex items-center justify-center mb-8">
     <div class="flex items-center gap-4">
       <div class="w-16 h-px bg-gray-300"></div>
       <div class="w-2 h-2 bg-gray-400 rounded-full"></div>
@@ -149,7 +141,7 @@
   </div>
 
   <!-- Navigation principale -->
-  <div class="text-center">
+  <div class="text-center mb-8">
     <h3 class="text-2xl font-bold text-gray-900 mb-8">Explorez mon travail</h3>
     <div class="flex flex-col sm:flex-row justify-center gap-6">
       <a href="{% slugurl 'blog' %}" class="group relative overflow-hidden bg-white border-2 border-gray-200 rounded-xl px-8 py-6 hover:border-blue-500 transition-all duration-300 hover:shadow-lg">
@@ -212,6 +204,6 @@
     </div>
   </div>
 
-</div>
+
 
 {% endblock %}
