@@ -74,7 +74,7 @@ LOGGING = {
            # Handler avec rotation automatique pour éviter les gros fichiers
            'class': 'logging.handlers.RotatingFileHandler',
            # Nom du fichier de destination
-           'filename': 'erreurs.log',
+           'filename': '/var/log/pygabdev/erreurs.log',
            # Taille maximum par fichier : 5 MB
            'maxBytes': 1024*1024*5,
            # Nombre de fichiers de sauvegarde à conserver
