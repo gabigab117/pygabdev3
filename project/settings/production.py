@@ -51,3 +51,48 @@ STORAGES = {
     },
 }
 
+# Configuration du système de logging Django pour la production
+LOGGING = {
+   # Version du format de configuration (obligatoire)
+   'version': 1,
+   # Garde les loggers Django existants actifs
+   'disable_existing_loggers': False,
+   # FORMATTERS : définissent la mise en forme des messages de log
+   'formatters': {
+       'verbose': {
+           # Format détaillé : niveau, horodatage, module, message
+           'format': '{levelname} {asctime} {module} {message}',
+           # Style moderne avec accolades (recommandé)
+           'style': '{',
+       },
+   },
+   # HANDLERS : définissent où vont les logs (fichier, console, email, etc.)
+   'handlers': {
+       'file': {
+           # Niveau minimum : warnings, erreurs et critiques
+           'level': 'WARNING',
+           # Handler avec rotation automatique pour éviter les gros fichiers
+           'class': 'logging.handlers.RotatingFileHandler',
+           # Nom du fichier de destination
+           'filename': 'erreurs.log',
+           # Taille maximum par fichier : 5 MB
+           'maxBytes': 1024*1024*5,
+           # Nombre de fichiers de sauvegarde à conserver
+           'backupCount': 5,
+           # Utilise le formatter "verbose" défini ci-dessus
+           'formatter': 'verbose',
+       },
+   },
+   # LOGGERS : définissent qui envoie les logs et comment
+   'loggers': {
+       # Logger principal de Django (capture toutes les erreurs Django)
+       'django': {
+           # Utilise le handler "file" défini ci-dessus
+           'handlers': ['file'],
+           # Niveau du logger : accepte WARNING, ERROR et CRITICAL
+           'level': 'WARNING',
+           # Pas de propagation vers les loggers parents
+           'propagate': False,
+       },
+   },
+}
