@@ -25,7 +25,7 @@ def dashboard_view(request):
 class ProjectList(ListView):
     model = Project
     template_name = "customers/projects.html"
-    paginate_by = 10
+    paginate_by = 20
     ordering = ["-id"]
 
 
