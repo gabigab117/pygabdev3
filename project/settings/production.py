@@ -1,3 +1,4 @@
+import os
 from .base import *
 
 DEBUG = env.bool("DEBUG")
@@ -74,7 +75,7 @@ LOGGING = {
            # Handler avec rotation automatique pour éviter les gros fichiers
            'class': 'logging.handlers.RotatingFileHandler',
            # Nom du fichier de destination
-           'filename': BASE_DIR / 'logs' / 'django.log',
+           'filename': os.path.join(BASE_DIR, 'logs', 'django.log'),
            # Taille maximum par fichier : 5 MB
            'maxBytes': 1024*1024*5,
            # Nombre de fichiers de sauvegarde à conserver
