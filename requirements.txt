@@ -26,7 +26,6 @@ django-taggit==5.0.1
 django-tailwind==4.0.1
 django-tasks==0.9.0
 django-treebeard==4.7.1
-django-visual-urls @ git+https://github.com/gabigab117/django-visual-urls.git@a39e1819388f399feddcd2472295e5a9421199ce
 djangorestframework==3.15.2
 draftjs-exporter==5.0.0
 et-xmlfile==1.1.0
