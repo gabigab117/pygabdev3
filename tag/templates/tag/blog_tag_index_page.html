@@ -1,57 +1,40 @@
 {% extends "base.html" %}
 {% load wagtailcore_tags %}
 
+{% block banner_eyebrow %}<p class="section-eyebrow">Blog</p>{% endblock %}
+{% block banner_title %}
+  {% if request.GET.tag %}Articles · {{ request.GET.tag }}{% else %}Tous les articles{% endif %}
+{% endblock %}
+
 {% block content %}
-
-<div class="max-w-4xl mx-auto">
-    {% if request.GET.tag %}
-    <h2 class="text-3xl font-bold mb-6 text-center text-gray-900">Articles avec le tag "{{ request.GET.tag }}"</h2>
-    {% else %}
-    <h2 class="text-3xl font-bold mb-6 text-center text-gray-900">Tous les articles</h2>
-    {% endif %}
-
-    <div class="space-y-6">
-        {% for blogpage in blogpages %}
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 transition-all duration-300 hover:shadow-lg">
-            <h3 class="text-xl font-bold mb-2 text-center">
-                <a href="{% pageurl blogpage %}" class="text-gray-900 hover:text-blue-600 transition-colors duration-300">
-                    {{ blogpage.title }}
-                </a>
+<div class="space-y-4">
+    {% for blogpage in blogpages %}
+    <div class="content-card p-6 flex flex-col sm:flex-row sm:items-start gap-4">
+        <div class="flex-1">
+            <p class="text-xs text-[#6b7280] mb-1">{{ blogpage.latest_revision_created_at|date:"d F Y" }}</p>
+            <h3 class="font-display font-bold text-[#0d0d0d] text-lg mb-2 hover:text-emerald-600 transition-colors">
+                <a href="{% pageurl blogpage %}">{{ blogpage.title }}</a>
             </h3>
-            <p class="text-sm text-gray-500 mb-3 text-center">Mis à jour le : {{ blogpage.latest_revision_created_at|date:"d F Y" }}</p>
             {% if blogpage.intro %}
-            <p class="mb-4 text-center text-gray-600">{{ blogpage.intro|truncatewords:30 }}</p>
+            <p class="text-sm text-[#525252] leading-relaxed line-clamp-2">{{ blogpage.intro|truncatewords:25 }}</p>
             {% endif %}
-            <div class="flex justify-center">
-                <a href="{% pageurl blogpage %}" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold text-sm group/link">
-                    Lire plus
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform group-hover/link:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                    </svg>
-                </a>
-            </div>
         </div>
-        {% empty %}
-        <div class="text-center py-12">
-            <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-                </svg>
-            </div>
-            <h3 class="text-lg font-medium text-gray-900 mb-2">Aucun article trouvé</h3>
-            <p class="text-gray-600">Aucun article trouvé avec ce tag.</p>
-        </div>
-        {% endfor %}
+        <a href="{% pageurl blogpage %}" class="btn-ghost text-xs self-start sm:self-center flex-shrink-0">Lire →</a>
     </div>
+    {% empty %}
+    <div class="text-center py-16">
+        <div class="w-14 h-14 bg-[#f7f7f5] rounded-full flex items-center justify-center mx-auto mb-4 border border-[#e5e5e5]">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-[#9ca3af]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+            </svg>
+        </div>
+        <h3 class="font-bold text-[#0d0d0d] mb-2">Aucun article trouvé</h3>
+        <p class="text-sm text-[#525252]">Aucun article avec ce tag.</p>
+    </div>
+    {% endfor %}
 </div>
 
-<div class="text-center mt-8">
-    <a href="{{ page.get_parent.url }}" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold text-sm group/link">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform group-hover/link:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-        </svg>
-        Retour
-    </a>
+<div class="mt-10">
+    <a href="{{ page.get_parent.url }}" class="btn-ghost">← Retour au blog</a>
 </div>
-
 {% endblock %}

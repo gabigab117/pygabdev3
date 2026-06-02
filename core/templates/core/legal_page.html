@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 {% load wagtailcore_tags %}
 
+{% block banner_eyebrow %}<p class="section-eyebrow">Légal</p>{% endblock %}
+
 {% block content %}
-
-    <div class="prose prose-lg max-w-none text-justify">
-        {{ page.body|richtext }}
-    </div>
-
-
+<div class="prose prose-lg max-w-none
+  prose-headings:font-display prose-headings:text-[#0d0d0d] prose-headings:font-bold
+  prose-p:text-[#525252] prose-p:leading-relaxed
+  prose-a:text-emerald-600 prose-a:no-underline hover:prose-a:underline">
+    {{ page.body|richtext }}
+</div>
 {% endblock %}

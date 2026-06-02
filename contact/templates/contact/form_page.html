@@ -1,17 +1,18 @@
 {% extends 'base.html' %}
 {% load wagtailcore_tags %}
 {% load crispy_forms_tags %}
+
+{% block banner_eyebrow %}<p class="section-eyebrow">Contact</p>{% endblock %}
 {% block banner_text %}Formulaire de contact{% endblock %}
 
 {% block content %}
-<div class="text-center">
+<div class="max-w-xl">
     <form method="post" class="space-y-6">
         {% csrf_token %}
         {{ form|crispy }}
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn-primary">
             Envoyer
         </button>
     </form>
 </div>
-
 {% endblock %}
