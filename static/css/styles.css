@@ -46,7 +46,7 @@
 html{ scroll-behavior:smooth; }
 body{ -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; min-height:100vh; display:flex; flex-direction:column; }
 main{ flex:1 0 auto; }
-img{ max-width:100%; }
+img{ max-width:100%; height:auto; }
 a{ text-decoration:none; }
 
 /* wider, Zorin-ish container */
