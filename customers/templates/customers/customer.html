@@ -11,7 +11,7 @@
   <div class="card">
     <div class="card-body">
       <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-4">
-        <h2 class="h-sec" style="font-size:22px;">Coordonnées</h2>
+        <h2 class="h-sec h-sec-xs">Coordonnées</h2>
         <a href="{% url 'customers:update-customer' pk=customer.pk %}" class="btn btn-ghost btn-sm">Modifier</a>
       </div>
       <div class="kv">
@@ -26,7 +26,7 @@
   <div class="card">
     <div class="card-body">
       <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
-        <h3 class="h-sec" style="font-size:20px;">Projets associés</h3>
+        <h3 class="h-sec h-sec-2xs">Projets associés</h3>
         <a href="{% url 'customers:create-project' %}" class="btn btn-primary btn-sm">+ Ajouter un projet</a>
       </div>
       {% if projects %}
@@ -51,7 +51,7 @@
 
   <div class="card">
     <div class="card-body">
-      <h3 class="h-sec mb-4" style="font-size:20px;">Services non facturés</h3>
+      <h3 class="h-sec h-sec-2xs mb-4">Services non facturés</h3>
       {% if total_unbilled_services %}
       <div class="tags mb-4">
         <span class="tag soft">Total : {{ total_unbilled_services }} €</span>

@@ -16,13 +16,13 @@
         <div class="kv-full">
           <span class="kv-k">Description</span>
           {% if project.description %}
-          <span class="kv-v" style="font-weight:400;">{{ project.description }}</span>
+          <span class="kv-v kv-plain">{{ project.description }}</span>
           {% else %}
-          <span class="kv-v" style="font-weight:400; color:var(--ink-3);">Pas de description pour ce projet</span>
+          <span class="kv-v kv-muted">Pas de description pour ce projet</span>
           {% endif %}
         </div>
       </div>
-      <div class="d-flex gap-3 pt-4 border-top flex-wrap" style="border-color:var(--border)!important;">
+      <div class="d-flex gap-3 pt-4 border-top border-theme flex-wrap">
         <a href="{% url 'customers:projects' %}" class="btn btn-ghost">Retour</a>
         <a href="{% url 'customers:update-project' pk=project.pk %}" class="btn btn-primary">Modifier</a>
         {% if not project.has_services %}
@@ -35,7 +35,7 @@
   <div class="card">
     <div class="card-body">
       <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
-        <h2 class="h-sec" style="font-size:22px;">Services associés</h2>
+        <h2 class="h-sec h-sec-xs">Services associés</h2>
         <a href="{% url 'customers:add-service' pk=project.pk %}" class="btn btn-primary btn-sm">+ Ajouter un service</a>
       </div>
       {% if services %}

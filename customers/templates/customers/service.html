@@ -32,14 +32,14 @@
           <div class="kv-full">
             <span class="kv-k">Description</span>
             {% if service.description %}
-            <span class="kv-v" style="font-weight:400;">{{ service.description }}</span>
+            <span class="kv-v kv-plain">{{ service.description }}</span>
             {% else %}
-            <span class="kv-v" style="font-weight:400; color:var(--ink-3);">Pas de description pour cette tâche.</span>
+            <span class="kv-v kv-muted">Pas de description pour cette tâche.</span>
             {% endif %}
           </div>
         </div>
 
-        <div class="d-flex gap-3 pt-4 border-top flex-wrap" style="border-color:var(--border)!important;">
+        <div class="d-flex gap-3 pt-4 border-top border-theme flex-wrap">
           <a href="{% url 'customers:project' pk=service.project.pk %}" class="btn btn-ghost">Retour au projet</a>
           <a href="{% url 'customers:update-service' pk=service.pk %}" class="btn btn-primary">Modifier</a>
           <a href="{% url 'customers:delete-service' pk=service.pk %}" class="btn btn-danger">Supprimer</a>

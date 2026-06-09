@@ -3,8 +3,8 @@
 
 {% block banner %}
 {% if page.main_image %}
-<div style="width:100%;max-height:420px;overflow:hidden;line-height:0;">
-  {% image page.main_image fill-1280x480 alt=page.title style="width:100%;height:100%;object-fit:cover;display:block;max-height:420px;" %}
+<div class="img-hero-wrap">
+  {% image page.main_image fill-1280x480 alt=page.title %}
 </div>
 {% endif %}
 <section class="page-head">
@@ -43,7 +43,7 @@
     <div class="prose">
       {{ page.body }}
     </div>
-    <div class="pt-5 mt-4 border-top" style="border-color:var(--border)!important;">
+    <div class="pt-5 mt-4 border-top border-theme">
       <a href="{{ page.get_parent.url }}" class="btn-text">← Retour aux projets</a>
     </div>
   </div>

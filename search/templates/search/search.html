@@ -44,13 +44,13 @@
         {% if search_results.has_previous %}
         <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.previous_page_number }}">← Précédent</a>
         {% else %}
-        <span style="opacity:.45; pointer-events:none;">← Précédent</span>
+        <span class="pager-disabled">← Précédent</span>
         {% endif %}
 
         {% if search_results.has_next %}
         <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.next_page_number }}">Suivant →</a>
         {% else %}
-        <span style="opacity:.45; pointer-events:none;">Suivant →</span>
+        <span class="pager-disabled">Suivant →</span>
         {% endif %}
     </nav>
     {% endif %}

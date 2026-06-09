@@ -10,10 +10,10 @@
   <div class="col-md-7 col-lg-6">
     <div class="card">
       <div class="card-body text-center">
-        <h2 class="h-sec mb-3" style="font-size:20px;">Supprimer ce projet ?</h2>
+        <h2 class="h-sec h-sec-2xs mb-3">Supprimer ce projet ?</h2>
         <p class="card-text mb-4">
           Voulez-vous vraiment supprimer le projet <strong style="color:var(--ink);">{{ project.name }}</strong> ?<br>
-          <span class="mono" style="font-size:12.5px; color:#d6453b;">Cette action est irréversible.</span>
+          <span class="danger-note">Cette action est irréversible.</span>
         </p>
         <form method="post">
           {% csrf_token %}

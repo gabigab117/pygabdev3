@@ -26,11 +26,11 @@
           </div>
           <div class="kv-full">
             <span class="kv-k">PDF</span>
-            {% if invoice.pdf %}<a class="btn-text" href="{{ invoice.pdf.url }}" target="_blank">Télécharger →</a>{% else %}<span class="kv-v" style="font-weight:400; color:var(--ink-3);">Aucun fichier</span>{% endif %}
+            {% if invoice.pdf %}<a class="btn-text" href="{{ invoice.pdf.url }}" target="_blank">Télécharger →</a>{% else %}<span class="kv-v kv-muted">Aucun fichier</span>{% endif %}
           </div>
         </div>
 
-        <div class="d-flex gap-3 pt-4 border-top flex-wrap" style="border-color:var(--border)!important;">
+        <div class="d-flex gap-3 pt-4 border-top border-theme flex-wrap">
           <a href="{% url 'customers:invoices' %}" class="btn btn-ghost">Retour</a>
           <a href="{% url 'customers:update-invoice' pk=invoice.pk %}" class="btn btn-primary">Modifier</a>
           <a href="{% url 'customers:delete-invoice' pk=invoice.pk %}" class="btn btn-danger">Supprimer</a>

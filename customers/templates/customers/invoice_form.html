@@ -14,7 +14,7 @@
         <form method="post" enctype="multipart/form-data">
           {% csrf_token %}
           {{ form|crispy }}
-          <div class="d-flex gap-3 pt-4 mt-2 border-top" style="border-color:var(--border)!important;">
+          <div class="d-flex gap-3 pt-4 mt-2 border-top border-theme">
             <a href="{% url 'customers:invoices' %}" class="btn btn-ghost">Annuler</a>
             <button type="submit" class="btn btn-primary">Enregistrer</button>
           </div>
