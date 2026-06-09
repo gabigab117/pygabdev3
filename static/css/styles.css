@@ -148,10 +148,14 @@ h1,h2,h3,h4,h5{ color:var(--ink); font-weight:800; line-height:1.1; letter-spaci
 .card{ --bs-card-border-color:var(--border); --bs-card-border-radius:var(--r-lg); --bs-card-inner-border-radius:var(--r-lg); --bs-card-bg:var(--surface); --bs-card-spacer-y:22px; --bs-card-spacer-x:22px; box-shadow:var(--sh-sm); transition:transform .18s,box-shadow .18s,border-color .18s; overflow:hidden; }
 .card-hover:hover{ transform:translateY(-4px); box-shadow:var(--sh-md); border-color:var(--border-strong); }
 .card .thumb{ aspect-ratio:16/10; border:none; border-radius:0; overflow:hidden; }
+.card .thumb-compact{ aspect-ratio:16/9; background:var(--surface-2); border-bottom:1px solid var(--border); }
 .card-title{ font-size:21px; line-height:1.2; letter-spacing:-.01em; color:var(--ink); margin:0; }
 .card-title a{ color:inherit; }
 .card-title a:hover{ color:var(--accent); }
 .card-text{ color:var(--ink-2); font-size:15px; }
+.card-sm{ --bs-card-spacer-y:16px; --bs-card-spacer-x:18px; }
+.card-sm .card-title{ font-size:18px; }
+.card-sm .card-text{ font-size:14px; }
 
 /* ---------- horizontal scroller (NOT Bootstrap .carousel) ---------- */
 .scroller-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:20px; margin-bottom:28px; }

@@ -1,40 +1,40 @@
 {% extends "base.html" %}
 {% load wagtailcore_tags %}
 
-{% block banner_eyebrow %}<p class="section-eyebrow">Blog</p>{% endblock %}
+{% block banner_eyebrow %}<span class="eyebrow bare">Blog</span>{% endblock %}
 {% block banner_title %}
   {% if request.GET.tag %}Articles · {{ request.GET.tag }}{% else %}Tous les articles{% endif %}
 {% endblock %}
 
 {% block content %}
-<div class="space-y-4">
+<div class="d-flex flex-column gap-3">
     {% for blogpage in blogpages %}
-    <div class="content-card p-6 flex flex-col sm:flex-row sm:items-start gap-4">
-        <div class="flex-1">
-            <p class="text-xs text-[#6b7280] mb-1">{{ blogpage.latest_revision_created_at|date:"d F Y" }}</p>
-            <h3 class="font-display font-bold text-[#0d0d0d] text-lg mb-2 hover:text-emerald-600 transition-colors">
-                <a href="{% pageurl blogpage %}">{{ blogpage.title }}</a>
-            </h3>
-            {% if blogpage.intro %}
-            <p class="text-sm text-[#525252] leading-relaxed line-clamp-2">{{ blogpage.intro|truncatewords:25 }}</p>
-            {% endif %}
+    <article class="card">
+        <div class="card-body d-flex flex-column flex-sm-row align-items-sm-center gap-3">
+            <div class="flex-grow-1">
+                <div class="meta mb-1"><span>{{ blogpage.latest_revision_created_at|date:"d F Y" }}</span></div>
+                <h3 class="card-title mb-2">
+                    <a href="{% pageurl blogpage %}">{{ blogpage.title }}</a>
+                </h3>
+                {% if blogpage.intro %}
+                <p class="card-text mb-0">{{ blogpage.intro|truncatewords:25 }}</p>
+                {% endif %}
+            </div>
+            <a href="{% pageurl blogpage %}" class="btn btn-ghost btn-sm flex-shrink-0 align-self-start align-self-sm-center">Lire →</a>
         </div>
-        <a href="{% pageurl blogpage %}" class="btn-ghost text-xs self-start sm:self-center flex-shrink-0">Lire →</a>
-    </div>
+    </article>
     {% empty %}
-    <div class="text-center py-16">
-        <div class="w-14 h-14 bg-[#f7f7f5] rounded-full flex items-center justify-center mx-auto mb-4 border border-[#e5e5e5]">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-[#9ca3af]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-            </svg>
-        </div>
-        <h3 class="font-bold text-[#0d0d0d] mb-2">Aucun article trouvé</h3>
-        <p class="text-sm text-[#525252]">Aucun article avec ce tag.</p>
+    <div class="empty-state">
+        <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="color:var(--ink-3)">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+        </svg>
+        <p class="es-title">Aucun article trouvé</p>
+        <p>Aucun article avec ce tag.</p>
     </div>
     {% endfor %}
 </div>
 
-<div class="mt-10">
-    <a href="{{ page.get_parent.url }}" class="btn-ghost">← Retour au blog</a>
+<div class="mt-4">
+    <a href="{{ page.get_parent.url }}" class="btn-text">← Retour au blog</a>
 </div>
 {% endblock %}

@@ -2,70 +2,66 @@
 {% load static wagtailcore_tags wagtailimages_tags %}
 
 {% block title %}Recherche{% endblock %}
-{% block banner_eyebrow %}<p class="section-eyebrow">Recherche</p>{% endblock %}
+{% block banner_eyebrow %}<span class="eyebrow bare">Recherche</span>{% endblock %}
 {% block banner_title %}Résultats{% endblock %}
 {% block banner_text %}
-{% if search_query %}<p class="text-[#525252] mt-2">Résultats pour « {{ search_query }} »</p>{% endif %}
+{% if search_query %}<p class="lead">Résultats pour « {{ search_query }} »</p>{% endif %}
 {% endblock %}
 
 {% block content %}
 <div>
     {% if search_results %}
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {% for result in search_results %}
-        <div class="group content-card">
-            <div class="p-6">
-                <h2 class="font-bold text-[#0d0d0d] font-display mb-2 group-hover:text-emerald-600 transition-colors">
-                    <a href="{% pageurl result %}">{{ result }}</a>
-                </h2>
-                {% if result.search_description %}
-                <p class="text-sm text-[#525252] leading-relaxed line-clamp-3 mb-4">
-                    {{ result.search_description|truncatewords:20 }}
-                </p>
-                {% endif %}
-                <a href="{% pageurl result %}" class="btn-ghost text-xs">Voir plus →</a>
+        <div class="col">
+            <div class="card card-hover h-100">
+                <div class="card-body d-flex flex-column gap-3">
+                    <h2 class="card-title mb-0">
+                        <a href="{% pageurl result %}">{{ result }}</a>
+                    </h2>
+                    {% if result.search_description %}
+                    <p class="card-text">{{ result.search_description|truncatewords:20 }}</p>
+                    {% endif %}
+                    <a href="{% pageurl result %}" class="btn-text mt-auto">Voir plus →</a>
+                </div>
             </div>
         </div>
         {% empty %}
-        <div class="col-span-full text-center py-12">
-            <div class="w-14 h-14 bg-[#f7f7f5] rounded-full flex items-center justify-center mx-auto mb-4 border border-[#e5e5e5]">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-[#9ca3af]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div class="col-12">
+            <div class="empty-state">
+                <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="color:var(--ink-3)">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                 </svg>
+                <p class="es-title">Aucun résultat trouvé</p>
+                <p>Essayez avec d'autres termes de recherche.</p>
             </div>
-            <h3 class="font-bold text-[#0d0d0d] mb-2">Aucun résultat trouvé</h3>
-            <p class="text-sm text-[#525252]">Essayez avec d'autres termes de recherche.</p>
         </div>
         {% endfor %}
     </div>
 
     {% if search_results.has_previous or search_results.has_next %}
-    <nav class="flex justify-center items-center gap-3 mt-10">
+    <nav class="pager" aria-label="Pagination">
         {% if search_results.has_previous %}
-        <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.previous_page_number }}"
-           class="btn-ghost">← Précédent</a>
+        <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.previous_page_number }}">← Précédent</a>
         {% else %}
-        <span class="text-sm text-[#9ca3af] cursor-not-allowed">← Précédent</span>
+        <span style="opacity:.45; pointer-events:none;">← Précédent</span>
         {% endif %}
 
         {% if search_results.has_next %}
-        <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.next_page_number }}"
-           class="btn-ghost">Suivant →</a>
+        <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.next_page_number }}">Suivant →</a>
         {% else %}
-        <span class="text-sm text-[#9ca3af] cursor-not-allowed">Suivant →</span>
+        <span style="opacity:.45; pointer-events:none;">Suivant →</span>
         {% endif %}
     </nav>
     {% endif %}
 
     {% elif search_query %}
-    <div class="text-center py-16">
-        <div class="w-14 h-14 bg-[#f7f7f5] rounded-full flex items-center justify-center mx-auto mb-4 border border-[#e5e5e5]">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-[#9ca3af]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-            </svg>
-        </div>
-        <h3 class="font-bold text-[#0d0d0d] mb-2">Pas de résultats</h3>
-        <p class="text-sm text-[#525252]">Essayez avec d'autres termes de recherche.</p>
+    <div class="empty-state">
+        <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="color:var(--ink-3)">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        <p class="es-title">Pas de résultats</p>
+        <p>Essayez avec d'autres termes de recherche.</p>
     </div>
     {% endif %}
 </div>

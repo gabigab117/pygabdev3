@@ -35,18 +35,6 @@
   {% endfor %}
 </div>
 
-{% if is_paginated %}
-<nav class="pager" aria-label="Pagination">
-  {% if page_obj.has_previous %}
-  <a href="?page={{ page_obj.previous_page_number }}">‹</a>
-  {% endif %}
-  <span class="cur">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
-  {% if page_obj.has_next %}
-  <a href="?page={{ page_obj.next_page_number }}">›</a>
-  {% endif %}
-</nav>
-{% endif %}
-
 {% else %}
 <div class="empty-state">
   <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="color:var(--ink-3)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2 2 0 00-2-2h-2"/></svg>
