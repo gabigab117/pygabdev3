@@ -16,6 +16,8 @@ class HomePage(GenericPage):
 
     def get_context(self, request, *args, **kwargs):
         context = super().get_context(request, *args, **kwargs)
+        projects = FolioPage.objects.live().order_by("-date")
         context["last_article"] = BlogPage.objects.live().order_by("-date").first()
-        context["project"] = FolioPage.objects.live().order_by("-date").first()
+        context["project"] = projects.first()
+        context["recent_projects"] = projects[:8]
         return context

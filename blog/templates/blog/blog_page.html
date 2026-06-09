@@ -1,66 +1,41 @@
 {% extends 'base.html' %}
-{% load wagtailcore_tags %}
-{% load wagtailimages_tags %}
+{% load wagtailcore_tags wagtailimages_tags %}
 
 {% block banner %}
-<!-- Article header: full-bleed image + title -->
 {% if page.main_image %}
-<div class="w-full border-b border-[#e5e5e5]">
-  {% image page.main_image width-1400 class='w-full max-h-[480px] object-cover' alt=page.main_image.title %}
+<div style="width:100%;max-height:420px;overflow:hidden;line-height:0;">
+  {% image page.main_image fill-1280x480 alt=page.title style="width:100%;height:100%;object-fit:cover;display:block;max-height:420px;" %}
 </div>
 {% endif %}
-<div class="bg-[#f7f7f5] border-b border-[#e5e5e5]">
-  <div class="max-w-5xl mx-auto px-6 py-10">
-    <p class="section-eyebrow">Article</p>
-    <h1 class="section-headline text-3xl md:text-4xl mt-2 mb-3">{{ page.title }}</h1>
-    <p class="text-sm text-[#6b7280]">{{ page.date|date:"d F Y" }} &middot; {{ page.owner }}</p>
+<section class="page-head">
+  <div class="container">
+    <span class="eyebrow bare">Article</span>
+    <h1 class="display h-page">{{ page.title }}</h1>
+    <div class="meta mt-3">
+      <span>{{ page.date|date:"d F Y" }}</span>
+      <span class="sepdot"></span>
+      <span class="author">{{ page.owner }}</span>
+    </div>
+    {% with tags=page.tags.all %}{% if tags %}
+    <div class="tags mt-3">
+      {% for tag in tags %}
+      <a href="{% slugurl 'blog-tags' %}?tag={{ tag }}" class="tag">{{ tag }}</a>
+      {% endfor %}
+    </div>
+    {% endif %}{% endwith %}
   </div>
-</div>
+</section>
 {% endblock %}
 
 {% block content %}
-<div class="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-12">
-
-  <!-- Main prose -->
-  <div class="prose prose-lg max-w-none
-    prose-headings:font-display prose-headings:text-[#0d0d0d] prose-headings:font-bold
-    prose-p:text-[#525252] prose-p:leading-relaxed
-    prose-a:text-emerald-600 prose-a:no-underline hover:prose-a:underline
-    prose-strong:text-[#0d0d0d] prose-strong:font-semibold
-    prose-code:text-emerald-700 prose-code:bg-emerald-50 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm
-    prose-pre:bg-[#0d0d0d] prose-pre:text-gray-100">
-    {{ page.body }}
+<div class="row justify-content-center">
+  <div class="col-lg-9">
+    <div class="prose">
+      {{ page.body }}
+    </div>
+    <div class="pt-5 mt-4 border-top" style="border-color:var(--border)!important;">
+      <a href="{{ page.get_parent.url }}" class="btn-text">← Retour au blog</a>
+    </div>
   </div>
-
-  <!-- Sidebar -->
-  <aside class="space-y-8">
-    <!-- Tags -->
-    {% with tags=page.tags.all %}
-    {% if tags %}
-    <div>
-      <h3 class="text-xs font-semibold uppercase tracking-widest text-[#6b7280] mb-3">Tags</h3>
-      <div class="flex flex-wrap gap-2">
-        {% for tag in tags %}
-        <a href="{% slugurl 'blog-tags' %}?tag={{ tag }}"
-           class="inline-flex items-center px-3 py-1 border border-[#e5e5e5] rounded-full text-xs font-medium text-[#525252] hover:border-emerald-500 hover:text-emerald-600 transition-colors">
-          {{ tag }}
-        </a>
-        {% endfor %}
-      </div>
-    </div>
-    {% endif %}
-    {% endwith %}
-
-    <!-- Back link -->
-    <div>
-      <a href="{{ page.get_parent.url }}" class="inline-flex items-center gap-2 text-sm text-[#525252] hover:text-[#0d0d0d] font-medium group transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-        </svg>
-        Retour au blog
-      </a>
-    </div>
-  </aside>
-
 </div>
 {% endblock %}

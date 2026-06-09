@@ -1,82 +1,40 @@
 {% extends 'base.html' %}
-{% block title %}
-Projets
-{% endblock %}
+{% block title %}Projets{% endblock %}
 
+{% block banner_eyebrow %}<span class="eyebrow bare">Espace admin</span>{% endblock %}
 {% block banner_title %}Projets{% endblock %}
-{% block banner_text %}Liste des projets{% endblock %}
+{% block banner_text %}<p class="lead">Liste des projets clients.</p>{% endblock %}
 
 {% block content %}
-<div class="space-y-8">
-    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-        <div class="flex justify-between items-center mb-6">
-            <h3 class="text-2xl font-bold text-gray-900">Projets</h3>
-            <a href="{% url 'customers:create-project' %}" class="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                </svg>
-                Nouveau projet
-            </a>
-        </div>
-
-        <div class="overflow-x-auto">
-            <table class="table w-full">
-                <thead>
-                <tr>
-                    <th class="text-gray-700">Client</th>
-                    <th class="text-gray-700">Nom</th>
-                    <th class="text-gray-700">Taux horaire</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for project in page_obj %}
-                <tr class="hover:bg-gray-50">
-                    <td class="font-medium">{{ project.customer.name }}</td>
-                    <td>
-                        <a href="{{ project.get_absolute_url }}" class="text-blue-600 hover:text-blue-700 font-medium">
-                            {{ project.name }}
-                        </a>
-                    </td>
-                    <td class="font-semibold">{{ project.hourly_rate }} €</td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="3" class="text-center py-8">
-                        <div class="text-gray-500">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto mb-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                            </svg>
-                            <p class="text-lg font-medium mb-2">Aucun projet</p>
-                            <p>Commencez par créer votre premier projet.</p>
-                        </div>
-                    </td>
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Pagination -->
-        {% if page_obj.paginator.num_pages > 1 %}
-        <div class="mt-6 flex justify-center">
-            <div class="join">
-                {% if page_obj.has_previous %}
-                    <a href="?page=1" class="join-item btn btn-outline">«</a>
-                    <a href="?page={{ page_obj.previous_page_number }}" class="join-item btn btn-outline">‹</a>
-                {% endif %}
-                
-                <button class="join-item btn btn-active">{{ page_obj.number }}</button>
-                
-                {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}" class="join-item btn btn-outline">›</a>
-                    <a href="?page={{ page_obj.paginator.num_pages }}" class="join-item btn btn-outline">»</a>
-                {% endif %}
-            </div>
-        </div>
-        <div class="text-center mt-2 text-sm text-gray-500">
-            Page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}
-        </div>
-        {% endif %}
+<div class="card">
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+      <h2 class="h-sec" style="font-size:24px;">Projets</h2>
+      <a href="{% url 'customers:create-project' %}" class="btn btn-primary btn-sm">+ Nouveau projet</a>
     </div>
+
+    {% if page_obj %}
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead><tr><th>Client</th><th>Nom</th><th>Taux horaire</th></tr></thead>
+        <tbody>
+          {% for project in page_obj %}
+          <tr>
+            <td>{{ project.customer.name }}</td>
+            <td><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></td>
+            <td>{{ project.hourly_rate }} €</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% include 'customers/_pager.html' %}
+    {% else %}
+    <div class="empty-state">
+      <p class="es-title">Aucun projet</p>
+      <p>Commencez par créer votre premier projet.</p>
+    </div>
+    {% endif %}
+  </div>
 </div>
 {% endblock %}

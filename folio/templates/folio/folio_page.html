@@ -1,64 +1,51 @@
 {% extends 'base.html' %}
-{% load wagtailcore_tags %}
-{% load wagtailimages_tags %}
+{% load wagtailcore_tags wagtailimages_tags %}
 
 {% block banner %}
-<!-- Full-bleed project image -->
 {% if page.main_image %}
-<div class="w-full border-b border-[#e5e5e5]">
-  {% image page.main_image original class='w-full max-h-[520px] object-cover' alt=page.main_image.title %}
+<div style="width:100%;max-height:420px;overflow:hidden;line-height:0;">
+  {% image page.main_image fill-1280x480 alt=page.title style="width:100%;height:100%;object-fit:cover;display:block;max-height:420px;" %}
 </div>
 {% endif %}
-<!-- Project header -->
-<div class="bg-[#f7f7f5] border-b border-[#e5e5e5]">
-  <div class="max-w-5xl mx-auto px-6 py-10">
-    <p class="section-eyebrow">Projet</p>
-    <h1 class="section-headline text-3xl md:text-4xl mt-2 mb-4">{{ page.title }}</h1>
-    <!-- Project links as chips -->
-    {% if page.youtube or page.github or page.production %}
-    <div class="flex flex-wrap gap-3">
+<section class="page-head">
+  <div class="container">
+    <span class="eyebrow bare">Projet</span>
+    <h1 class="display h-page">{{ page.title }}</h1>
+    {% if page.header %}
+    <p class="lead">{{ page.header|richtext|striptags }}</p>
+    {% endif %}
+    {% if page.github or page.youtube or page.production %}
+    <div class="d-flex flex-wrap gap-2 mt-4">
       {% if page.github %}
-      <a href="{{ page.github }}" target="_blank" rel="noopener noreferrer"
-         class="inline-flex items-center gap-2 px-4 py-1.5 border border-[#e5e5e5] rounded-full text-sm font-medium text-[#525252] hover:border-emerald-500 hover:text-emerald-600 bg-white transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-        GitHub
+      <a href="{{ page.github }}" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm">
+        <i class="bi bi-github"></i> GitHub
       </a>
       {% endif %}
       {% if page.youtube %}
-      <a href="{{ page.youtube }}" target="_blank" rel="noopener noreferrer"
-         class="inline-flex items-center gap-2 px-4 py-1.5 border border-[#e5e5e5] rounded-full text-sm font-medium text-[#525252] hover:border-red-400 hover:text-red-600 bg-white transition-colors">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
-        YouTube
+      <a href="{{ page.youtube }}" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm">
+        <i class="bi bi-youtube"></i> YouTube
       </a>
       {% endif %}
       {% if page.production %}
-      <a href="{{ page.production }}" target="_blank" rel="noopener noreferrer" class="btn-primary text-xs px-4 py-1.5">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-        Voir en production
+      <a href="{{ page.production }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">
+        <i class="bi bi-box-arrow-up-right"></i> Voir en production
       </a>
       {% endif %}
     </div>
     {% endif %}
   </div>
-</div>
+</section>
 {% endblock %}
 
 {% block content %}
-<div class="prose prose-lg max-w-none
-  prose-headings:font-display prose-headings:text-[#0d0d0d] prose-headings:font-bold
-  prose-p:text-[#525252] prose-p:leading-relaxed
-  prose-a:text-emerald-600 prose-a:no-underline hover:prose-a:underline
-  prose-strong:text-[#0d0d0d] prose-code:text-emerald-700 prose-code:bg-emerald-50 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded
-  prose-pre:bg-[#0d0d0d] prose-pre:text-gray-100">
-  {{ page.body }}
-</div>
-
-<div class="border-t border-[#e5e5e5] mt-12 pt-8">
-  <a href="{{ page.get_parent.url }}" class="inline-flex items-center gap-2 text-sm text-[#525252] hover:text-[#0d0d0d] font-medium group transition-colors">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-    </svg>
-    Retour aux projets
-  </a>
+<div class="row justify-content-center">
+  <div class="col-lg-9">
+    <div class="prose">
+      {{ page.body }}
+    </div>
+    <div class="pt-5 mt-4 border-top" style="border-color:var(--border)!important;">
+      <a href="{{ page.get_parent.url }}" class="btn-text">← Retour aux projets</a>
+    </div>
+  </div>
 </div>
 {% endblock %}

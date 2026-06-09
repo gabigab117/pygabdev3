@@ -1,7 +1,7 @@
-{% load static wagtailcore_tags wagtailuserbar tailwind_tags cookie_consent_tags %}
+{% load static wagtailcore_tags wagtailuserbar cookie_consent_tags %}
 
 <!DOCTYPE html>
-<html lang="fr" class="h-full">
+<html lang="fr">
 <head>
     {% if request|cookie_group_accepted:"analytics" %}
     <!-- Google Tag Manager -->
@@ -36,29 +36,15 @@
     <link rel="icon" href="{% static 'logos/favicon.ico' %}"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
-    {% tailwind_css %}
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'css/custom_css.css' %}">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-        .font-display { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .nav-link { position: relative; transition: color 0.2s ease; }
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -4px;
-            left: 0;
-            background: #10b981;
-            transition: width 0.25s ease;
-        }
-        .nav-link:hover::after { width: 100%; }
-        .nav-link:hover { color: #0d0d0d; }
-    </style>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
 </head>
 
-<body class="flex flex-col min-h-full bg-white text-[#0d0d0d] leading-relaxed">
+<body>
     {% if request|cookie_group_accepted:"analytics" %}
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MPJ4JSR2"
@@ -68,13 +54,13 @@
     {% url "cookie_consent_cookie_group_list" as url_cookies %}
 
     <template id="cookie-consent__cookie-bar">
-      <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-[#e5e5e5] p-4 z-50 shadow-lg">
-        <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p class="text-sm text-[#525252]">Ce site utilise des cookies pour améliorer votre expérience.</p>
-          <div class="flex gap-3">
-            <button type="button" class="cookie-consent__accept btn-primary text-xs px-4 py-2">Accepter</button>
-            <button type="button" class="cookie-consent__decline text-sm text-[#525252] hover:text-[#0d0d0d] font-medium transition-colors">Refuser</button>
-            <a href="{{ url_cookies }}" class="text-sm text-[#525252] hover:text-emerald-500 font-medium transition-colors">Plus d'infos</a>
+      <div class="cookie-theme-bar">
+        <div class="container d-flex flex-column flex-sm-row align-items-center justify-content-between gap-3">
+          <p class="mb-0 card-text">Ce site utilise des cookies pour améliorer votre expérience.</p>
+          <div class="d-flex align-items-center gap-3">
+            <button type="button" class="cookie-consent__accept btn btn-primary btn-sm">Accepter</button>
+            <button type="button" class="cookie-consent__decline btn btn-ghost btn-sm">Refuser</button>
+            <a href="{{ url_cookies }}" class="btn-text">Plus d'infos</a>
           </div>
         </div>
       </div>
@@ -83,214 +69,35 @@
     {% all_cookie_groups 'cookie-consent__cookie-groups' %}
     {% wagtailuserbar %}
 
-    <!-- Header -->
-    <header class="bg-white border-b border-[#e5e5e5] sticky top-0 z-40">
-      <div class="max-w-7xl mx-auto px-6">
-        <div class="flex items-center justify-between h-16">
+    {% include 'includes/navbar.html' %}
 
-          <!-- Logo -->
-          <a href="{% slugurl 'index' %}" class="flex items-center gap-2.5 flex-shrink-0">
-            <div class="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg flex items-center justify-center">
-              <span class="text-white font-bold text-sm font-display">PG</span>
-            </div>
-            <span class="text-base font-bold text-[#0d0d0d] font-display">PyGabDev</span>
-          </a>
-
-          <!-- Desktop nav -->
-          <nav class="hidden lg:flex items-center gap-8">
-            <a href="{% slugurl 'index' %}" class="nav-link text-[#525252] font-medium text-sm py-2">Accueil</a>
-            <a href="{% slugurl 'projets' %}" class="nav-link text-[#525252] font-medium text-sm py-2">Projets</a>
-            <a href="{% slugurl 'blog' %}" class="nav-link text-[#525252] font-medium text-sm py-2">Blog</a>
-            <a href="{% slugurl 'contact' %}" class="nav-link text-[#525252] font-medium text-sm py-2">Contact</a>
-
-            <!-- Social icons inline -->
-            <div class="flex items-center gap-3 pl-4 border-l border-[#e5e5e5]">
-              <a href="https://github.com/gabigab117" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="text-[#6b7280] hover:text-[#0d0d0d] transition-colors">
-                <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-              </a>
-              <a href="https://x.com/GabrielTrouve" target="_blank" rel="noopener noreferrer" aria-label="X" class="text-[#6b7280] hover:text-[#0d0d0d] transition-colors">
-                <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/></svg>
-              </a>
-              <a href="https://www.linkedin.com/in/gabriel-trouv%C3%A9-b6a2bb159/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="text-[#6b7280] hover:text-[#0d0d0d] transition-colors">
-                <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z"/></svg>
-              </a>
-              <a href="https://www.youtube.com/@gabrieltrouve2801" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="text-[#6b7280] hover:text-red-500 transition-colors">
-                <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-              </a>
-            </div>
-
-            {% if request.user.is_superuser %}
-            <!-- Clients dropdown (CSS hover) -->
-            <div class="relative group">
-              <button class="nav-link text-[#525252] font-medium text-sm py-2 flex items-center gap-1">
-                Clients
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                </svg>
-              </button>
-              <div class="absolute right-0 top-full mt-2 w-48 bg-white border border-[#e5e5e5] rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                <div class="p-2 space-y-0.5">
-                  <a href="{% url 'customers:dashboard' %}" class="block px-3 py-2 text-sm text-[#525252] hover:bg-[#f7f7f5] rounded-lg transition-colors">Dashboard</a>
-                  <a href="{% url 'customers:projects' %}" class="block px-3 py-2 text-sm text-[#525252] hover:bg-[#f7f7f5] rounded-lg transition-colors">Projets</a>
-                  <a href="{% url 'customers:invoices' %}" class="block px-3 py-2 text-sm text-[#525252] hover:bg-[#f7f7f5] rounded-lg transition-colors">Factures</a>
-                  <a href="{% url 'customers:search' %}" class="block px-3 py-2 text-sm text-[#525252] hover:bg-[#f7f7f5] rounded-lg transition-colors">Recherche</a>
-                </div>
-              </div>
-            </div>
-            {% endif %}
-          </nav>
-
-          <!-- Search + mobile button -->
-          <div class="flex items-center gap-3">
-            <form action="{% url 'search' %}" method="get" class="hidden sm:block relative">
-              <input type="text"
-                     placeholder="Rechercher…"
-                     name="query"
-                     class="w-52 pl-9 pr-4 py-1.5 border border-[#e5e5e5] rounded-full text-sm bg-[#f7f7f5] focus:outline-none focus:border-emerald-400 focus:bg-white transition-all duration-200" />
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 absolute left-3 top-1/2 -translate-y-1/2 text-[#6b7280]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-              </svg>
-            </form>
-            <!-- Mobile menu toggle -->
-            <button id="mobile-menu-btn" class="lg:hidden p-2 text-[#525252] hover:text-[#0d0d0d] transition-colors" aria-label="Menu">
-              <svg id="icon-open" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-              </svg>
-              <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        <!-- Mobile menu -->
-        <div id="mobile-menu" class="hidden lg:hidden border-t border-[#e5e5e5] py-4">
-          <nav class="flex flex-col gap-0.5">
-            <a href="{% slugurl 'index' %}" class="px-3 py-2.5 text-sm text-[#525252] hover:text-[#0d0d0d] hover:bg-[#f7f7f5] rounded-lg transition-colors">Accueil</a>
-            <a href="{% slugurl 'projets' %}" class="px-3 py-2.5 text-sm text-[#525252] hover:text-[#0d0d0d] hover:bg-[#f7f7f5] rounded-lg transition-colors">Projets</a>
-            <a href="{% slugurl 'blog' %}" class="px-3 py-2.5 text-sm text-[#525252] hover:text-[#0d0d0d] hover:bg-[#f7f7f5] rounded-lg transition-colors">Blog</a>
-            <a href="{% slugurl 'contact' %}" class="px-3 py-2.5 text-sm text-[#525252] hover:text-[#0d0d0d] hover:bg-[#f7f7f5] rounded-lg transition-colors">Contact</a>
-            {% if request.user.is_superuser %}
-            <details class="group">
-              <summary class="px-3 py-2.5 text-sm text-[#525252] hover:text-[#0d0d0d] hover:bg-[#f7f7f5] rounded-lg transition-colors cursor-pointer list-none flex justify-between items-center">
-                Clients
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-              </summary>
-              <div class="pl-4 mt-0.5 flex flex-col gap-0.5">
-                <a href="{% url 'customers:dashboard' %}" class="px-3 py-2 text-sm text-[#525252] hover:bg-[#f7f7f5] rounded-lg transition-colors">Dashboard</a>
-                <a href="{% url 'customers:projects' %}" class="px-3 py-2 text-sm text-[#525252] hover:bg-[#f7f7f5] rounded-lg transition-colors">Projets</a>
-                <a href="{% url 'customers:invoices' %}" class="px-3 py-2 text-sm text-[#525252] hover:bg-[#f7f7f5] rounded-lg transition-colors">Factures</a>
-                <a href="{% url 'customers:search' %}" class="px-3 py-2 text-sm text-[#525252] hover:bg-[#f7f7f5] rounded-lg transition-colors">Recherche</a>
-              </div>
-            </details>
-            {% endif %}
-            <!-- Mobile search -->
-            <form action="{% url 'search' %}" method="get" class="sm:hidden px-3 pt-3 relative">
-              <input type="text" placeholder="Rechercher…" name="query"
-                     class="w-full pl-9 pr-4 py-2 border border-[#e5e5e5] rounded-full text-sm bg-[#f7f7f5] focus:outline-none focus:border-emerald-400 focus:bg-white transition-all duration-200" />
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 absolute left-6 top-1/2 mt-1.5 -translate-y-1/2 text-[#6b7280]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-              </svg>
-            </form>
-          </nav>
-        </div>
-      </div>
-    </header>
-
-    <!-- Page banner (overrideable by home page for custom hero) -->
+    <!-- Page banner (overridable by pages for a custom hero) -->
     {% block banner %}
-    <div class="bg-[#f7f7f5] border-b border-[#e5e5e5]">
-      <div class="max-w-7xl mx-auto px-6 py-12 md:py-16">
+    <section class="page-head">
+      <div class="container">
         {% block banner_eyebrow %}{% endblock %}
-        <h1 class="section-headline text-3xl md:text-4xl mt-2">
-          {% block banner_title %}{{ page.title }}{% endblock %}
-        </h1>
+        <h1 class="display h-page">{% block banner_title %}{{ page.title }}{% endblock %}</h1>
         {% block banner_text %}
         {% if page.header %}
-        <div class="mt-4 text-[#525252] max-w-2xl leading-relaxed">
-          {{ page.header|richtext }}
-        </div>
+        <p class="lead">{{ page.header|richtext|striptags }}</p>
         {% endif %}
         {% endblock %}
         {% block extra_intro %}{% endblock %}
       </div>
-    </div>
+    </section>
     {% endblock %}
 
     <!-- Main Content -->
-    <main class="{% block main_class %}max-w-5xl mx-auto px-6 py-16 w-full{% endblock %} grow">
-      {% block content %}{% endblock %}
+    <main>
+      <div class="{% block main_class %}container py-5{% endblock %}">
+        {% block content %}{% endblock %}
+      </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-[#0d0d0d] text-white">
-      <div class="h-0.5 bg-emerald-500"></div>
-      <div class="max-w-7xl mx-auto px-6 py-16">
-        <div class="flex flex-col md:flex-row justify-between gap-12 mb-12">
+    {% include 'includes/footer.html' %}
 
-          <!-- Branding -->
-          <div class="max-w-xs">
-            <div class="flex items-center gap-2.5 mb-4">
-              <div class="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg flex items-center justify-center">
-                <span class="text-white font-bold text-sm font-display">PG</span>
-              </div>
-              <span class="text-base font-bold font-display">PyGabDev</span>
-            </div>
-            <p class="text-sm text-[#6b7280] leading-relaxed">
-              Développeur web passionné, spécialisé en Django et Python.
-              Je crée des solutions web modernes et performantes.
-            </p>
-          </div>
-
-          <!-- Links -->
-          <div class="flex flex-wrap gap-12">
-            <div>
-              <h3 class="text-xs font-semibold uppercase tracking-widest text-[#6b7280] mb-4">Navigation</h3>
-              <ul class="space-y-2">
-                <li><a href="{% slugurl 'index' %}" class="text-sm text-[#9ca3af] hover:text-white transition-colors">Accueil</a></li>
-                <li><a href="{% slugurl 'projets' %}" class="text-sm text-[#9ca3af] hover:text-white transition-colors">Projets</a></li>
-                <li><a href="{% slugurl 'blog' %}" class="text-sm text-[#9ca3af] hover:text-white transition-colors">Blog</a></li>
-                <li><a href="{% slugurl 'contact' %}" class="text-sm text-[#9ca3af] hover:text-white transition-colors">Contact</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 class="text-xs font-semibold uppercase tracking-widest text-[#6b7280] mb-4">Réseaux</h3>
-              <ul class="space-y-2">
-                <li><a href="https://github.com/gabigab117" target="_blank" rel="noopener noreferrer" class="text-sm text-[#9ca3af] hover:text-white transition-colors">GitHub</a></li>
-                <li><a href="https://x.com/GabrielTrouve" target="_blank" rel="noopener noreferrer" class="text-sm text-[#9ca3af] hover:text-white transition-colors">X (Twitter)</a></li>
-                <li><a href="https://www.linkedin.com/in/gabriel-trouv%C3%A9-b6a2bb159/" target="_blank" rel="noopener noreferrer" class="text-sm text-[#9ca3af] hover:text-white transition-colors">LinkedIn</a></li>
-                <li><a href="https://www.youtube.com/@gabrieltrouve2801" target="_blank" rel="noopener noreferrer" class="text-sm text-[#9ca3af] hover:text-white transition-colors">YouTube</a></li>
-              </ul>
-            </div>
-            <div>
-              <h3 class="text-xs font-semibold uppercase tracking-widest text-[#6b7280] mb-4">Légal</h3>
-              <ul class="space-y-2">
-                <li><a href="{% slugurl 'legal' %}" class="text-sm text-[#9ca3af] hover:text-white transition-colors">Mentions légales</a></li>
-                <li><a href="{{ url_cookies }}" class="text-sm text-[#9ca3af] hover:text-white transition-colors">Cookies</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div class="border-t border-white/10 pt-8 text-center">
-          <p class="text-xs text-[#6b7280]">© {% now "Y" %} PyGabDev. Tous droits réservés.</p>
-        </div>
-      </div>
-    </footer>
-
-    <script>
-      const btn = document.getElementById('mobile-menu-btn');
-      const menu = document.getElementById('mobile-menu');
-      const iconOpen = document.getElementById('icon-open');
-      const iconClose = document.getElementById('icon-close');
-      if (btn) {
-        btn.addEventListener('click', function () {
-          menu.classList.toggle('hidden');
-          iconOpen.classList.toggle('hidden');
-          iconClose.classList.toggle('hidden');
-        });
-      }
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/script.js' %}"></script>
 
     {% static "cookie_consent/cookiebar.module.js" as cookiebar_src %}
     {% url 'cookie_consent_status' as status_url %}

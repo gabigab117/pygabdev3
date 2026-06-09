@@ -1,9 +1,20 @@
 {% extends 'base.html' %}
 {% load wagtailcore_tags %}
-{% block banner_eyebrow %}<p class="section-eyebrow">Contact</p>{% endblock %}
-{% block banner_text %}Votre message est bien envoyé{% endblock %}
+
+{% block banner_eyebrow %}<span class="eyebrow bare">Contact</span>{% endblock %}
+{% block banner_title %}Message envoyé{% endblock %}
+{% block banner_text %}{% endblock %}
+
 {% block content %}
-<div>
-  <p class="text-[#525252]">{{ page.thank_you_text|safe }}</p>
+<div class="row justify-content-center">
+  <div class="col-lg-7">
+    <div class="card">
+      <div class="card-body text-center">
+        <div class="prose" style="font-size:17px; color:var(--ink-2);">
+          {{ page.thank_you_text|richtext }}
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}

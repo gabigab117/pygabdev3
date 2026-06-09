@@ -1,45 +1,47 @@
 {% extends 'base.html' %}
-{% load wagtailcore_tags %}
-{% load wagtailimages_tags %}
+{% load wagtailcore_tags wagtailimages_tags %}
 
-{% block banner_eyebrow %}<p class="section-eyebrow">Portfolio</p>{% endblock %}
+{% block banner_eyebrow %}<span class="eyebrow bare">Portfolio</span>{% endblock %}
 
 {% block content %}
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+{% if foliopages %}
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
   {% for project in foliopages %}
-  <article class="group content-card {% if forloop.first %}sm:col-span-2{% endif %}">
-    {% if project.main_image %}
-    <a href="{% pageurl project %}" class="block overflow-hidden">
-      {% if forloop.first %}
-      {% image project.main_image width-1000 class='w-full h-72 lg:h-96 object-cover transition-transform duration-500 group-hover:scale-[1.02]' alt=project.main_image.title %}
-      {% else %}
-      {% image project.main_image width-600 class='w-full h-56 object-cover transition-transform duration-500 group-hover:scale-[1.02]' alt=project.main_image.title %}
+  <div class="col">
+    <article class="card card-hover h-100">
+      {% if project.main_image %}
+      <a href="{% pageurl project %}">
+        <div class="thumb">{% image project.main_image fill-720x450 alt=project.title %}</div>
+      </a>
       {% endif %}
-    </a>
-    {% endif %}
-    <div class="p-6 {% if forloop.first %}grid sm:grid-cols-2 gap-4 items-start{% endif %}">
-      <div>
-        <p class="text-xs text-[#6b7280] mb-2">{{ project.date }}</p>
-        <h2 class="font-bold text-[#0d0d0d] font-display {% if forloop.first %}text-2xl{% else %}text-lg{% endif %} mb-2 group-hover:text-emerald-600 transition-colors line-clamp-2">
-          <a href="{% pageurl project %}">{{ project.title }}</a>
-        </h2>
-        <p class="text-sm text-[#525252] leading-relaxed line-clamp-2">{{ project.header|richtext|striptags|truncatewords:20 }}</p>
+      <div class="card-body d-flex flex-column gap-3">
+        <div class="meta">
+          <span>{{ project.date|date:"d M Y" }}</span>
+          {% if project.github or project.youtube or project.production %}
+          <span class="sepdot"></span>
+          <span class="d-flex gap-2">
+            {% if project.github %}<a href="{{ project.github }}" target="_blank" rel="noopener noreferrer" style="color:var(--ink-3);" aria-label="GitHub"><i class="bi bi-github"></i></a>{% endif %}
+            {% if project.youtube %}<a href="{{ project.youtube }}" target="_blank" rel="noopener noreferrer" style="color:var(--ink-3);" aria-label="YouTube"><i class="bi bi-youtube"></i></a>{% endif %}
+            {% if project.production %}<a href="{{ project.production }}" target="_blank" rel="noopener noreferrer" style="color:var(--ink-3);" aria-label="Voir le site"><i class="bi bi-box-arrow-up-right"></i></a>{% endif %}
+          </span>
+          {% endif %}
+        </div>
+        <h2 class="card-title"><a href="{% pageurl project %}">{{ project.title }}</a></h2>
+        <p class="card-text">{{ project.header|richtext|striptags|truncatewords:22 }}</p>
+        <a class="btn-text mt-auto" href="{% pageurl project %}">Voir le projet →</a>
       </div>
-      <div class="{% if forloop.first %}flex sm:justify-end sm:items-start{% else %}mt-4{% endif %}">
-        <a href="{% pageurl project %}" class="btn-ghost text-xs">Voir le projet →</a>
-      </div>
-    </div>
-  </article>
-  {% empty %}
-  <div class="col-span-full text-center py-16">
-    <div class="w-14 h-14 bg-[#f7f7f5] rounded-full flex items-center justify-center mx-auto mb-4 border border-[#e5e5e5]">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-[#9ca3af]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
-      </svg>
-    </div>
-    <h3 class="font-bold text-[#0d0d0d] mb-2">Aucun projet pour le moment</h3>
-    <p class="text-sm text-[#525252]">Les premiers projets seront bientôt disponibles.</p>
+    </article>
   </div>
   {% endfor %}
 </div>
+
+{% else %}
+<div class="empty-state">
+  <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="color:var(--ink-3)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+  <p class="es-title">Aucun projet pour le moment</p>
+  <p>Les premiers projets seront bientôt disponibles.</p>
+</div>
+{% endif %}
+
 {% endblock %}

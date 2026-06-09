@@ -1,0 +1,39 @@
+{% load static wagtailcore_tags %}
+{% slugurl 'index' as url_index %}
+{% slugurl 'projets' as url_projets %}
+{% slugurl 'blog' as url_blog %}
+{% slugurl 'contact' as url_contact %}
+{% url "cookie_consent_cookie_group_list" as url_cookies %}
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="foottop row g-4">
+      <div class="col-lg-6">
+        <div class="brand"><span class="mark">PG</span> PyGabDev</div>
+        <p>Développeur web passionné, spécialisé en Django et Python. Je crée des solutions web modernes et performantes.</p>
+        <div class="social">
+          <a href="https://github.com/gabigab117" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="bi bi-github"></i></a>
+          <a href="https://x.com/GabrielTrouve" target="_blank" rel="noopener noreferrer" aria-label="X"><i class="bi bi-twitter-x"></i></a>
+          <a href="https://www.linkedin.com/in/gabriel-trouv%C3%A9-b6a2bb159/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+          <a href="https://www.youtube.com/@gabrieltrouve2801" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3 footer-col">
+        <p class="footer-col-label">Navigation</p>
+        <a href="{{ url_index }}">Accueil</a>
+        <a href="{{ url_projets }}">Projets</a>
+        <a href="{{ url_blog }}">Blog</a>
+        <a href="{{ url_contact }}">Contact</a>
+      </div>
+      <div class="col-6 col-lg-3 footer-col">
+        <p class="footer-col-label">Légal</p>
+        <a href="{% slugurl 'legal' %}">Mentions légales</a>
+        <a href="{{ url_cookies }}">Cookies</a>
+      </div>
+    </div>
+    <div class="footer-base">
+      <span>© {% now "Y" %} PyGabDev. Tous droits réservés.</span>
+      <span>Conçu &amp; développé avec Django · Wagtail</span>
+    </div>
+  </div>
+</footer>

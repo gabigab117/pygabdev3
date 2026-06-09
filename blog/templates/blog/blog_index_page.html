@@ -1,106 +1,58 @@
 {% extends 'base.html' %}
-{% load wagtailcore_tags %}
-{% load wagtailimages_tags %}
+{% load wagtailcore_tags wagtailimages_tags %}
 
-{% block banner_eyebrow %}<p class="section-eyebrow">Blog</p>{% endblock %}
+{% block banner_eyebrow %}<span class="eyebrow bare">Blog</span>{% endblock %}
 
 {% block content %}
 
-{% for post in blogpages %}
-
-  {% if forloop.first %}
-  <!-- Featured article (first) -->
-  <article class="group mb-12">
-    <a href="{% pageurl post %}" class="block">
+{% if blogpages %}
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+  {% for post in blogpages %}
+  <div class="col">
+    <article class="card card-hover h-100">
       {% if post.main_image %}
-      <div class="rounded-xl overflow-hidden border border-[#e5e5e5] mb-6">
-        {% image post.main_image width-1000 class='w-full h-72 lg:h-96 object-cover' alt=post.main_image.title %}
-      </div>
+      <a href="{% pageurl post %}">
+        <div class="thumb">{% image post.main_image fill-720x450 alt=post.title %}</div>
+      </a>
       {% endif %}
-      <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
-        <div class="flex-1">
-          <p class="text-xs text-[#6b7280] mb-2">{{ post.date|date:"d F Y" }} &middot; {{ post.owner }}</p>
-          <h2 class="section-headline text-2xl lg:text-3xl mb-3 group-hover:text-emerald-600 transition-colors">{{ post.title }}</h2>
-          <p class="text-[#525252] leading-relaxed line-clamp-2">{{ post.header|richtext|striptags|truncatewords:25 }}</p>
+      <div class="card-body d-flex flex-column gap-3">
+        <div class="meta">
+          <span>{{ post.date|date:"d M Y" }}</span>
+          <span class="sepdot"></span>
+          <span class="author">{{ post.owner }}</span>
         </div>
-        <span class="btn-ghost flex-shrink-0 self-start mt-1">Lire →</span>
+        <h2 class="card-title"><a href="{% pageurl post %}">{{ post.title }}</a></h2>
+        <p class="card-text">{{ post.header|richtext|striptags|truncatewords:22 }}</p>
+        {% with tags=post.tags.all %}{% if tags %}
+        <div class="tags">
+          {% for tag in tags|slice:":3" %}<span class="tag">{{ tag }}</span>{% endfor %}
+        </div>
+        {% endif %}{% endwith %}
+        <a class="btn-text mt-auto" href="{% pageurl post %}">Lire l'article →</a>
       </div>
-    </a>
-    {% if post.categories.all %}
-    <div class="flex flex-wrap gap-2 mt-4">
-      {% for cat in post.categories.all|slice:":3" %}
-      <span class="px-3 py-1 bg-emerald-50 text-emerald-700 text-xs font-medium rounded-full border border-emerald-100">{{ cat.name }}</span>
-      {% endfor %}
-    </div>
-    {% endif %}
-  </article>
-
-  {% if blogpages|length > 1 %}
-  <div class="border-t border-[#e5e5e5] mb-12"></div>
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
-  {% endif %}
-
-  {% else %}
-  <!-- Regular cards -->
-  <article class="group content-card">
-    {% if post.main_image %}
-    <a href="{% pageurl post %}">
-      {% image post.main_image width-600 class='w-full h-48 object-cover' alt=post.main_image.title %}
-    </a>
-    {% endif %}
-    <div class="p-6">
-      <p class="text-xs text-[#6b7280] mb-2">{{ post.date|date:"d M Y" }} &middot; {{ post.owner }}</p>
-      <h3 class="font-bold text-[#0d0d0d] font-display text-lg mb-3 group-hover:text-emerald-600 transition-colors line-clamp-2">
-        <a href="{% pageurl post %}">{{ post.title }}</a>
-      </h3>
-      <p class="text-sm text-[#525252] leading-relaxed line-clamp-3 mb-4">{{ post.header|richtext|striptags|truncatewords:20 }}</p>
-      <div class="flex justify-between items-center">
-        <a href="{% pageurl post %}" class="btn-ghost text-xs">Lire →</a>
-        {% if post.categories.all %}
-        {% for cat in post.categories.all|slice:":1" %}
-        <span class="px-2 py-0.5 bg-emerald-50 text-emerald-700 text-xs font-medium rounded-full border border-emerald-100">{{ cat.name }}</span>
-        {% endfor %}
-        {% endif %}
-      </div>
-    </div>
-  </article>
-
-  {% if forloop.last %}
+    </article>
   </div>
-  {% endif %}
-
-  {% endif %}
-
-{% empty %}
-<div class="text-center py-16">
-  <div class="w-14 h-14 bg-[#f7f7f5] rounded-full flex items-center justify-center mx-auto mb-4 border border-[#e5e5e5]">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-[#9ca3af]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2 2 0 00-2-2h-2"/>
-    </svg>
-  </div>
-  <h3 class="font-bold text-[#0d0d0d] mb-2">Aucun article pour le moment</h3>
-  <p class="text-[#525252] text-sm">Les premiers articles seront bientôt disponibles.</p>
+  {% endfor %}
 </div>
-{% endfor %}
 
-<!-- Pagination -->
 {% if is_paginated %}
-<nav class="flex justify-center items-center gap-3 mt-12">
+<nav class="pager" aria-label="Pagination">
   {% if page_obj.has_previous %}
-  <a href="?page={{ page_obj.previous_page_number }}" class="btn-ghost">← Précédent</a>
+  <a href="?page={{ page_obj.previous_page_number }}">‹</a>
   {% endif %}
-  <span class="text-sm text-[#6b7280]">Page {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+  <span class="cur">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
   {% if page_obj.has_next %}
-  <a href="?page={{ page_obj.next_page_number }}" class="btn-ghost">Suivant →</a>
+  <a href="?page={{ page_obj.next_page_number }}">›</a>
   {% endif %}
 </nav>
 {% endif %}
 
-<!-- CTA -->
-<div class="border border-[#e5e5e5] rounded-xl p-8 mt-16 text-center bg-[#f7f7f5]">
-  <p class="section-eyebrow mb-2">Travaillons ensemble</p>
-  <h3 class="section-headline text-2xl mb-4">Vous avez un projet en tête ?</h3>
-  <a href="{% slugurl 'contact' %}" class="btn-primary inline-flex">Me contacter</a>
+{% else %}
+<div class="empty-state">
+  <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="color:var(--ink-3)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2 2 0 00-2-2h-2"/></svg>
+  <p class="es-title">Aucun article pour le moment</p>
+  <p>Les premiers articles seront bientôt disponibles.</p>
 </div>
+{% endif %}
 
 {% endblock %}

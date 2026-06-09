@@ -1,106 +1,181 @@
 {% extends 'base.html' %}
-{% load wagtailcore_tags %}
+{% load static wagtailcore_tags %}
 {% load wagtailimages_tags %}
 
-{% block main_class %}w-full{% endblock %}
+{% block main_class %}{% endblock %}
 
 {% block banner %}
-<!-- Hero -->
-<div class="bg-white border-b border-[#e5e5e5]">
-  <div class="max-w-7xl mx-auto px-6 py-20 lg:py-28">
-    <div class="max-w-2xl">
-      <p class="section-eyebrow">Développeur Full-Stack Django</p>
-      <h1 class="section-headline text-5xl lg:text-6xl mt-3 mb-6">{{ page.title }}</h1>
-      {% if page.header %}
-      <div class="text-lg text-[#525252] leading-relaxed mb-8 max-w-xl">
-        {{ page.header|richtext|striptags }}
+<!-- ============ HERO (éditorial asymétrique) ============ -->
+<section class="hero">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6 hero-copy">
+        <span class="eyebrow">Django · Wagtail · DRF · Mentor Python</span>
+        <h1 class="display h-hero">Salut, moi c'est <span class="muted">Gabriel.</span></h1>
+        <p class="lead">
+          {% if page.header %}{{ page.header|richtext|striptags }}{% else %}Développeur freelance spécialisé en Python &amp; Django. J'accompagne les entreprises dans la conception de leurs applications web — et je transmets ce que j'apprends à la communauté.{% endif %}
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary btn-lg" href="{% slugurl 'projets' %}">Voir mes projets <span class="arr">→</span></a>
+          <a class="btn btn-ghost btn-lg" href="{% slugurl 'contact' %}">Me contacter</a>
+        </div>
+        <div class="tags">
+          <span class="tag">Django</span>
+          <span class="tag">Python</span>
+          <span class="tag">Wagtail</span>
+          <span class="tag">DRF</span>
+          <span class="tag">Mentor</span>
+        </div>
       </div>
-      {% endif %}
-      <div class="flex flex-wrap items-center gap-4">
-        <a href="{% slugurl 'contact' %}" class="btn-primary">Me contacter</a>
-        <a href="{% slugurl 'projets' %}" class="btn-ghost">Voir mes projets →</a>
-      </div>
-      <!-- Tech badges -->
-      <div class="flex flex-wrap gap-2 mt-10">
-        <span class="inline-flex items-center px-3 py-1 bg-[#0d0d0d] text-white text-xs font-medium rounded-full">Django</span>
-        <span class="inline-flex items-center px-3 py-1 bg-[#0d0d0d] text-white text-xs font-medium rounded-full">Python</span>
-        <span class="inline-flex items-center px-3 py-1 bg-[#0d0d0d] text-white text-xs font-medium rounded-full">Wagtail</span>
-        <span class="inline-flex items-center px-3 py-1 bg-[#0d0d0d] text-white text-xs font-medium rounded-full">Tailwind CSS</span>
-        <span class="inline-flex items-center px-3 py-1 bg-[#0d0d0d] text-white text-xs font-medium rounded-full">Formation</span>
+      <div class="col-lg-6">
+        <div class="hero-visual">
+          <div class="hero-composition">
+            <div class="hc-bg-grid"></div>
+            <div class="hc-glow-l"></div>
+            <div class="hc-glow-r"></div>
+            <div class="hc-vignette"></div>
+            <div class="hc-layout">
+              <div class="hc-photo-wrap">
+                <div class="hc-photo-halo"></div>
+                <div class="hc-ring">
+                  <div class="hc-ring-inner">
+                    <img class="hc-photo" src="{% static 'logos/profile.jpg' %}" alt="Gabriel Trouvé">
+                  </div>
+                </div>
+              </div>
+              <div class="hc-cards">
+                <div class="hc-card hc-card-python">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python">
+                  <span>Python</span>
+                </div>
+                <div class="hc-card hc-card-django">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/django/django-plain-wordmark.svg" alt="Django">
+                  <span>Django</span>
+                </div>
+                <div class="hc-card hc-card-vue">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vuejs/vuejs-original.svg" alt="Vue.js">
+                  <span>Vue.js</span>
+                </div>
+                <div class="hc-card hc-card-nuxt">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nuxtjs/nuxtjs-original.svg" alt="Nuxt.js">
+                  <span>Nuxt.js</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</section>
 {% endblock %}
 
 {% block content %}
-
-{% if project %}
-<!-- Section Dernier Projet -->
-<section class="feature-section bg-[#f7f7f5] border-b border-[#e5e5e5] -mx-6 px-6">
-  <div class="max-w-7xl mx-auto">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-      <!-- Image -->
-      {% if project.main_image %}
-      <div class="rounded-xl overflow-hidden border border-[#e5e5e5]">
-        {% image project.main_image width-700 class='w-full h-72 lg:h-96 object-cover' alt=project.main_image.title %}
-      </div>
-      {% endif %}
-      <!-- Text -->
+{% if recent_projects %}
+<!-- ============ PROJETS RÉCENTS (scroller horizontal) ============ -->
+<section class="section-sm band">
+  <div class="container">
+    <div class="scroller-head">
       <div>
-        <p class="section-eyebrow">Dernier projet</p>
-        <h2 class="section-headline text-3xl lg:text-4xl mt-3 mb-5">{{ project.title }}</h2>
-        <p class="text-[#525252] leading-relaxed mb-8">
-          {{ project.header|richtext|striptags|truncatewords:30 }}
-        </p>
-        <a href="{% pageurl project %}" class="btn-ghost">Voir le projet →</a>
+        <span class="eyebrow">Sélection</span>
+        <h2 class="h-sec">Projets récents</h2>
       </div>
+      <div class="d-flex align-items-center gap-3">
+        <a class="btn-text d-none d-sm-inline-flex" href="{% slugurl 'projets' %}">Tous les projets →</a>
+        <div class="scroller-btns">
+          <button class="scroll-btn" data-scroll="prev" aria-label="Précédent">‹</button>
+          <button class="scroll-btn" data-scroll="next" aria-label="Suivant">›</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container" data-scroller>
+    <div class="scroller-track">
+      {% for p in recent_projects %}
+      <article class="card card-hover">
+        <a href="{% pageurl p %}">
+          {% if p.main_image %}
+          <div class="thumb">{% image p.main_image fill-720x450 alt=p.title %}</div>
+          {% else %}
+          <div class="ph thumb" data-label="Capture projet"></div>
+          {% endif %}
+        </a>
+        <div class="card-body d-flex flex-column gap-3">
+          <div class="meta"><span>{{ p.date|date:"d M Y" }}</span></div>
+          <h3 class="card-title"><a href="{% pageurl p %}">{{ p.title }}</a></h3>
+          <p class="card-text">{{ p.header|richtext|striptags|truncatewords:20 }}</p>
+          <a class="btn-text mt-auto" href="{% pageurl p %}">Voir le projet →</a>
+        </div>
+      </article>
+      {% endfor %}
     </div>
   </div>
 </section>
 {% endif %}
 
-{% if last_article %}
-<!-- Section Dernier Article -->
-<section class="feature-section bg-white border-b border-[#e5e5e5] -mx-6 px-6">
-  <div class="max-w-7xl mx-auto">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-      <!-- Text -->
-      <div class="lg:order-first">
-        <p class="section-eyebrow">Dernier article</p>
-        <h2 class="section-headline text-3xl lg:text-4xl mt-3 mb-2">{{ last_article.title }}</h2>
-        <p class="text-xs text-[#6b7280] mt-2 mb-5">{{ last_article.date|date:"d F Y" }} &middot; {{ last_article.owner }}</p>
-        <p class="text-[#525252] leading-relaxed mb-8">
-          {{ last_article.header|richtext|striptags|truncatewords:30 }}
-        </p>
-        <a href="{% pageurl last_article %}" class="btn-ghost">Lire l'article →</a>
-      </div>
-      <!-- Image -->
-      {% if last_article.main_image %}
-      <div class="rounded-xl overflow-hidden border border-[#e5e5e5] lg:order-last">
-        {% image last_article.main_image width-700 class='w-full h-72 lg:h-96 object-cover' alt=last_article.main_image.title %}
+<!-- ============ BLOG + À PROPOS teaser ============ -->
+<section class="section">
+  <div class="container">
+    <div class="row g-4 align-items-stretch">
+      {% if last_article %}
+      <div class="col-lg-7">
+        <article class="card card-hover h-100">
+          <div class="row g-0 h-100">
+            <div class="col-sm-5">
+              <a href="{% pageurl last_article %}" class="d-block h-100">
+                {% if last_article.main_image %}
+                <div class="thumb h-100" style="border-radius:0; min-height:220px; aspect-ratio:auto;">{% image last_article.main_image fill-560x600 alt=last_article.title %}</div>
+                {% else %}
+                <div class="ph h-100 thumb" data-label="Cover article" style="border-radius:0; min-height:220px;"></div>
+                {% endif %}
+              </a>
+            </div>
+            <div class="col-sm-7">
+              <div class="card-body d-flex flex-column gap-3 h-100">
+                <span class="eyebrow bare">Dernière publication</span>
+                <div class="meta"><span>{{ last_article.date|date:"d M Y" }}</span><span class="sepdot"></span><span class="author">{{ last_article.owner }}</span></div>
+                <h3 class="card-title"><a href="{% pageurl last_article %}">{{ last_article.title }}</a></h3>
+                <p class="card-text">{{ last_article.header|richtext|striptags|truncatewords:28 }}</p>
+                <a class="btn-text mt-auto" href="{% pageurl last_article %}">Lire l'article →</a>
+              </div>
+            </div>
+          </div>
+        </article>
       </div>
       {% endif %}
+      <div class="{% if last_article %}col-lg-5{% else %}col-12{% endif %}">
+        <div class="card h-100">
+          <div class="card-body d-flex flex-column gap-3">
+            <span class="eyebrow bare">À propos</span>
+            <h3 class="h-sec" style="font-size:26px;">Code &amp; transmission.</h3>
+            <div class="card-text" style="font-size:16px;">
+              {% if page.body %}{{ page.body|richtext|striptags|truncatewords:40 }}{% else %}Expert Django, DRF et Wagtail, je m'investis aussi dans le partage : mentor sur Docstring, speaker en meetup et membre de la Django Software Foundation.{% endif %}
+            </div>
+            <div class="tags">
+              <span class="tag soft">Mentor Docstring</span>
+              <span class="tag soft">PyCon FR</span>
+              <span class="tag soft">DSF</span>
+            </div>
+            <a class="btn btn-ghost mt-auto align-self-start" href="{% slugurl 'contact' %}">Me contacter</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
-{% endif %}
 
-<!-- Section À propos -->
-<section class="feature-section bg-[#f7f7f5] -mx-6 px-6">
-  <div class="max-w-3xl mx-auto text-center">
-    <div class="w-14 h-14 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6">
-      <span class="text-white font-bold text-lg font-display">PG</span>
-    </div>
-    <p class="section-eyebrow mb-3">À propos</p>
-    <h2 class="section-headline text-3xl lg:text-4xl mb-6">À propos de moi</h2>
-    <div class="prose prose-lg max-w-none text-[#525252] prose-p:text-[#525252] prose-a:text-emerald-600 prose-a:no-underline prose-strong:text-[#0d0d0d]">
-      {{ page.body|richtext }}
-    </div>
-    <div class="mt-10">
-      <a href="{% slugurl 'contact' %}" class="btn-primary">Me contacter</a>
+<!-- ============ CTA band ============ -->
+<section class="section-sm">
+  <div class="container">
+    <div class="cta-band">
+      <span class="eyebrow bare" style="color:#9aa6ff; justify-content:center;">Un projet en tête ?</span>
+      <h2>Construisons quelque chose de solide.</h2>
+      <p>Application web, API, site éditorial ou accompagnement technique — parlons-en.</p>
+      <div class="d-flex justify-content-center gap-3 flex-wrap">
+        <a class="btn btn-primary btn-lg" href="{% slugurl 'contact' %}">Me contacter <span class="arr">→</span></a>
+        <a class="btn btn-ghost btn-lg" href="{% slugurl 'projets' %}">Voir mes réalisations</a>
+      </div>
     </div>
   </div>
 </section>
-
 {% endblock %}
