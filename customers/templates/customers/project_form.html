@@ -1,34 +1,26 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
-{% block title %}
-{{ status }}
-{% endblock %}
+{% block title %}{{ status }}{% endblock %}
 
-{% block banner_title %}Projets{% endblock %}
-{% block banner_text %}{{ status }}{% endblock %}
+{% block banner_eyebrow %}<span class="eyebrow bare">Projets</span>{% endblock %}
+{% block banner_title %}{{ status }}{% endblock %}
+{% block banner_text %}{% endblock %}
 
 {% block content %}
-<div class="max-w-2xl mx-auto">
-    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
-        <form method="post" class="space-y-6">
-            {% csrf_token %}
-            
-            <div class="space-y-4">
-                {{ form|crispy }}
-            </div>
-
-            <div class="flex gap-3 pt-6 border-t border-gray-200">
-                <a href="{% url 'customers:projects' %}" class="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium text-center">
-                    Annuler
-                </a>
-                <button type="submit" class="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium flex items-center justify-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                    </svg>
-                    Enregistrer
-                </button>
-            </div>
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card">
+      <div class="card-body">
+        <form method="post">
+          {% csrf_token %}
+          {{ form|crispy }}
+          <div class="d-flex gap-3 pt-4 mt-2 border-top" style="border-color:var(--border)!important;">
+            <a href="{% url 'customers:projects' %}" class="btn btn-ghost">Annuler</a>
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+          </div>
         </form>
+      </div>
     </div>
+  </div>
 </div>
 {% endblock %}

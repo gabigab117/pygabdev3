@@ -2,82 +2,66 @@
 {% load static wagtailcore_tags wagtailimages_tags %}
 
 {% block title %}Recherche{% endblock %}
-{% block banner_title %}Recherche{% endblock %}
-{% block banner_text %}Moteur de recherche{% endblock %}
+{% block banner_eyebrow %}<span class="eyebrow bare">Recherche</span>{% endblock %}
+{% block banner_title %}Résultats{% endblock %}
+{% block banner_text %}
+{% if search_query %}<p class="lead">Résultats pour « {{ search_query }} »</p>{% endif %}
+{% endblock %}
 
 {% block content %}
 <div>
     {% if search_results %}
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {% for result in search_results %}
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group">
-            <div class="p-6">
-                <h2 class="text-lg font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
-                    <a href="{% pageurl result %}">{{ result }}</a>
-                </h2>
-                {% if result.search_description %}
-                <div class="text-gray-600 mb-4 text-sm leading-relaxed line-clamp-3">
-                    {{ result.search_description|truncatewords:20 }}
-                </div>
-                {% endif %}
-                <div class="flex justify-end">
-                    <a href="{% pageurl result %}" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold text-sm group/link">
-                        Voir plus
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform group-hover/link:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                    </a>
+        <div class="col">
+            <div class="card card-hover h-100">
+                <div class="card-body d-flex flex-column gap-3">
+                    <h2 class="card-title mb-0">
+                        <a href="{% pageurl result %}">{{ result }}</a>
+                    </h2>
+                    {% if result.search_description %}
+                    <p class="card-text">{{ result.search_description|truncatewords:20 }}</p>
+                    {% endif %}
+                    <a href="{% pageurl result %}" class="btn-text mt-auto">Voir plus →</a>
                 </div>
             </div>
         </div>
         {% empty %}
-        <div class="col-span-full text-center py-8">
-            <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        <div class="col-12">
+            <div class="empty-state">
+                <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="color:var(--ink-3)">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                 </svg>
+                <p class="es-title">Aucun résultat trouvé</p>
+                <p>Essayez avec d'autres termes de recherche.</p>
             </div>
-            <h3 class="text-lg font-medium text-gray-900 mb-2">Aucun résultat trouvé</h3>
-            <p class="text-gray-600">Essayez avec d'autres termes de recherche.</p>
         </div>
         {% endfor %}
     </div>
 
     {% if search_results.has_previous or search_results.has_next %}
-    <div class="flex justify-center mt-8 space-x-4">
+    <nav class="pager" aria-label="Pagination">
         {% if search_results.has_previous %}
-        <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.previous_page_number }}"
-           class="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors font-medium text-sm">
-            Précédent
-        </a>
+        <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.previous_page_number }}">← Précédent</a>
         {% else %}
-        <button class="px-4 py-2 rounded-lg bg-gray-200 text-gray-400 cursor-not-allowed font-medium text-sm"
-                disabled>Précédent
-        </button>
+        <span style="opacity:.45; pointer-events:none;">← Précédent</span>
         {% endif %}
 
         {% if search_results.has_next %}
-        <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.next_page_number }}"
-           class="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors font-medium text-sm">
-            Suivant
-        </a>
+        <a href="{% url 'search' %}?query={{ search_query|urlencode }}&amp;page={{ search_results.next_page_number }}">Suivant →</a>
         {% else %}
-        <button class="px-4 py-2 rounded-lg bg-gray-200 text-gray-400 cursor-not-allowed font-medium text-sm"
-                disabled>Suivant
-        </button>
+        <span style="opacity:.45; pointer-events:none;">Suivant →</span>
         {% endif %}
-    </div>
+    </nav>
     {% endif %}
 
     {% elif search_query %}
-    <div class="text-center py-12">
-        <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-        </div>
-        <h3 class="text-lg font-medium text-gray-900 mb-2">Pas de résultats</h3>
-        <p class="text-gray-600">Essayez avec d'autres termes de recherche.</p>
+    <div class="empty-state">
+        <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="color:var(--ink-3)">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        </svg>
+        <p class="es-title">Pas de résultats</p>
+        <p>Essayez avec d'autres termes de recherche.</p>
     </div>
     {% endif %}
 </div>

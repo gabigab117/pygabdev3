@@ -1,11 +1,14 @@
 {% extends 'base.html' %}
 {% load wagtailcore_tags %}
 
+{% block banner_eyebrow %}<span class="eyebrow bare">Légal</span>{% endblock %}
+
 {% block content %}
-
-    <div class="prose prose-lg max-w-none text-justify">
-        {{ page.body|richtext }}
+<div class="row justify-content-center">
+  <div class="col-lg-9">
+    <div class="prose">
+      {{ page.body|richtext }}
     </div>
-
-
+  </div>
+</div>
 {% endblock %}

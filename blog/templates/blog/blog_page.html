@@ -1,46 +1,41 @@
 {% extends 'base.html' %}
-{% load wagtailcore_tags %}
-{% load wagtailimages_tags %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block banner %}
+{% if page.main_image %}
+<div style="width:100%;max-height:420px;overflow:hidden;line-height:0;">
+  {% image page.main_image fill-1280x480 alt=page.title style="width:100%;height:100%;object-fit:cover;display:block;max-height:420px;" %}
+</div>
+{% endif %}
+<section class="page-head">
+  <div class="container">
+    <span class="eyebrow bare">Article</span>
+    <h1 class="display h-page">{{ page.title }}</h1>
+    <div class="meta mt-3">
+      <span>{{ page.date|date:"d F Y" }}</span>
+      <span class="sepdot"></span>
+      <span class="author">{{ page.owner }}</span>
+    </div>
+    {% with tags=page.tags.all %}{% if tags %}
+    <div class="tags mt-3">
+      {% for tag in tags %}
+      <a href="{% slugurl 'blog-tags' %}?tag={{ tag }}" class="tag">{{ tag }}</a>
+      {% endfor %}
+    </div>
+    {% endif %}{% endwith %}
+  </div>
+</section>
+{% endblock %}
 
 {% block content %}
-    <div class="prose prose-lg prose-gray max-w-none">
-        {% if page.main_image %}
-        {% image page.main_image width-400 class="rounded-xl mb-8 mx-auto" alt=page.main_image.title %}
-        {% endif %}
-
-        <div class="prose-headings:text-gray-900 prose-headings:font-bold prose-p:text-gray-700 prose-p:leading-relaxed prose-a:text-blue-600 prose-a:no-underline prose-strong:text-gray-900 prose-code:text-blue-600 prose-code:bg-blue-50 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-pre:bg-gray-900 prose-pre:text-gray-100">
-            {{ page.body }}
-        </div>
-
-        {% with tags=page.tags.all %}
-        {% if tags %}
-        <div class="mt-8 flex justify-center">
-            <div class="w-full mt-8 p-6 bg-gray-50 rounded-xl border border-gray-100 flex flex-col items-center">
-                <h3 class="text-xl font-bold mb-4 text-gray-900">Tags</h3>
-                <div class="flex flex-wrap gap-3">
-                    {% for tag in tags %}
-                    <a href="{% slugurl 'blog-tags' %}?tag={{ tag }}" class="tag-link">
-                        <span class="inline-flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-blue-50 hover:border-blue-200 hover:text-blue-700 transition-all duration-200">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
-                            </svg>
-                            {{ tag }}
-                        </span>
-                    </a>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-        {% endif %}
-        {% endwith %}
+<div class="row justify-content-center">
+  <div class="col-lg-9">
+    <div class="prose">
+      {{ page.body }}
     </div>
-
-    <div class="border-t border-gray-200 my-8"></div>
-
-    <a href="{{ page.get_parent.url }}" class="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 font-medium group">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform group-hover:-translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-        </svg>
-        Retour au blog
-    </a>
+    <div class="pt-5 mt-4 border-top" style="border-color:var(--border)!important;">
+      <a href="{{ page.get_parent.url }}" class="btn-text">← Retour au blog</a>
+    </div>
+  </div>
+</div>
 {% endblock %}

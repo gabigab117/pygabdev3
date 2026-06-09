@@ -1,0 +1,44 @@
+{% load wagtailcore_tags %}
+{% slugurl 'index' as url_index %}
+{% slugurl 'projets' as url_projets %}
+{% slugurl 'blog' as url_blog %}
+{% slugurl 'contact' as url_contact %}
+
+<nav class="navbar navbar-expand-lg site-nav">
+  <div class="container">
+    <div class="site-nav-inner">
+      <a class="navbar-brand brand" href="{{ url_index }}"><span class="mark">PG</span> pygab.dev</a>
+      <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#mainnav" aria-controls="mainnav" aria-expanded="false" aria-label="Menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="mainnav">
+        <ul class="navbar-nav ms-auto mb-0 align-items-lg-center">
+          <li class="nav-item"><a class="nav-link {% if request.path == url_index %}active{% endif %}" href="{{ url_index }}">Accueil</a></li>
+          <li class="nav-item"><a class="nav-link {% if request.path == url_projets %}active{% endif %}" href="{{ url_projets }}">Projets</a></li>
+          <li class="nav-item"><a class="nav-link {% if request.path == url_blog %}active{% endif %}" href="{{ url_blog }}">Blog</a></li>
+          <li class="nav-item"><a class="nav-link {% if request.path == url_contact %}active{% endif %}" href="{{ url_contact }}">Contact</a></li>
+
+          {% if request.user.is_superuser %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="adminmenu" role="button" data-bs-toggle="dropdown" aria-expanded="false">Clients</a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="adminmenu">
+              <li><a class="dropdown-item" href="{% url 'customers:dashboard' %}">Dashboard</a></li>
+              <li><a class="dropdown-item" href="{% url 'customers:projects' %}">Projets</a></li>
+              <li><a class="dropdown-item" href="{% url 'customers:invoices' %}">Factures</a></li>
+              <li><a class="dropdown-item" href="{% url 'customers:search' %}">Recherche</a></li>
+            </ul>
+          </li>
+          {% endif %}
+
+          <li class="nav-item">
+            <form class="nav-search" action="{% url 'search' %}" method="get" role="search">
+              <svg class="nav-search-ic" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+              <input type="search" name="query" class="form-control" placeholder="Rechercher…" aria-label="Rechercher">
+            </form>
+          </li>
+          <li class="nav-item"><a class="btn btn-primary nav-cta" href="{{ url_contact }}">Me contacter</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>

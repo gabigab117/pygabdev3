@@ -1,17 +1,25 @@
 {% extends 'base.html' %}
 {% load wagtailcore_tags %}
 {% load crispy_forms_tags %}
-{% block banner_text %}Formulaire de contact{% endblock %}
+
+{% block banner_eyebrow %}<span class="eyebrow bare">Contact</span>{% endblock %}
+{% block banner_title %}Me contacter{% endblock %}
+{% block banner_text %}<p class="lead">Un projet&nbsp;? Une question&nbsp;? Écrivez-moi directement.</p>{% endblock %}
 
 {% block content %}
-<div class="text-center">
-    <form method="post" class="space-y-6">
-        {% csrf_token %}
-        {{ form|crispy }}
-        <button type="submit" class="btn btn-primary">
-            Envoyer
-        </button>
-    </form>
+<div class="row justify-content-center">
+  <div class="col-lg-8 col-xl-7">
+    <div class="card">
+      <div class="card-body">
+        <form method="post">
+          {% csrf_token %}
+          {{ form|crispy }}
+          <div class="pt-3 mt-1">
+            <button type="submit" class="btn btn-primary btn-lg">Envoyer <span class="arr">→</span></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
-
 {% endblock %}

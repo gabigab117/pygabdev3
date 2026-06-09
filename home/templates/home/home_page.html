@@ -1,209 +1,164 @@
 {% extends 'base.html' %}
-{% load wagtailcore_tags %}
+{% load static wagtailcore_tags %}
 {% load wagtailimages_tags %}
 
+{% block main_class %}{% endblock %}
 
-
-
-    
-    <!-- Badges technologies -->
-    {% block extra_intro %}
-    <div class="flex flex-wrap justify-center gap-3">
-      <span class="px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">Django</span>
-      <span class="px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium">Python</span>
-      <span class="px-4 py-2 bg-orange-100 text-orange-800 rounded-full text-sm font-medium">Formation</span>
-      <span class="px-4 py-2 bg-red-100 text-red-800 rounded-full text-sm font-medium">Wagtail</span>
-      <span class="px-4 py-2 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium">Tailwind CSS</span>
-    </div>
-
-  {% endblock %}
-  {% block content %}
-
-  <!-- Articles et Projets -->
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-    
-    <!-- Dernière Publication -->
-    <div class="space-y-6">
-      <div class="flex items-center gap-4">
-        <h3 class="text-2xl font-bold text-gray-900">Dernière Publication</h3>
-        <div class="flex-1 h-px bg-gray-200"></div>
+{% block banner %}
+<!-- ============ HERO (éditorial asymétrique) ============ -->
+<section class="hero">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6 hero-copy">
+        <span class="eyebrow">Django · Wagtail · DRF · Mentor</span>
+        <h1 class="display h-hero">Salut, moi c'est <span class="muted">Gabriel.</span></h1>
+        <p class="lead">
+          {% if page.header %}{{ page.header|richtext|striptags }}{% else %}Développeur freelance spécialisé en Python &amp; Django. J'accompagne les entreprises dans la conception de leurs applications web — et je transmets ce que j'apprends à la communauté.{% endif %}
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary btn-lg" href="{% slugurl 'projets' %}">Voir mes projets <span class="arr">→</span></a>
+          <a class="btn btn-ghost btn-lg" href="{% slugurl 'contact' %}">Me contacter</a>
+        </div>
+        <div class="tags">
+          <span class="tag">Django</span>
+          <span class="tag">Python</span>
+          <span class="tag">Wagtail</span>
+          <span class="tag">DRF</span>
+          <span class="tag">Mentor</span>
+        </div>
       </div>
-      
-      {% if last_article %}
-      <div class="group cursor-pointer">
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-          {% if last_article.main_image %}
-          <div class="relative overflow-hidden">
-            {% image last_article.main_image width-500 class='w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105' alt=last_article.main_image.title %}
-            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          </div>
-          {% endif %}
-          
-          <div class="p-6">
-            <div class="flex items-center gap-3 text-sm text-gray-500 mb-3">
-              <div class="flex items-center gap-1">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                {{ last_article.date|date:"d M Y" }}
+      <div class="col-lg-6">
+        <div class="hero-visual">
+          <div class="hero-composition">
+            <div class="hc-bg-grid"></div>
+            <div class="hc-glow-l"></div>
+            <div class="hc-glow-r"></div>
+            <div class="hc-vignette"></div>
+            <div class="hc-layout">
+              <div class="hc-photo-wrap">
+                <div class="hc-photo-halo"></div>
+                <div class="hc-ring">
+                  <div class="hc-ring-inner">
+                    <img class="hc-photo" src="{% static 'logos/profile.jpg' %}" alt="Gabriel Trouvé">
+                  </div>
+                </div>
               </div>
-              <span>•</span>
-              <div class="flex items-center gap-1">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-                {{ last_article.owner }}
+              <div class="hc-cards">
+                <div class="hc-card hc-card-python">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python">
+                  <span>Python</span>
+                </div>
+                <div class="hc-card hc-card-django">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/django/django-plain-wordmark.svg" alt="Django">
+                  <span>Django</span>
+                </div>
+                <div class="hc-card hc-card-vue">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vuejs/vuejs-original.svg" alt="Vue.js">
+                  <span>Vue.js</span>
+                </div>
+                <div class="hc-card hc-card-nuxt">
+                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nuxtjs/nuxtjs-original.svg" alt="Nuxt.js">
+                  <span>Nuxt.js</span>
+                </div>
               </div>
             </div>
-            
-            <h4 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
-              {{ last_article.title }}
-            </h4>
-            
-            <div class="text-gray-600 mb-4 line-clamp-3">
-              {{ last_article.header|richtext|striptags|truncatewords:25 }}
-            </div>
-            
-            <a href="{% pageurl last_article %}" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold group/link">
-              Lire l'article
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform group-hover/link:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-              </svg>
-            </a>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block content %}
+{% if recent_projects %}
+<!-- ============ PROJETS RÉCENTS ============ -->
+<section class="section-sm band">
+  <div class="container">
+    <div class="d-flex align-items-flex-end justify-content-between gap-3 mb-5">
+      <div>
+        <span class="eyebrow">Sélection</span>
+        <h2 class="h-sec mb-0">Projets récents</h2>
+      </div>
+      <a class="btn-text d-none d-sm-inline-flex align-self-end" href="{% slugurl 'projets' %}">Tous les projets →</a>
+    </div>
+    <div class="row g-4">
+      {% for p in recent_projects %}
+      <div class="col-md-6">
+        <article class="card card-hover card-sm h-100">
+          <div class="card-body d-flex flex-column gap-2">
+            <div class="meta"><span>{{ p.date|date:"d M Y" }}</span></div>
+            <h3 class="card-title"><a href="{% pageurl p %}">{{ p.title }}</a></h3>
+            <p class="card-text">{{ p.header|richtext|striptags|truncatewords:15 }}</p>
+            <a class="btn-text mt-auto" href="{% pageurl p %}">Voir le projet →</a>
+          </div>
+        </article>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="d-flex d-sm-none justify-content-center mt-4">
+      <a class="btn-text" href="{% slugurl 'projets' %}">Tous les projets →</a>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- ============ BLOG + À PROPOS teaser ============ -->
+<section class="section-sm">
+  <div class="container">
+    <div class="row g-4 align-items-stretch">
+      {% if last_articles %}
+      <div class="col-lg-7 d-flex flex-column gap-4">
+        {% for article in last_articles %}
+        <article class="card card-hover card-sm flex-fill">
+          <div class="card-body d-flex flex-column gap-2">
+            <span class="eyebrow bare">{% if forloop.first %}Dernière publication{% elif forloop.last %}À lire aussi{% else %}Article précédent{% endif %}</span>
+            <div class="meta"><span>{{ article.date|date:"d M Y" }}</span><span class="sepdot"></span><span class="author">{{ article.owner }}</span></div>
+            <h3 class="card-title"><a href="{% pageurl article %}">{{ article.title }}</a></h3>
+            <p class="card-text">{{ article.header|richtext|striptags|truncatewords:20 }}</p>
+            {% with tags=article.tags.all %}{% if tags %}
+            <div class="tags">{% for tag in tags %}<span class="tag soft">{{ tag }}</span>{% endfor %}</div>
+            {% endif %}{% endwith %}
+            <a class="btn-text mt-auto" href="{% pageurl article %}">Lire l'article →</a>
+          </div>
+        </article>
+        {% endfor %}
       </div>
       {% endif %}
-    </div>
-
-    <!-- Dernier Projet -->
-    <div class="space-y-6">
-      <div class="flex items-center gap-4">
-        <h3 class="text-2xl font-bold text-gray-900">Dernier Projet</h3>
-        <div class="flex-1 h-px bg-gray-200"></div>
-      </div>
-      
-      {% if project %}
-      <div class="group cursor-pointer">
-        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-          {% if project.main_image %}
-          <div class="relative overflow-hidden">
-            {% image project.main_image width-500 class='w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105' alt=project.main_image.title %}
-            <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          </div>
-          {% endif %}
-          
-          <div class="p-6">
-            <div class="flex items-center gap-3 text-sm text-gray-500 mb-3">
-              <div class="flex items-center gap-1">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                {{ project.date|date:"d M Y" }}
-              </div>
-              <span>•</span>
-              <div class="flex items-center gap-1">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-                {{ project.owner }}
-              </div>
+      <div class="{% if last_articles %}col-lg-5{% else %}col-12{% endif %}">
+        <div class="card h-100">
+          <div class="card-body d-flex flex-column gap-3">
+            <span class="eyebrow bare">À propos</span>
+            <h3 class="h-sec" style="font-size:26px;">Code &amp; transmission.</h3>
+            <div class="card-text" style="font-size:16px;">
+              {% if page.body %}{{ page.body|richtext }}{% else %}Expert Django, DRF et Wagtail, je m'investis aussi dans le partage : mentor sur Docstring, speaker en meetup et membre de la Django Software Foundation.{% endif %}
             </div>
-            
-            <h4 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
-              {{ project.title }}
-            </h4>
-            
-            <div class="text-gray-600 mb-4 line-clamp-3">
-              {{ project.header|richtext|striptags|truncatewords:25 }}
+            <div class="tags">
+              <span class="tag soft">Développeur</span>
+              <span class="tag soft">Mentor Docstring</span>
+              <span class="tag soft">PyCon FR</span>
+              <span class="tag soft">DSF</span>
             </div>
-            
-            <a href="{% pageurl project %}" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold group/link">
-              Voir le projet
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform group-hover/link:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-              </svg>
-            </a>
+            <a class="btn btn-ghost mt-auto align-self-start" href="{% slugurl 'contact' %}">Me contacter</a>
           </div>
         </div>
       </div>
-      {% endif %}
     </div>
   </div>
+</section>
 
-  <!-- Séparateur élégant -->
-  <div class="flex items-center justify-center mb-8">
-    <div class="flex items-center gap-4">
-      <div class="w-16 h-px bg-gray-300"></div>
-      <div class="w-2 h-2 bg-gray-400 rounded-full"></div>
-      <div class="w-16 h-px bg-gray-300"></div>
-    </div>
-  </div>
-
-  <!-- Navigation principale -->
-  <div class="text-center mb-8">
-    <h3 class="text-2xl font-bold text-gray-900 mb-8">Explorez mon travail</h3>
-    <div class="flex flex-col sm:flex-row justify-center gap-6">
-      <a href="{% slugurl 'blog' %}" class="group relative overflow-hidden bg-white border-2 border-gray-200 rounded-xl px-8 py-6 hover:border-blue-500 transition-all duration-300 hover:shadow-lg">
-        <div class="flex items-center justify-center gap-3">
-          <div class="p-3 bg-blue-50 rounded-lg group-hover:bg-blue-100 transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9.5a2 2 0 00-2-2h-2" />
-            </svg>
-          </div>
-          <div class="text-left">
-            <div class="font-bold text-gray-900 text-lg">Blog</div>
-            <div class="text-gray-600 text-sm">Articles techniques</div>
-          </div>
-        </div>
-      </a>
-      
-      <a href="{% slugurl 'projets' %}" class="group relative overflow-hidden bg-white border-2 border-gray-200 rounded-xl px-8 py-6 hover:border-blue-500 transition-all duration-300 hover:shadow-lg">
-        <div class="flex items-center justify-center gap-3">
-          <div class="p-3 bg-blue-50 rounded-lg group-hover:bg-blue-100 transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
-            </svg>
-          </div>
-          <div class="text-left">
-            <div class="font-bold text-gray-900 text-lg">Projets</div>
-            <div class="text-gray-600 text-sm">Mes réalisations</div>
-          </div>
-        </div>
-      </a>
-    </div>
-  </div>
-
-  <!-- À propos - Version améliorée avec meilleur style pour le texte -->
-  <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-8 md:p-12">
-    <div class="max-w-4xl mx-auto">
-      <div class="text-center mb-8">
-        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-          </svg>
-        </div>
-        <h3 class="text-2xl font-bold text-gray-900 mb-6">À propos de moi</h3>
-      </div>
-      
-      <!-- Contenu avec style prose amélioré -->
-      <div class="prose prose-lg prose-gray max-w-none">
-        <div class="prose-p:text-gray-700 prose-p:leading-relaxed prose-p:mb-6 prose-strong:text-gray-900 prose-strong:font-semibold prose-a:text-blue-600 prose-a:no-underline prose-ul:text-gray-700 prose-li:mb-2">
-          {{ page.body|richtext }}
-        </div>
-      </div>
-      
-      <div class="text-center mt-8">
-        <a href="{% slugurl 'contact' %}" class="inline-flex items-center gap-2 bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 transition-colors font-semibold text-lg shadow-md hover:shadow-lg">
-          Me contacter
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-          </svg>
-        </a>
+<!-- ============ CTA band ============ -->
+<section class="section-sm">
+  <div class="container">
+    <div class="cta-band">
+      <span class="eyebrow bare" style="color:#9aa6ff; justify-content:center;">Un projet en tête ?</span>
+      <h2>Construisons quelque chose de solide.</h2>
+      <p>Application web, API, site éditorial ou accompagnement technique — parlons-en.</p>
+      <div class="d-flex justify-content-center gap-3 flex-wrap">
+        <a class="btn btn-primary btn-lg" href="{% slugurl 'contact' %}">Me contacter <span class="arr">→</span></a>
+        <a class="btn btn-ghost btn-lg" href="{% slugurl 'projets' %}">Voir mes réalisations</a>
       </div>
     </div>
   </div>
-
-
-
+</section>
 {% endblock %}

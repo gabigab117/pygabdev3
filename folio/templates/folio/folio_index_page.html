@@ -1,40 +1,47 @@
 {% extends 'base.html' %}
-{% load wagtailcore_tags %}
-{% load wagtailimages_tags %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block banner_eyebrow %}<span class="eyebrow bare">Portfolio</span>{% endblock %}
 
 {% block content %}
-<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-    {% for project in foliopages %}
-    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group">
-        <div class="relative overflow-hidden">
-            <a href="{% pageurl project %}">
-                {% image project.main_image width-400 class='h-48 object-cover mx-auto transition-transform duration-300 group-hover:scale-105' alt=project.main_image.title %}
-                <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </a>
+
+{% if foliopages %}
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+  {% for project in foliopages %}
+  <div class="col">
+    <article class="card card-hover h-100">
+      {% if project.main_image %}
+      <a href="{% pageurl project %}">
+        <div class="thumb">{% image project.main_image fill-720x450 alt=project.title %}</div>
+      </a>
+      {% endif %}
+      <div class="card-body d-flex flex-column gap-3">
+        <div class="meta">
+          <span>{{ project.date|date:"d M Y" }}</span>
+          {% if project.github or project.youtube or project.production %}
+          <span class="sepdot"></span>
+          <span class="d-flex gap-2">
+            {% if project.github %}<a href="{{ project.github }}" target="_blank" rel="noopener noreferrer" style="color:var(--ink-3);" aria-label="GitHub"><i class="bi bi-github"></i></a>{% endif %}
+            {% if project.youtube %}<a href="{{ project.youtube }}" target="_blank" rel="noopener noreferrer" style="color:var(--ink-3);" aria-label="YouTube"><i class="bi bi-youtube"></i></a>{% endif %}
+            {% if project.production %}<a href="{{ project.production }}" target="_blank" rel="noopener noreferrer" style="color:var(--ink-3);" aria-label="Voir le site"><i class="bi bi-box-arrow-up-right"></i></a>{% endif %}
+          </span>
+          {% endif %}
         </div>
-        <div class="p-6">
-            <h2 class="text-lg font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors line-clamp-2">
-                <a href="{% pageurl project %}">{{ project.title }}</a>
-            </h2>
-            <div class="flex items-center gap-1 text-sm text-gray-500 mb-3">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-                {{ project.date }}
-            </div>
-            <div class="text-gray-600 mb-4 text-sm leading-relaxed line-clamp-3">
-                {{ project.header|richtext|striptags|truncatewords:20 }}
-            </div>
-            <div class="flex justify-end">
-                <a href="{% pageurl project %}" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold text-sm group/link">
-                    Voir le projet
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform group-hover/link:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                    </svg>
-                </a>
-            </div>
-        </div>
-    </div>
-    {% endfor %}
+        <h2 class="card-title"><a href="{% pageurl project %}">{{ project.title }}</a></h2>
+        <p class="card-text">{{ project.header|richtext|striptags|truncatewords:22 }}</p>
+        <a class="btn-text mt-auto" href="{% pageurl project %}">Voir le projet →</a>
+      </div>
+    </article>
+  </div>
+  {% endfor %}
 </div>
+
+{% else %}
+<div class="empty-state">
+  <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="color:var(--ink-3)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+  <p class="es-title">Aucun projet pour le moment</p>
+  <p>Les premiers projets seront bientôt disponibles.</p>
+</div>
+{% endif %}
+
 {% endblock %}

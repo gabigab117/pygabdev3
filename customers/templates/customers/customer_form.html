@@ -1,22 +1,26 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
-{% block title %}
-{{ status }}
-{% endblock %}
+{% block title %}{{ status }}{% endblock %}
 
-{% block banner_title %}Clients{% endblock %}
-{% block banner_text %}{{ status }}{% endblock %}
+{% block banner_eyebrow %}<span class="eyebrow bare">Clients</span>{% endblock %}
+{% block banner_title %}{{ status }}{% endblock %}
+{% block banner_text %}{% endblock %}
 
 {% block content %}
-<div class="text-center">
-    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-       <form method="post" class="space-y-6">
-           {% csrf_token %}
-           {{ form|crispy }}
-           <button type="submit" class="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-semibold">
-               Envoyer
-           </button>
-       </form>
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card">
+      <div class="card-body">
+        <form method="post">
+          {% csrf_token %}
+          {{ form|crispy }}
+          <div class="d-flex gap-3 pt-4 mt-2 border-top" style="border-color:var(--border)!important;">
+            <a href="{% url 'customers:dashboard' %}" class="btn btn-ghost">Annuler</a>
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
 {% endblock %}
