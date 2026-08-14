@@ -9,9 +9,9 @@ from wagtail.documents import urls as wagtaildocs_urls
 from search import views as search_views
 
 urlpatterns = [
-    path("django-admin/", admin.site.urls),
+    path(settings.DJANGO_ADMIN_URL, admin.site.urls),
     path("customers/", include("customers.urls")),
-    path("admin/", include(wagtailadmin_urls)),
+    path(settings.WAGTAIL_ADMIN_URL, include(wagtailadmin_urls)),
     path("documents/", include(wagtaildocs_urls)),
     path("search/", search_views.search, name="search"),
     path("sitemap.xml", sitemap),

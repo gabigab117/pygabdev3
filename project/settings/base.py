@@ -193,4 +193,8 @@ WAGTAIL_CODE_BLOCK_THEME = "coy"
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env("SECRET_KEY")
 
+# Admin URLs (kept out of the repo, real values live in .env)
+DJANGO_ADMIN_URL = env("DJANGO_ADMIN_URL", default="django-admin/")
+WAGTAIL_ADMIN_URL = env("WAGTAIL_ADMIN_URL", default="admin/")
+
 X_FRAME_OPTIONS = "SAMEORIGIN"
