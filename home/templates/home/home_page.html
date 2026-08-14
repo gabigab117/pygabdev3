@@ -8,23 +8,23 @@
 <!-- ============ HERO (éditorial asymétrique) ============ -->
 <section class="hero">
   <div class="container">
-    <div class="row align-items-center g-5">
+    <div class="row align-items-center gy-5 gx-0 gx-sm-5">
       <div class="col-lg-6 hero-copy">
-        <span class="eyebrow">Django · Wagtail · DRF · Mentor</span>
-        <h1 class="display h-hero">Salut, moi c'est <span class="muted">Gabriel.</span></h1>
+        <span class="eyebrow">Sur mesure · Reprise d'existant · IA</span>
+        <h1 class="display h-hero-sm">Je crée vos applications métier, <span class="muted">et je remets à neuf celles qui ont vieilli.</span></h1>
         <p class="lead">
-          {% if page.header %}{{ page.header|richtext|striptags }}{% else %}Développeur freelance spécialisé en Python &amp; Django. J'accompagne les entreprises dans la conception de leurs applications web — et je transmets ce que j'apprends à la communauté.{% endif %}
+          {% if page.header %}{{ page.header|richtext|striptags }}{% else %}Un outil interne qui rame, un site que plus personne n'ose toucher, des tâches que vos équipes font encore à la main. Ou simplement une idée d'application, et personne pour la construire. C'est ce que je fais.{% endif %}
         </p>
         <div class="hero-actions">
-          <a class="btn btn-primary btn-lg" href="{% slugurl 'projets' %}">Voir mes projets <span class="arr">→</span></a>
-          <a class="btn btn-ghost btn-lg" href="{% slugurl 'contact' %}">Me contacter</a>
+          <a class="btn btn-primary btn-lg" href="{% slugurl 'projets' %}">Voir mes réalisations <span class="arr">→</span></a>
+          <a class="btn btn-ghost btn-lg" href="{% slugurl 'contact' %}">Parler de votre projet</a>
         </div>
         <div class="tags">
-          <span class="tag">Django</span>
+          <span class="tag">Intégration d'IA</span>
+          <span class="tag">Automatisation</span>
           <span class="tag">Python</span>
+          <span class="tag">Django</span>
           <span class="tag">Wagtail</span>
-          <span class="tag">DRF</span>
-          <span class="tag">Mentor</span>
         </div>
       </div>
       <div class="col-lg-6">
@@ -52,13 +52,18 @@
                   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/django/django-plain-wordmark.svg" alt="Django">
                   <span>Django</span>
                 </div>
-                <div class="hc-card hc-card-vue">
-                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vuejs/vuejs-original.svg" alt="Vue.js">
-                  <span>Vue.js</span>
+                <div class="hc-card hc-card-ia">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Intelligence artificielle">
+                    <path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3L12 3z"/>
+                    <path d="M19 3v4"/><path d="M17 5h4"/>
+                  </svg>
+                  <span>IA</span>
                 </div>
-                <div class="hc-card hc-card-nuxt">
-                  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nuxtjs/nuxtjs-original.svg" alt="Nuxt.js">
-                  <span>Nuxt.js</span>
+                <div class="hc-card hc-card-autom">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Automatisation">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                  </svg>
+                  <span>Automation</span>
                 </div>
               </div>
             </div>
@@ -71,6 +76,68 @@
 {% endblock %}
 
 {% block content %}
+<!-- ============ CE QUE JE FAIS ============ -->
+<section class="section-sm">
+  <div class="container">
+    <div class="mb-5">
+      <span class="eyebrow">Ce que je fais</span>
+      <h2 class="h-sec mb-0">Créer, remettre à neuf, automatiser.</h2>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4">
+        <article class="card card-hover card-sm h-100">
+          <div class="card-body d-flex flex-column gap-3">
+            <div class="svc-ic">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>
+              </svg>
+            </div>
+            <h3 class="card-title">Applications sur mesure</h3>
+            <p class="card-text mb-0">Outils métier, espaces d'administration, sites éditoriaux, boutiques en ligne — conçus autour de vos processus et de vos équipes.</p>
+          </div>
+        </article>
+      </div>
+      <div class="col-md-4">
+        <article class="card card-hover card-sm h-100">
+          <div class="card-body d-flex flex-column gap-3">
+            <div class="svc-ic">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+              </svg>
+            </div>
+            <h3 class="card-title">Reprise d'existant</h3>
+            <p class="card-text mb-0">Je reprends les applications vieillissantes et je les fais évoluer : montée de version, migration des données, remise à neuf — sans perte et sans coupure de service.</p>
+          </div>
+        </article>
+      </div>
+      <div class="col-md-4">
+        <article class="card card-hover card-sm card-accent h-100">
+          <div class="card-body d-flex flex-column gap-3">
+            <div class="svc-ic">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3L12 3z"/>
+                <path d="M19 3v4"/><path d="M17 5h4"/>
+              </svg>
+            </div>
+            <h3 class="card-title">IA &amp; automatisations</h3>
+            <p class="card-text mb-0">Des assistants qui répondent à partir de vos propres documents, du tri et du traitement automatique de contenus, la fin des saisies manuelles.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+    <div class="card case-note mt-4">
+      <div class="card-body d-flex flex-column flex-md-row align-items-md-center gap-3">
+        <div>
+          <span class="eyebrow bare">Dernier exemple en date</span>
+          <p class="card-text mb-0">Une boutique en ligne bloquée sur une version vieille de dix ans, remise à neuf avec l'intégralité de son historique de données — sans perte et sans coupure de service.</p>
+        </div>
+        <a class="btn-text flex-shrink-0 ms-md-auto" href="{% slugurl 'projets' %}">Voir mes réalisations →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 {% if recent_projects %}
 <!-- ============ PROJETS RÉCENTS ============ -->
 <section class="section-sm band">
@@ -103,7 +170,7 @@
 </section>
 {% endif %}
 
-<!-- ============ BLOG + À PROPOS teaser ============ -->
+<!-- ============ BLOG + CONFIANCE ============ -->
 <section class="section-sm">
   <div class="container">
     <div class="row g-4 align-items-stretch">
@@ -128,18 +195,26 @@
       <div class="{% if last_articles %}col-lg-5{% else %}col-12{% endif %}">
         <div class="card h-100">
           <div class="card-body d-flex flex-column gap-3">
-            <span class="eyebrow bare">À propos</span>
+            <span class="eyebrow bare">Pourquoi me faire confiance</span>
             <h3 class="h-sec h-sec-sm">Code &amp; transmission.</h3>
-            <div class="card-text" style="font-size:16px;">
-              {% if page.body %}{{ page.body|richtext }}{% else %}Expert Django, DRF et Wagtail, je m'investis aussi dans le partage : mentor sur Docstring, speaker en meetup et membre de la Django Software Foundation.{% endif %}
+            <div class="card-text trust-body">
+              {% if page.body %}{{ page.body|richtext }}{% else %}
+              <ul>
+                <li>Mentor sur Docstring, où j'accompagne les développeurs dans leur montée en compétences</li>
+                <li>Co-animateur d'un workshop à la PyCon FR et speaker à la Django Meetup Paris</li>
+                <li>Membre individuel de la Django Software Foundation</li>
+                <li>Certifié TOSA Python (955/1000)</li>
+              </ul>
+              <p>Je travaille en Python, Django et Wagtail, des technologies solides et maintenables, sans dépendance à un éditeur.</p>
+              <p>Je collabore en direct avec des PME et des collectivités, et en sous-traitance pour des agences.</p>
+              {% endif %}
             </div>
             <div class="tags">
-              <span class="tag soft">Développeur</span>
-              <span class="tag soft">Mentor Docstring</span>
-              <span class="tag soft">PyCon FR</span>
-              <span class="tag soft">DSF</span>
+              <span class="tag soft">PME</span>
+              <span class="tag soft">Collectivités</span>
+              <span class="tag soft">Agences</span>
             </div>
-            <a class="btn btn-ghost mt-auto align-self-start" href="{% slugurl 'contact' %}">Me contacter</a>
+            <a class="btn btn-ghost mt-auto align-self-start" href="{% slugurl 'contact' %}">Parler de votre projet</a>
           </div>
         </div>
       </div>
@@ -153,9 +228,9 @@
     <div class="cta-band">
       <span class="eyebrow bare" style="color:#9aa6ff; justify-content:center;">Un projet en tête ?</span>
       <h2>Construisons quelque chose de solide.</h2>
-      <p>Application web, API, site éditorial ou accompagnement technique — parlons-en.</p>
+      <p>Une application à créer, un outil à remettre à neuf, de l'IA ou des automatisations à intégrer dans vos processus — parlons-en.</p>
       <div class="d-flex justify-content-center gap-3 flex-wrap">
-        <a class="btn btn-primary btn-lg" href="{% slugurl 'contact' %}">Me contacter <span class="arr">→</span></a>
+        <a class="btn btn-primary btn-lg" href="{% slugurl 'contact' %}">Parler de votre projet <span class="arr">→</span></a>
         <a class="btn btn-ghost btn-lg" href="{% slugurl 'projets' %}">Voir mes réalisations</a>
       </div>
     </div>
