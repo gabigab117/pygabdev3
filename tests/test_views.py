@@ -22,6 +22,65 @@ def test_projects_view(client: Client, admin):
 
 
 @pytest.mark.django_db
+def test_projects_view_filtered_by_customer(
+    client: Client, admin, project_1, project_3, customer_1
+):
+    """
+    Scenario: Filter the projects list by customer
+        Given I am an authenticated administrator
+            And projects exist for several customers
+        When I request the projects list filtered on one customer
+        Then only that customer's projects are returned
+    """
+    client.force_login(admin)
+    response = client.get(
+        reverse("customers:projects"), {"customer": customer_1.id}
+    )
+    assert response.status_code == 200
+    projects = list(response.context["object_list"])
+    assert project_1 in projects
+    assert project_3 not in projects
+
+
+@pytest.mark.django_db
+def test_projects_filter_non_numeric_value(
+    client: Client, admin, project_1, project_3
+):
+    """
+    Scenario: Filter with a non-numeric customer value
+        Given I am an authenticated administrator
+            And projects exist for several customers
+        When I request the projects list with a non-numeric customer param
+        Then all projects are returned (filter is ignored)
+    """
+    client.force_login(admin)
+    response = client.get(reverse("customers:projects"), {"customer": "abc"})
+    assert response.status_code == 200
+    projects = list(response.context["object_list"])
+    assert project_1 in projects
+    assert project_3 in projects
+
+
+@pytest.mark.django_db
+def test_projects_filter_nonexistent_customer_id(
+    client: Client, admin, project_1, project_3
+):
+    """
+    Scenario: Filter with a numeric but non-existent customer id
+        Given I am an authenticated administrator
+            And projects exist for several customers
+        When I request the projects list with an id that matches no customer
+        Then all projects are returned (filter is ignored)
+    """
+    client.force_login(admin)
+    response = client.get(reverse("customers:projects"), {"customer": "99999"})
+    assert response.status_code == 200
+    projects = list(response.context["object_list"])
+    assert project_1 in projects
+    assert project_3 in projects
+
+
+@pytest.mark.django_db
 def test_create_invoice_view(client: Client, admin, customer_1, service_1, today, pdf1):
     """
     Scenario: Create a new invoice
