@@ -1,3 +1,5 @@
+from functools import cached_property
+
 from django.contrib.admin.views.decorators import staff_member_required
 from django.db.models import Sum
 from django.shortcuts import get_object_or_404, render
@@ -27,6 +29,29 @@ class ProjectList(ListView):
     template_name = "customers/projects.html"
     paginate_by = 20
     ordering = ["-id"]
+
+    @cached_property
+    def selected_customer_id(self):
+        raw = self.request.GET.get("customer")
+        if raw and raw.isdigit():
+            pk = int(raw)
+            if Customer.objects.filter(pk=pk).exists():
+                return pk
+        return None
+
+    def get_queryset(self):
+        queryset = super().get_queryset().select_related("customer")
+        if self.selected_customer_id:
+            queryset = queryset.filter(customer_id=self.selected_customer_id)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["customers"] = (
+            Customer.objects.filter(projects__isnull=False).distinct().order_by("name")
+        )
+        context["selected_customer"] = self.selected_customer_id
+        return context
 
 
 @method_decorator(staff_member_required, name="dispatch")

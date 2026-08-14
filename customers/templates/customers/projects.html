@@ -13,6 +13,28 @@
       <a href="{% url 'customers:create-project' %}" class="btn btn-primary btn-sm">+ Nouveau projet</a>
     </div>
 
+    {% if customers %}
+    <form method="get" class="row g-2 align-items-end mb-4">
+      <div class="col-12 col-sm-6 col-md-4">
+        <label for="customer-filter" class="form-label">Filtrer par client</label>
+        <select name="customer" id="customer-filter" class="form-select" onchange="this.form.submit()">
+          <option value=""{% if not selected_customer %} selected{% endif %}>Tous les clients</option>
+          {% for customer in customers %}
+          <option value="{{ customer.pk }}"{% if customer.pk == selected_customer %} selected{% endif %}>{{ customer.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary btn-sm">Filtrer</button>
+      </div>
+      {% if selected_customer %}
+      <div class="col-auto">
+        <a href="{% url 'customers:projects' %}" class="btn btn-ghost btn-sm">Réinitialiser</a>
+      </div>
+      {% endif %}
+    </form>
+    {% endif %}
+
     {% if page_obj %}
     <div class="table-responsive">
       <table class="table table-hover">
@@ -31,8 +53,13 @@
     {% include 'customers/_pager.html' %}
     {% else %}
     <div class="empty-state">
+      {% if selected_customer %}
+      <p class="es-title">Aucun projet pour ce client</p>
+      <p>Essayez un autre client ou <a href="{% url 'customers:projects' %}">réinitialisez le filtre</a>.</p>
+      {% else %}
       <p class="es-title">Aucun projet</p>
       <p>Commencez par créer votre premier projet.</p>
+      {% endif %}
     </div>
     {% endif %}
   </div>
