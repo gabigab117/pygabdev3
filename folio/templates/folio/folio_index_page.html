@@ -18,14 +18,16 @@
       <div class="card-body d-flex flex-column gap-3">
         <div class="meta">
           <span>{{ project.date|date:"d M Y" }}</span>
-          {% if project.github or project.youtube or project.production %}
+          {% with repositories=project.repositories.all %}
+          {% if repositories or project.youtube or project.production %}
           <span class="sepdot"></span>
           <span class="d-flex gap-2">
-            {% if project.github %}<a href="{{ project.github }}" target="_blank" rel="noopener noreferrer" style="color:var(--ink-3);" aria-label="GitHub"><i class="bi bi-github"></i></a>{% endif %}
+            {% for repository in repositories %}<a href="{{ repository.url }}" target="_blank" rel="noopener noreferrer" style="color:var(--ink-3);" aria-label="{{ repository.label|default:'GitHub' }}" title="{{ repository.label|default:'GitHub' }}"><i class="bi bi-github"></i></a>{% endfor %}
             {% if project.youtube %}<a href="{{ project.youtube }}" target="_blank" rel="noopener noreferrer" style="color:var(--ink-3);" aria-label="YouTube"><i class="bi bi-youtube"></i></a>{% endif %}
             {% if project.production %}<a href="{{ project.production }}" target="_blank" rel="noopener noreferrer" style="color:var(--ink-3);" aria-label="Voir le site"><i class="bi bi-box-arrow-up-right"></i></a>{% endif %}
           </span>
           {% endif %}
+          {% endwith %}
         </div>
         <h2 class="card-title"><a href="{% pageurl project %}">{{ project.title }}</a></h2>
         <p class="card-text">{{ project.header|richtext|striptags|truncatewords:22 }}</p>

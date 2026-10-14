@@ -14,13 +14,14 @@
     {% if page.header %}
     <p class="lead">{{ page.header|richtext|striptags }}</p>
     {% endif %}
-    {% if page.github or page.youtube or page.production %}
+    {% with repositories=page.repositories.all %}
+    {% if repositories or page.youtube or page.production %}
     <div class="d-flex flex-wrap gap-2 mt-4">
-      {% if page.github %}
-      <a href="{{ page.github }}" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm">
-        <i class="bi bi-github"></i> GitHub
+      {% for repository in repositories %}
+      <a href="{{ repository.url }}" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm">
+        <i class="bi bi-github"></i> {{ repository.label|default:"GitHub" }}
       </a>
-      {% endif %}
+      {% endfor %}
       {% if page.youtube %}
       <a href="{{ page.youtube }}" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm">
         <i class="bi bi-youtube"></i> YouTube
@@ -33,6 +34,7 @@
       {% endif %}
     </div>
     {% endif %}
+    {% endwith %}
   </div>
 </section>
 {% endblock %}
