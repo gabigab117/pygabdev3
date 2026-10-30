@@ -7,18 +7,11 @@
       {% if customers %}
       <div class="table-responsive">
         <table class="table table-hover">
-          <thead><tr><th>Nom</th><th>Paiements</th></tr></thead>
+          <thead><tr><th>Nom</th></tr></thead>
           <tbody>
             {% for customer in customers %}
             <tr>
               <td><a href="{{ customer.get_absolute_url }}">{{ customer.name }}</a></td>
-              <td>
-                {% if customer.has_unpaid %}
-                <span class="pill pill-warn"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> En attente</span>
-                {% else %}
-                <span class="pill pill-ok"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> OK</span>
-                {% endif %}
-              </td>
             </tr>
             {% endfor %}
           </tbody>
@@ -80,40 +73,6 @@
       </div>
       {% else %}
       <p class="card-text mb-0">Aucun service ne correspond à votre recherche.</p>
-      {% endif %}
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-body">
-      <h2 class="h-sec h-sec-2xs mb-4">Factures</h2>
-      {% if invoices %}
-      <div class="table-responsive">
-        <table class="table table-hover">
-          <thead><tr><th>Client</th><th>Numéro</th><th>Émission</th><th>Échéance</th><th>Montant</th><th>Statut</th><th>PDF</th></tr></thead>
-          <tbody>
-            {% for invoice in invoices %}
-            <tr>
-              <td>{{ invoice.customer.name }}</td>
-              <td><a href="{{ invoice.get_absolute_url }}">{{ invoice.number }}</a></td>
-              <td>{{ invoice.issue_date }}</td>
-              <td>{{ invoice.due_date }}</td>
-              <td>{{ invoice.total }} €</td>
-              <td>
-                {% if not invoice.paid %}
-                <span class="pill pill-warn"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Impayée</span>
-                {% else %}
-                <span class="pill pill-ok"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Payée</span>
-                {% endif %}
-              </td>
-              <td>{% if invoice.pdf %}<a href="{{ invoice.pdf.url }}" target="_blank">Télécharger</a>{% else %}—{% endif %}</td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-      {% else %}
-      <p class="card-text mb-0">Aucune facture ne correspond à votre recherche.</p>
       {% endif %}
     </div>
   </div>

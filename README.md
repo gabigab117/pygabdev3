@@ -1,16 +1,13 @@
 
 # Mon Application Personnelle
 
-Bienvenue sur mon application personnelle, conçue avec **Django Wagtail**, pour montrer mes articles de blog sur Python, Django et Wagtail, présenter mes projets, et gérer en backoffice mes projets et factures.
+Bienvenue sur mon application personnelle, conçue avec **Django Wagtail**, pour montrer mes articles de blog sur Python, Django et Wagtail, présenter mes projets, et gérer en backoffice mes clients et projets.
 
 ## Fonctionnalités Principales
 
 - **Portfolio** : Une présentation de mes projets et articles pour partager mon travail et mes idées.
 - **Blog** : J'adore partager à propos de Python, Django et Wagtail.
-- **Back-office** : Gestion complète des factures incluant :
-  - Création et modification des factures.
-  - Suivi des paiements.
-  - Gestion des clients, projets, et services.
+- **Back-office** : Gestion des clients, projets et services, avec le suivi de ce qui reste à facturer. Les factures se font sur facture.net ; les anciennes restent consultables, en lecture seule, dans l'admin Django.
 
 ## Installation
 

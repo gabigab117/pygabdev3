@@ -16,18 +16,11 @@
     {% if customers %}
     <div class="table-responsive">
       <table class="table table-hover">
-        <thead><tr><th>Nom</th><th>Paiements</th></tr></thead>
+        <thead><tr><th>Nom</th></tr></thead>
         <tbody>
           {% for customer in customers %}
           <tr>
             <td><a href="{{ customer.get_absolute_url }}">{{ customer.name }}</a></td>
-            <td>
-              {% if customer.has_unpaid %}
-              <span class="pill pill-warn"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Factures en attente</span>
-              {% else %}
-              <span class="pill pill-ok"><svg fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Tout est ok</span>
-              {% endif %}
-            </td>
           </tr>
           {% endfor %}
         </tbody>

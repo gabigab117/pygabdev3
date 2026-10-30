@@ -33,3 +33,13 @@ class ProjectAdmin(admin.ModelAdmin):
 class InvoiceAdmin(admin.ModelAdmin):
     list_display = ["customer", "number", "issue_date", "total", "paid"]
     list_filter = ["customer", "paid"]
+
+    # Invoices are now made on facture.net: the old ones stay as a read-only archive.
+    def has_add_permission(self, request):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False

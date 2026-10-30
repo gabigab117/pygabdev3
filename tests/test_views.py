@@ -4,7 +4,7 @@ import pytest
 from django.test import Client
 from django.urls import reverse
 
-from customers.models import Invoice, Service
+from customers.models import Service
 
 
 @pytest.mark.django_db
@@ -77,70 +77,6 @@ def test_projects_filter_nonexistent_customer_id(
 
 
 @pytest.mark.django_db
-def test_create_invoice_view(client: Client, admin, customer_1, service_1, today, pdf1):
-    """
-    Scenario: Create a new invoice
-        Given I am an authenticated administrator
-            And I have a customer and service
-        When I submit a new invoice form with valid data
-            And include a service and PDF file
-        Then the invoice should be created successfully
-            And I should be redirected to the invoices list
-    """
-    client.force_login(admin)
-    data = {
-        "customer": customer_1.id,
-        "number": 1,
-        "issue_date": today,
-        "delivery_date": today,
-        "due_date": today + datetime.timedelta(days=15),
-        "services": [service_1.id],
-        "pdf": pdf1,
-    }
-
-    response = client.post(reverse("customers:create-invoice"), data=data)
-    assert response.status_code == 302
-    assert Invoice.objects.filter(number=1).exists()
-    assert response.url == reverse("customers:invoices")
-
-
-@pytest.mark.django_db
-def test_update_invoice_view(
-    client: Client, admin, today, pdf1, invoice_1_with_services, customer_2, service_4
-):
-    """
-    Scenario: Update an existing invoice
-        Given I am an authenticated administrator
-            And I have an existing invoice
-        When I submit updated invoice data
-            And change the customer and service
-        Then the invoice should be updated successfully
-            And I should be redirected to the invoice detail page
-    """
-    client.force_login(admin)
-    data = {
-        "customer": customer_2.id,
-        "number": 1,
-        "issue_date": today,
-        "delivery_date": today,
-        "due_date": today + datetime.timedelta(days=16),
-        "services": [service_4.id],
-        "pdf": pdf1,
-    }
-
-    response = client.post(
-        reverse("customers:update-invoice", kwargs={"pk": invoice_1_with_services.pk}),
-        data=data,
-    )
-
-    assert response.status_code == 302
-    assert Invoice.objects.filter(number=1).exists()
-    assert response.url == reverse(
-        "customers:invoice", kwargs={"pk": invoice_1_with_services.pk}
-    )
-
-
-@pytest.mark.django_db
 def test_create_service_view(client: Client, project_1, admin, today):
     """
     Scenario: Create a new service
@@ -185,3 +121,68 @@ def test_update_service_view(client: Client, service_1: Service, admin, today):
     service_1.refresh_from_db()
     assert service_1.time_spent == 0.21
     assert response.status_code == 302
+
+
+@pytest.mark.django_db
+def test_mark_service_as_billed(client: Client, admin, service_1: Service, today):
+    """
+    Scenario: Mark a service as billed once it is invoiced on facture.net
+        Given I am an authenticated administrator
+            And an unbilled service exists
+        When I submit the service form with "Facturé" checked
+        Then the service is billed
+    """
+    client.force_login(admin)
+    data = {"date": today, "time_spent": service_1.time_spent, "billed": "on"}
+
+    response = client.post(
+        reverse("customers:update-service", kwargs={"pk": service_1.pk}), data=data
+    )
+
+    service_1.refresh_from_db()
+    assert response.status_code == 302
+    assert service_1.billed
+
+
+@pytest.mark.django_db
+def test_service_of_archived_invoice_stays_billed(
+    client: Client, admin, invoice_1_with_services, service_1: Service, today
+):
+    """
+    Scenario: A service of an archived invoice cannot be unbilled
+        Given I am an authenticated administrator
+            And a service belongs to an archived invoice
+        When I submit the service form with "Facturé" unchecked
+        Then the form is refused with an error on "Facturé"
+            And the service is still billed
+    """
+    client.force_login(admin)
+    data = {"date": today, "time_spent": service_1.time_spent}
+
+    response = client.post(
+        reverse("customers:update-service", kwargs={"pk": service_1.pk}), data=data
+    )
+
+    service_1.refresh_from_db()
+    assert response.status_code == 200
+    assert "billed" in response.context["form"].errors
+    assert service_1.billed
+
+
+@pytest.mark.django_db
+def test_search_view(client: Client, admin, customer_1):
+    """
+    Scenario: Open the back-office search page
+        Given I am an authenticated administrator
+            And a customer exists
+        When I open the search page, before typing anything
+        Then the page is displayed
+            And no customer, project or service is listed yet
+    """
+    client.force_login(admin)
+
+    response = client.get(reverse("customers:search"))
+
+    assert response.status_code == 200
+    assert customer_1.name not in response.content.decode()
+    assert "Aucun client ne correspond" in response.content.decode()

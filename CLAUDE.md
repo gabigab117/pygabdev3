@@ -1,6 +1,6 @@
 # pygabdev3 : règles du projet
 
-pygab.dev, le site de Gabriel, développeur freelance. Un site public en Wagtail (accueil, réalisations, blog, contact, pages légales), qui doit convaincre des prospects, et un back-office Django privé (clients, projets, prestations, factures). Les règles propres à un type de fichier vivent dans `.claude/rules/` et se chargent quand on touche ces fichiers.
+pygab.dev, le site de Gabriel, développeur freelance. Un site public en Wagtail (accueil, réalisations, blog, contact, pages légales), qui doit convaincre des prospects, et un back-office Django privé (clients, projets, prestations ; les anciennes factures en archive). Les règles propres à un type de fichier vivent dans `.claude/rules/` et se chargent quand on touche ces fichiers.
 
 **Le dépôt est public sur GitHub.** Rien de privé n'entre dans le code, ce fichier ou `.claude/` : ni secret, ni adresse, utilisateur ou chemin du serveur. Ce qui décrit la prod reste dans la skill locale `deployer`, ignorée par git.
 

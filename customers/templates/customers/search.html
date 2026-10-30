@@ -3,7 +3,7 @@
 
 {% block banner_eyebrow %}<span class="eyebrow bare">Espace admin</span>{% endblock %}
 {% block banner_title %}Recherche{% endblock %}
-{% block banner_text %}<p class="lead">Clients · Projets · Services · Factures</p>{% endblock %}
+{% block banner_text %}<p class="lead">Clients · Projets · Services</p>{% endblock %}
 
 {% block content %}
 <div class="d-flex flex-column gap-4">
@@ -17,7 +17,7 @@
             class="form-control w-100"
             type="search"
             name="search"
-            placeholder="Rechercher un client, projet, service ou facture…"
+            placeholder="Rechercher un client, projet ou service…"
             hx-get="{% url 'customers:search-results' %}"
             hx-trigger="keyup changed delay:300ms, search"
             hx-target="#search-results"

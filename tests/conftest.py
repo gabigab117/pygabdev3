@@ -3,7 +3,6 @@ import datetime
 import pytest
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.core.files.uploadedfile import SimpleUploadedFile
 
 from .factories import CustomerFactory, InvoiceFactory, ProjectFactory, ServiceFactory
 
@@ -33,11 +32,6 @@ def media_root(tmpdir):
 
     # Restaurer la valeur initiale de MEDIA_ROOT
     settings.MEDIA_ROOT = original_media_root
-
-
-@pytest.fixture
-def pdf1(media_root):
-    return SimpleUploadedFile("test.pdf", b"content")
 
 
 @pytest.fixture

@@ -13,8 +13,8 @@ from django.views.generic import (
     UpdateView,
 )
 
-from .forms import InvoiceForm, InvoiceUpdateForm, ServiceForm
-from .models import Customer, Invoice, Project, Service
+from .forms import ServiceForm
+from .models import Customer, Project, Service
 
 
 @staff_member_required
@@ -231,71 +231,9 @@ class CreateCustomer(CreateView):
         return context
 
 
-@method_decorator(staff_member_required, name="dispatch")
-class InvoicesList(ListView):
-    model = Invoice
-    template_name = "customers/invoices.html"
-    paginate_by = 10
-
-
-@method_decorator(staff_member_required, name="dispatch")
-class InvoiceDetail(DetailView):
-    model = Invoice
-    template_name = "customers/invoice.html"
-    context_object_name = "invoice"
-
-
-@method_decorator(staff_member_required, name="dispatch")
-class CreateInvoice(CreateView):
-    template_name = "customers/invoice_form.html"
-    model = Invoice
-    form_class = InvoiceForm
-    success_url = reverse_lazy("customers:invoices")
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["status"] = "Création d'une facture"
-        return context
-
-
-@method_decorator(staff_member_required, name="dispatch")
-class UpdateInvoice(UpdateView):
-    model = Invoice
-    form_class = InvoiceUpdateForm
-    template_name = "customers/invoice_form.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["status"] = (
-            f"Mise à jour de la facture {self.object.number}, pour {self.object.customer}"
-        )
-        return context
-
-    def get_success_url(self):
-        return reverse("customers:invoice", kwargs={"pk": self.object.pk})
-
-
-@method_decorator(staff_member_required, name="dispatch")
-class DeleteInvoice(DeleteView):
-    model = Invoice
-    template_name = "customers/invoice_delete_confirm.html"
-    success_url = reverse_lazy("customers:invoices")
-    context_object_name = "invoice"
-
-
 @staff_member_required
 def search_view(request):
-    customers = Customer.objects.none()
-    projects = Project.objects.none()
-    services = Service.objects.none()
-    invoices = Invoice.objects.none()
-    context = {
-        "customers": customers,
-        "projects": projects,
-        "services": services,
-        "invoices": invoices,
-    }
-    return render(request, "customers/search.html", context=context)
+    return render(request, "customers/search.html")
 
 
 @staff_member_required
@@ -305,18 +243,15 @@ def search_results_view(request):
     customers = Customer.objects.none()
     projects = Project.objects.none()
     services = Service.objects.none()
-    invoices = Invoice.objects.none()
 
     if query:
         customers = Customer.objects.filter(name__icontains=query)
         projects = Project.objects.filter(customer__name__icontains=query)
         services = Service.objects.filter(project__customer__name__icontains=query)
-        invoices = Invoice.objects.filter(customer__name__icontains=query)
 
     context = {
         "customers": customers,
         "projects": projects,
         "services": services,
-        "invoices": invoices,
     }
     return render(request, "customers/search_results.html", context=context)
