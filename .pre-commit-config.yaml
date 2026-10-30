@@ -1,0 +1,50 @@
+# The checks of every commit, replayed by the CI. No hook may rewrite a migration:
+# ruff excludes them (ruff.toml), and `--force-exclude` applies that exclusion to
+# the paths pre-commit passes as arguments.
+repos:
+  # Read-only: stays active on the migrations. The repository is public.
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.1
+    hooks:
+      - id: gitleaks
+
+  - repo: local
+    hooks:
+      # The ruff of requirements.txt, in the venv of the repository.
+      - id: ruff-check
+        name: ruff check
+        entry: ./venv/bin/ruff check --fix --force-exclude
+        language: system
+        types: [python]
+
+      - id: ruff-format
+        name: ruff format
+        entry: ./venv/bin/ruff format --force-exclude
+        language: system
+        types: [python]
+
+      - id: django-makemigrations-check
+        name: django makemigrations --check
+        entry: ./venv/bin/python manage.py makemigrations --check --dry-run
+        language: system
+        types: [python]
+        pass_filenames: false
+
+      # Beyond that length, Claude Code's documentation notes that a file is
+      # followed less closely (see CLAUDE.md).
+      - id: harness-length
+        name: CLAUDE.md and rules of 150 lines at most
+        entry: >-
+          bash -c 'status=0; for f in "$@"; do n=$(awk "END { print NR }" "$f");
+          if [ "$n" -gt 150 ]; then echo "$f is $n lines long, 150 at most"; status=1; fi;
+          done; exit $status' --
+        language: system
+        files: ^(CLAUDE\.md|\.claude/rules/.+\.md)$
+
+      # The system Python, the one that runs the hook in Claude Code.
+      - id: git-guard-tests
+        name: tests of the git guard hook
+        entry: /usr/bin/python3 -m unittest discover -s .claude/hooks -p "test_*.py"
+        language: system
+        files: ^\.claude/hooks/
+        pass_filenames: false

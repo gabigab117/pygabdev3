@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    name: Quality and tests
+    runs-on: ubuntu-24.04
+    # A newer push supersedes the checks of an older one.
+    concurrency:
+      group: checks-${{ github.ref }}
+      cancel-in-progress: true
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.14"
+          cache: pip
+
+      # mysqlclient has no Linux wheel: pip builds it against these headers.
+      - name: Install system packages
+        run: sudo apt-get update && sudo apt-get install --yes --no-install-recommends libmysqlclient-dev pkg-config
+
+      # The layout of a local clone: the hooks call ./venv/bin/.
+      - name: Install dependencies
+        run: |
+          python -m venv venv
+          ./venv/bin/pip install -r requirements.txt
+
+      # Fictitious values only: nothing in .env.example is a secret.
+      - name: Environment
+        run: cp .env.example .env
+
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit-${{ runner.os }}-${{ hashFiles('.pre-commit-config.yaml') }}
+
+      # The same hooks as on every local commit: secrets detection, ruff,
+      # migrations up to date, CLAUDE.md and rules length, git guard tests.
+      - name: Pre-commit hooks
+        run: pipx run --spec pre-commit==4.7.0 pre-commit run --all-files --show-diff-on-failure
+
+      - name: Tests
+        run: ./venv/bin/pytest

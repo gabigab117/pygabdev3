@@ -1,2 +1,9 @@
+# No hook may rewrite a migration: one that is pushed never changes.
+extend-exclude = ["*/migrations/*"]
+
 [lint]
 ignore = ["F403", "F405"]
+
+[lint.per-file-ignores]
+# Reads the .env before importing Django, as it runs in production: left as is.
+"project/wsgi.py" = ["E402"]
