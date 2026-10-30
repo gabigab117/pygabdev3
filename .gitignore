@@ -168,3 +168,8 @@ theme/static_src/node_modules/
 npm-debug.log
 
 **/.DS_Store
+
+# Claude Code: personal settings, and the deployment skill, which describes the
+# server of a public repository.
+.claude/settings.local.json
+.claude/skills/deployer/
