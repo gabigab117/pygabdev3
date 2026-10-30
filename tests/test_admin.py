@@ -1,4 +1,5 @@
 import pytest
+from django.contrib.contenttypes.models import ContentType
 from django.test import Client
 from django.urls import reverse
 
@@ -57,3 +58,25 @@ def test_invoice_admin_is_read_only(client: Client, admin, invoice_1):
     assert change.status_code == 403
     assert delete.status_code == 403
     assert Invoice.objects.filter(pk=invoice_1.pk, number=1).exists()
+
+
+@pytest.mark.django_db
+def test_invoice_admin_has_no_link_to_a_removed_page(client: Client, admin, invoice_1):
+    """
+    Scenario: An archived invoice no longer links to the back office
+        Given I am an authenticated administrator
+            And an archived invoice exists
+        When I open the invoice in the Django admin
+        Then no "Voir sur le site" link is offered
+            And the address of that link answers 404, not a server error
+    """
+    client.force_login(admin)
+    content_type = ContentType.objects.get_for_model(Invoice)
+
+    change = client.get(reverse("admin:customers_invoice_change", args=[invoice_1.pk]))
+    view_on_site = client.get(
+        reverse("admin:view_on_site", args=[content_type.pk, invoice_1.pk])
+    )
+
+    assert not change.context["has_absolute_url"]
+    assert view_on_site.status_code == 404

@@ -103,9 +103,6 @@ class Invoice(models.Model):
     total = models.DecimalField(decimal_places=2, max_digits=7, blank=True, null=True)
     pdf = models.FileField(upload_to="factures", blank=True, null=True)
 
-    def get_absolute_url(self):
-        return reverse("customers:invoice", kwargs={"pk": self.pk})
-
     def __str__(self):
         return f"{self.customer} - {self.number} - {self.issue_date} - {self.paid}"
 
