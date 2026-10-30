@@ -24,7 +24,7 @@ def media_root(tmpdir):
     """
     # Sauvegarder la valeur initiale de MEDIA_ROOT
     original_media_root = settings.MEDIA_ROOT
-    
+
     # Rediriger MEDIA_ROOT vers le répertoire temporaire
     settings.MEDIA_ROOT = tmpdir
 
@@ -33,6 +33,7 @@ def media_root(tmpdir):
 
     # Restaurer la valeur initiale de MEDIA_ROOT
     settings.MEDIA_ROOT = original_media_root
+
 
 @pytest.fixture
 def pdf1(media_root):

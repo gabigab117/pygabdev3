@@ -33,9 +33,7 @@ def test_projects_view_filtered_by_customer(
         Then only that customer's projects are returned
     """
     client.force_login(admin)
-    response = client.get(
-        reverse("customers:projects"), {"customer": customer_1.id}
-    )
+    response = client.get(reverse("customers:projects"), {"customer": customer_1.id})
     assert response.status_code == 200
     projects = list(response.context["object_list"])
     assert project_1 in projects
@@ -43,9 +41,7 @@ def test_projects_view_filtered_by_customer(
 
 
 @pytest.mark.django_db
-def test_projects_filter_non_numeric_value(
-    client: Client, admin, project_1, project_3
-):
+def test_projects_filter_non_numeric_value(client: Client, admin, project_1, project_3):
     """
     Scenario: Filter with a non-numeric customer value
         Given I am an authenticated administrator
@@ -109,7 +105,9 @@ def test_create_invoice_view(client: Client, admin, customer_1, service_1, today
 
 
 @pytest.mark.django_db
-def test_update_invoice_view(client: Client, admin, today, pdf1, invoice_1_with_services, customer_2, service_4):
+def test_update_invoice_view(
+    client: Client, admin, today, pdf1, invoice_1_with_services, customer_2, service_4
+):
     """
     Scenario: Update an existing invoice
         Given I am an authenticated administrator
@@ -130,11 +128,16 @@ def test_update_invoice_view(client: Client, admin, today, pdf1, invoice_1_with_
         "pdf": pdf1,
     }
 
-    response = client.post(reverse("customers:update-invoice", kwargs={"pk": invoice_1_with_services.pk}), data=data)
-   
+    response = client.post(
+        reverse("customers:update-invoice", kwargs={"pk": invoice_1_with_services.pk}),
+        data=data,
+    )
+
     assert response.status_code == 302
     assert Invoice.objects.filter(number=1).exists()
-    assert response.url == reverse("customers:invoice", kwargs={"pk": invoice_1_with_services.pk})
+    assert response.url == reverse(
+        "customers:invoice", kwargs={"pk": invoice_1_with_services.pk}
+    )
 
 
 @pytest.mark.django_db
@@ -152,7 +155,9 @@ def test_create_service_view(client: Client, project_1, admin, today):
         "date": today,
         "time_spent": 0.25,
     }
-    response = client.post(reverse("customers:add-service", kwargs={"pk": project_1.pk}), data=data)
+    response = client.post(
+        reverse("customers:add-service", kwargs={"pk": project_1.pk}), data=data
+    )
 
     assert Service.objects.all().count() == 1
     assert response.status_code == 302
@@ -174,7 +179,9 @@ def test_update_service_view(client: Client, service_1: Service, admin, today):
         "date": today - datetime.timedelta(days=-1),
         "time_spent": 0.21,
     }
-    response = client.post(reverse("customers:update-service", kwargs={"pk": service_1.pk}), data=data)
+    response = client.post(
+        reverse("customers:update-service", kwargs={"pk": service_1.pk}), data=data
+    )
     service_1.refresh_from_db()
     assert service_1.time_spent == 0.21
     assert response.status_code == 302

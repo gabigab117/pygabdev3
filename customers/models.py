@@ -126,13 +126,13 @@ class Invoice(models.Model):
 def handle_invoice_change(sender, instance, action, pk_set, **kwargs):
     """
     Signal handler that manages the relationship between Invoice and Service models.
-    
+
     This handler performs the following operations:
     - When services are added to an invoice, marks them as billed
     - When services are removed from an invoice, marks them as unbilled
     - When all services are cleared from an invoice, marks them all as unbilled
     - Updates the invoice total after any changes to its services
-    
+
     Args:
         sender: The model class sending the signal (Invoice.services.through)
         instance: The Invoice instance being modified
@@ -153,10 +153,10 @@ def handle_invoice_change(sender, instance, action, pk_set, **kwargs):
 def handle_invoice_delete(sender, instance, **kwargs):
     """
     Signal handler that manages cleanup when an Invoice is deleted.
-    
+
     Ensures that all services associated with the invoice are marked as unbilled
     before the invoice is deleted, preventing orphaned billed services.
-    
+
     Args:
         sender: The model class sending the signal (Invoice)
         instance: The Invoice instance being deleted
@@ -170,10 +170,10 @@ def handle_invoice_delete(sender, instance, **kwargs):
 def handle_service_change(sender, instance, **kwargs):
     """
     Signal handler that updates invoice totals when a service is modified.
-    
+
     When a service is saved (created or updated), this handler ensures that
     invoice containing this service has its total recalculated.
-    
+
     Args:
         sender: The model class sending the signal (Service)
         instance: The Service instance that was saved
