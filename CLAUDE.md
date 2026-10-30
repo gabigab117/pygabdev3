@@ -45,7 +45,7 @@ Tout ce qu'une machine peut vérifier l'est (hook, pre-commit, CI, test) ; ce fi
 - **Le hook `.claude/hooks/garde_git.py` refuse** `git checkout`, `git restore` sur les fichiers de travail, `git reset --hard`, `git clean -f`, `git switch -f`, `git stash drop` ou `clear`, et tout force-push, même lancés par `git -C`. Ces commandes effacent un travail non commité, et c'est déjà arrivé sur un autre projet. Pour changer de branche : `git switch`.
 - **Une mutation volontaire** (prouver qu'un test attrape un défaut) se fait sur une copie : copier le fichier dans le scratchpad, muter, restaurer depuis la copie, puis vérifier `git diff --stat`.
 - **La lecture des `.env` est refusée** (`permissions.deny`), par Read comme par `cat` : un secret lu finit dans la conversation. Le modèle à lire est `.env.example`. La règle s'écrit `Read(~/**/.env)` : sans `~/` ni `/` en tête, elle se compterait depuis le dossier courant.
-- **En local, les e-mails partent vraiment** : `base.py` règle le SMTP de Gmail pour tous les settings. Le formulaire de contact ne se soumet pas en local sans l'accord de Gabriel. Les tests, eux, passent par la boîte en mémoire de pytest-django.
+- **En local, aucun e-mail ne part** : `dev.py` les affiche dans la console de `runserver`, à la place du SMTP de Gmail que `base.py` garde pour la prod. Un test le vérifie (`tests/test_settings.py`). Les tests, eux, passent par la boîte en mémoire de Django.
 - Le pre-commit refuse un CLAUDE.md ou une règle de `.claude/rules/` de plus de 150 lignes : selon la documentation de Claude Code, un fichier long est moins bien suivi.
 
 ## Documentation à jour (Context7, obligatoire)

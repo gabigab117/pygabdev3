@@ -45,7 +45,7 @@ La réponse attendue : `200`.
 
 ## 4. Les e-mails
 
-`base.py` règle le SMTP de Gmail pour tous les settings : en local, un message du formulaire de contact part vraiment, avec les identifiants du `.env`. Ce formulaire ne se soumet pas sans l'accord de Gabriel.
+Ils s'affichent dans la console de `runserver` (`dev.py`) : en local, rien ne part. Le SMTP de Gmail de `base.py` ne sert qu'en prod.
 
 ## 5. Sur le vrai téléphone
 

@@ -16,6 +16,9 @@ DATABASES = {
     }
 }
 
+# Emails are printed by runserver, never sent: base.py holds the Gmail SMTP of production.
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
 STORAGES = {
     "default": {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
