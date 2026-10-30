@@ -186,3 +186,22 @@ def test_search_view(client: Client, admin, customer_1):
     assert response.status_code == 200
     assert customer_1.name not in response.content.decode()
     assert "Aucun client ne correspond" in response.content.decode()
+
+
+@pytest.mark.django_db
+def test_update_service_form_shows_the_date(client: Client, admin, service_1: Service):
+    """
+    Scenario: The service form keeps the date of the service
+        Given I am an authenticated administrator
+            And a service dated 2024-01-01 exists
+        When I open its update form
+        Then the date field holds 2024-01-01, in the format the date picker reads
+    """
+    client.force_login(admin)
+
+    response = client.get(
+        reverse("customers:update-service", kwargs={"pk": service_1.pk})
+    )
+
+    assert response.status_code == 200
+    assert 'value="2024-01-01"' in response.context["form"]["date"].as_widget()
