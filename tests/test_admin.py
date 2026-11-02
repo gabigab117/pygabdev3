@@ -7,6 +7,8 @@ from django.urls import reverse
 
 from customers.models import Invoice
 
+from .factories import ServiceFactory
+
 
 def mark_as_billed(client, services, confirm=False):
     """Run the bulk action of the services list on these services."""
@@ -225,3 +227,23 @@ def test_mark_as_billed_needs_the_change_permission(
 
     service_1.refresh_from_db()
     assert not service_1.billed
+
+
+@pytest.mark.django_db
+def test_mark_as_billed_rounds_the_total_hours(client: Client, admin, project_1):
+    """
+    Scenario: The total hours stay readable whatever the decimals
+        Given I am an authenticated administrator
+            And two unbilled services of 0.1 and 0.2 hours
+        When I run "Marquer comme facturés" on them
+        Then the confirmation page shows 0,30 h in total
+    """
+    client.force_login(admin)
+    services = [
+        ServiceFactory(project=project_1, date="2024-03-01", time_spent=0.1),
+        ServiceFactory(project=project_1, date="2024-03-02", time_spent=0.2),
+    ]
+
+    response = mark_as_billed(client, services)
+
+    assert "<th>0,30 h</th>" in response.content.decode()
