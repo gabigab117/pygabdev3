@@ -3,6 +3,7 @@ import datetime
 import pytest
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Permission
 
 from .factories import CustomerFactory, InvoiceFactory, ProjectFactory, ServiceFactory
 
@@ -39,6 +40,20 @@ def admin():
     return User.objects.create_superuser(
         username="gabigab", email="g@g.com", password="Test_60000", is_superuser=True
     )
+
+
+@pytest.fixture
+def service_viewer():
+    """A staff account that can view the services, not change them."""
+    user = User.objects.create_user(
+        username="viewer", email="v@v.com", password="Test_60000", is_staff=True
+    )
+    user.user_permissions.add(
+        Permission.objects.get(
+            codename="view_service", content_type__app_label="customers"
+        )
+    )
+    return user
 
 
 @pytest.fixture

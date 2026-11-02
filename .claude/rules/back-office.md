@@ -16,9 +16,9 @@ Le back-office (`customers/`) ne sert qu'à Gabriel : clients, projets, prestati
   - le total d'une prestation vaut son `time_spent` multiplié par le `hourly_rate` de son projet, calculé à l'enregistrement (`Service.save`) ;
   - une prestation rattachée à une facture est `billed`, détachée elle ne l'est plus (`m2m_changed`), et supprimer une facture libère ses prestations (`pre_delete`) ;
   - le total d'une facture est la somme de ses prestations (`update_total`), recalculé quand l'une change (`post_save`) ;
-  - une prestation se coche `billed` à la main, une fois facturée sur facture.net ; celle d'une ancienne facture ne se décoche pas (`Service.clean`).
+  - une prestation se coche `billed` à la main, une fois facturée sur facture.net : sur sa fiche, ou en lot dans l'admin Django (`ServiceAdmin.mark_as_billed`, filtre par client puis page de confirmation avec le montant) ; celle d'une ancienne facture ne se décoche pas (`Service.clean`).
 
-  Un changement qui touche l'un d'eux garde les autres, prouvé par un test. Un `queryset.update()` saute `save()` et les signaux : il ne recalcule aucun total.
+  Un changement qui touche l'un d'eux garde les autres, prouvé par un test. Un `queryset.update()` saute `save()` et les signaux : il ne recalcule aucun total. `mark_as_billed` s'en sert quand même, car une prestation non facturée n'est sur aucune facture.
 - Une règle de valeur vit dans le modèle (`clean`, contrainte), avec son message en français, pas dans la vue ni le formulaire : `number` unique, échéance après l'émission (`Invoice.clean`), prestation d'une ancienne facture toujours facturée (`Service.clean`).
 - **Suppressions protégées** (`on_delete=PROTECT`) : un client, un projet ou une prestation encore référencés ne se suppriment pas. Le gabarit cache alors le bouton (`project.has_services`) ; appelée quand même, la suppression lève `ProtectedError`.
 - **Formulaires** : `ModelForm` dans `customers/forms.py`, rendus par crispy-forms (`bootstrap5`), une date en `DateInput(attrs={"type": "date"}, format="%Y-%m-%d")` (sans `format`, la date s'écrit au format français, que le sélecteur de date du navigateur ne lit pas : le champ s'affiche vide). Une vue ou un formulaire nouveau liste ses champs (`fields = [...]`) : un champ ajouté au modèle ne devient pas éditable sans que Gabriel l'ait décidé.

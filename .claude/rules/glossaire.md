@@ -20,6 +20,7 @@ La table de référence. Sa règle d'usage est dans le CLAUDE.md (Conventions) :
 | prestation (du temps passé sur un projet, à facturer) | `service` (`Service`) |
 | temps passé | `time_spent` |
 | facturée (une prestation cochée une fois facturée sur facture.net, ou rattachée à une ancienne facture) | `billed` |
+| marquer facturées (action groupée de l'admin Django, sur les prestations sélectionnées) | `mark_as_billed` |
 | facture (archivée : les nouvelles se font sur facture.net) | `invoice` (`Invoice`) |
 | numéro (d'une facture) | `number` |
 | date d'émission / de livraison / d'échéance | `issue_date` / `delivery_date` / `due_date` |
