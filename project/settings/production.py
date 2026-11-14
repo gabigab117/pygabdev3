@@ -94,5 +94,11 @@ LOGGING = {
             # Pas de propagation vers les loggers parents
             "propagate": False,
         },
+        # The contact form: a Turnstile check that fails on the site's side.
+        "contact": {
+            "handlers": ["file"],
+            "level": "WARNING",
+            "propagate": False,
+        },
     },
 }

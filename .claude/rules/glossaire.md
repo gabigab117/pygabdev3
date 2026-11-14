@@ -46,6 +46,7 @@ La table de référence. Sa règle d'usage est dans le CLAUDE.md (Conventions) :
 | dépôt GitHub (d'une réalisation, quatre au plus) | `repository` (`FolioRepository`) |
 | libellé (d'un dépôt) | `label` |
 | page de contact, ses champs | `FormPage`, `FormField` |
+| vérification anti-robot (Turnstile de Cloudflare, sur la page de contact) | `turnstile` : `TurnstileField`, `TurnstileWidget`, `TurnstileFormBuilder` |
 | page légale | `LegalPage` |
 | bloc d'un corps : paragraphe, code | `paragraphe`, `code` (des clés stockées : elles restent telles quelles) |
 | recherche (du site) | `search` |

@@ -1,13 +1,47 @@
 import datetime
+from unittest.mock import Mock
 
 import pytest
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission
+from wagtail.models import Site
+
+from contact.models import FormField, FormPage
 
 from .factories import CustomerFactory, InvoiceFactory, ProjectFactory, ServiceFactory
 
 User = get_user_model()
+
+
+@pytest.fixture
+def contact_page():
+    """The contact page, with fields as Gabriel declares them in the Wagtail admin."""
+    root = Site.objects.get(is_default_site=True).root_page
+    page = root.add_child(
+        instance=FormPage(
+            title="Contact",
+            slug="contact",
+            to_address="gabriel@example.org",
+            from_address="site@example.org",
+            subject="Nouveau message",
+        )
+    )
+    FormField.objects.create(page=page, label="Email", field_type="email")
+    FormField.objects.create(page=page, label="Message", field_type="multiline")
+    return page
+
+
+@pytest.fixture
+def siteverify(monkeypatch):
+    """
+    Cloudflare's siteverify, replaced so that no test reaches the network.
+    It accepts the token unless a test sets another answer.
+    """
+    post = Mock()
+    post.return_value.json.return_value = {"success": True}
+    monkeypatch.setattr("contact.forms.requests.post", post)
+    return post
 
 
 @pytest.fixture

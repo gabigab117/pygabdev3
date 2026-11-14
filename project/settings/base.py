@@ -44,8 +44,6 @@ INSTALLED_APPS = [
     "folio",
     "tag",
     "contact",
-    "django_recaptcha",
-    "wagtailcaptcha",
     "crispy_forms",
     "crispy_bootstrap5",
     "customers",
@@ -184,9 +182,10 @@ DEFAULT_FROM_EMAIL = "Contact PyGabDev<gabrieltrouve5@gmail.com>"
 CRISPY_ALLOWED_TEMPLATE_PACKS = ("bootstrap5",)
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 
-# Recaptcha
-RECAPTCHA_PUBLIC_KEY = env("RECAPTCHA_PUBLIC_KEY")
-RECAPTCHA_PRIVATE_KEY = env("RECAPTCHA_PRIVATE_KEY")
+# Cloudflare Turnstile of the contact form. No default: a missing key must stop the
+# deployment check, not fall back to the test keys, which let everything through.
+TURNSTILE_SITE_KEY = env("TURNSTILE_SITE_KEY")
+TURNSTILE_SECRET_KEY = env("TURNSTILE_SECRET_KEY")
 
 WAGTAIL_CODE_BLOCK_THEME = "coy"
 

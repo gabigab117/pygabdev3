@@ -16,7 +16,7 @@ Le site sert à convaincre des prospects : un texte maladroit ou un écran cass�
   - une classe maison ne recouvre pas un nom de Bootstrap ;
   - aucune couleur, taille ou ombre écrite en dur, et pas d'attribut `style` nouveau : une valeur qui revient devient un token. Les styles nouveaux vont dans `styles.css`.
 - Polices : Hanken Grotesk pour le texte, JetBrains Mono pour les titres et les étiquettes, par Google Fonts. Icônes : Bootstrap Icons.
-- **JavaScript** : `static/js/script.js`, sans framework ni build. HTMX 2 pour la recherche du back-office. Une librairie chargée par CDN porte une version épinglée et son `integrity`.
+- **JavaScript** : `static/js/script.js`, sans framework ni build. HTMX 2 pour la recherche du back-office. Une librairie chargée par CDN porte une version épinglée et son `integrity`, sauf `api.js` de Turnstile : Cloudflare le met à jour à la même adresse, et une copie épinglée cesse de marcher.
 - Pas de logique dans un gabarit au-delà d'un `if` ou d'un `for` : un calcul va dans `get_context` ou dans la vue.
 - **Textes en français, pour des prospects** : clairs, concrets, au vouvoiement, sans jargon inutile. Aucun quadratin (—). Un texte nouveau du site se relit avec la skill `humanizer` avant d'être proposé à Gabriel.
 - **Cookies et mesure d'audience** : Google Tag Manager ne se charge que si le groupe `analytics` est accepté (`cookie_group_accepted`) ; Simple Analytics, sans cookie, reste hors du back-office et des aperçus. Tout traceur nouveau passe par django-cookie-consent.

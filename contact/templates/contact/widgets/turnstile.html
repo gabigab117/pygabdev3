@@ -1,0 +1,4 @@
+{# Neither a pinned version nor an integrity: Cloudflare updates api.js at this exact URL, and a pinned copy stops working. #}
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+{# is-invalid comes from crispy-forms: Bootstrap shows the error message only after it. #}
+<div class="cf-turnstile d-flex justify-content-center{% if 'is-invalid' in widget.attrs.class %} is-invalid{% endif %}" data-sitekey="{{ site_key }}" data-theme="light"></div>
