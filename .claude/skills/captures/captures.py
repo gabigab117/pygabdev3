@@ -12,6 +12,7 @@ import re
 from pathlib import Path
 
 from playwright.sync_api import Page, sync_playwright
+from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 
 SITE = "http://localhost:8000"
 
@@ -63,7 +64,10 @@ STEP = re.compile(r"([@~])([^@~]+)")
 def shoot(page: Page, target: str, file: Path) -> None:
     path = re.split("[@~]", target, maxsplit=1)[0]
     page.goto(f"{SITE}{path}")
-    page.wait_for_load_state("networkidle")
+    try:
+        page.wait_for_load_state("networkidle", timeout=10_000)
+    except PlaywrightTimeoutError:
+        pass  # The Turnstile widget of the contact page keeps the network busy.
     page.add_style_tag(content=f"{WAGTAIL_USERBAR} {{ display: none !important; }}")
     for step, value in STEP.findall(target[len(path) :]):
         if step == "~":
