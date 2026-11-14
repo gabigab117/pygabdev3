@@ -3,7 +3,6 @@
 {% slugurl 'projets' as url_projets %}
 {% slugurl 'blog' as url_blog %}
 {% slugurl 'contact' as url_contact %}
-{% url "cookie_consent_cookie_group_list" as url_cookies %}
 
 <footer class="site-footer">
   <div class="container">
@@ -28,7 +27,6 @@
       <div class="col-6 col-lg-3 footer-col">
         <p class="footer-col-label">Légal</p>
         <a href="{% slugurl 'legal' %}">Mentions légales</a>
-        <a href="{{ url_cookies }}">Cookies</a>
       </div>
     </div>
     <div class="footer-base">

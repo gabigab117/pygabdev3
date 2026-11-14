@@ -19,7 +19,7 @@ Le site sert à convaincre des prospects : un texte maladroit ou un écran cass�
 - **JavaScript** : `static/js/script.js`, sans framework ni build. HTMX 2 pour la recherche du back-office. Une librairie chargée par CDN porte une version épinglée et son `integrity`, sauf `api.js` de Turnstile : Cloudflare le met à jour à la même adresse, et une copie épinglée cesse de marcher.
 - Pas de logique dans un gabarit au-delà d'un `if` ou d'un `for` : un calcul va dans `get_context` ou dans la vue.
 - **Textes en français, pour des prospects** : clairs, concrets, au vouvoiement, sans jargon inutile. Aucun quadratin (—). Un texte nouveau du site se relit avec la skill `humanizer` avant d'être proposé à Gabriel.
-- **Cookies et mesure d'audience** : Google Tag Manager ne se charge que si le groupe `analytics` est accepté (`cookie_group_accepted`) ; Simple Analytics, sans cookie, reste hors du back-office et des aperçus. Tout traceur nouveau passe par django-cookie-consent.
+- **Cookies et mesure d'audience** : le site ne pose aucun cookie de suivi, donc il n'a pas de bannière. Simple Analytics, sans cookie, reste hors du back-office et des aperçus. Un traceur qui pose un cookie demande d'abord un mécanisme de consentement : Gabriel en décide avant le code.
 - **Référencement** : `seo_title`, `search_description` et lien canonique viennent de `base.html`. Un seul `h1` par page, un `alt` sur toute image.
 - **Lisible par tous** : contrastes AA, focus visible, libellé sur toute icône seule (`aria-label` ou `visually-hidden`).
 - **Deux gabarits** : le téléphone (390 px) et l'ordinateur (1440 px). Un écran nouveau ou retouché se dessine avec la skill `frontend-design`, puis se valide sur captures, aux deux tailles (skill `captures`).

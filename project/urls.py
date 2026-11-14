@@ -15,7 +15,6 @@ urlpatterns = [
     path("documents/", include(wagtaildocs_urls)),
     path("search/", search_views.search, name="search"),
     path("sitemap.xml", sitemap),
-    path("cookies/", include("cookie_consent.urls")),
 ]
 
 

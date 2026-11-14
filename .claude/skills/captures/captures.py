@@ -12,7 +12,6 @@ import re
 from pathlib import Path
 
 from playwright.sync_api import Page, sync_playwright
-from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 
 SITE = "http://localhost:8000"
 
@@ -44,16 +43,6 @@ def demo_password() -> str:
     if not match:
         raise SystemExit("DEMO_PASSWORD manque dans .env.example.")
     return match.group(1).strip()
-
-
-def decline_cookies(page: Page) -> None:
-    """Decline the cookie bar once, so that it covers no capture."""
-    page.goto(f"{SITE}/")
-    try:
-        page.locator(".cookie-consent__decline").click(timeout=5000)
-    except PlaywrightTimeoutError:
-        return  # No cookie group to consent to, hence no bar.
-    page.wait_for_load_state("networkidle")
 
 
 def sign_in(page: Page, password: str) -> None:
@@ -125,7 +114,6 @@ def main() -> None:
                 color_scheme="light",
             )
             page = context.new_page()
-            decline_cookies(page)
             if args.demo:
                 sign_in(page, password)
             for name, target in shots:

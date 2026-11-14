@@ -75,7 +75,7 @@ Tout ce qu'une machine peut vérifier l'est (hook, pre-commit, CI, test) ; ce fi
 - **Gabarits Django, sans build front** : Bootstrap 5.3 par CDN, la couche de thème `static/css/styles.css`, HTMX pour la recherche du back-office (`.claude/rules/gabarits.md`).
 - Settings : `base`, `dev` (DEBUG, SQLite), `production` (MySQL, HTTPS, HSTS, `ManifestStaticFilesStorage`, journal dans `logs/`). `manage.py` lit `DJANGO_SETTINGS_MODULE` dans le `.env`, `dev` par défaut.
 - Les adresses des deux admins viennent de l'environnement (`DJANGO_ADMIN_URL`, `WAGTAIL_ADMIN_URL`) et restent hors du dépôt : un gabarit ou un test les obtient par `{% url %}` ou `reverse()`, jamais écrites en dur.
-- Cookies par django-cookie-consent : Google Tag Manager ne se charge qu'après accord ; Simple Analytics, sans cookie, hors back-office.
+- Aucun cookie de suivi, donc aucune bannière : Simple Analytics, sans cookie, mesure l'audience hors back-office. Un traceur qui pose un cookie demande d'abord un consentement, et c'est à Gabriel d'en décider.
 
 ## Commandes
 

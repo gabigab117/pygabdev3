@@ -31,7 +31,7 @@ uv run --no-project --with playwright==1.64.0 python .claude/skills/captures/cap
 - `--demo` connecte le compte de démonstration (skill `lancer-app`) par la connexion de l'admin Django, avec le mot de passe de `.env.example`. Sans lui, seules les pages publiques s'ouvrent.
 - Un bouton à ouvrir avant la capture suit un « @ », par son nom accessible exact : le menu du téléphone (`Menu`), une modale. Plusieurs « @ » se suivent, dans l'ordre.
 - Un « ~ » suivi d'un nombre attend autant de millisecondes, le temps d'une animation (`"03-menu=/@Menu~800"`).
-- Le bandeau des cookies est refusé avant la première capture, et la barre de Wagtail est masquée.
+- La barre de Wagtail est masquée.
 
 ## Montrer
 

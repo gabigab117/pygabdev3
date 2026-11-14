@@ -422,9 +422,6 @@ a.contact-link:hover .ic{ border-color:var(--accent); color:var(--accent); }
 .empty-state{ text-align:center; padding:48px 16px; color:var(--ink-3); }
 .empty-state .es-title{ font-family:var(--mono); font-weight:700; color:var(--ink-2); margin:10px 0 4px; }
 
-/* cookie consent bar */
-.cookie-theme-bar{ position:fixed; bottom:0; left:0; right:0; z-index:1080; background:rgba(255,255,255,.96); backdrop-filter:saturate(140%) blur(10px); border-top:1px solid var(--border); box-shadow:0 -6px 24px rgba(27,30,45,.08); padding:16px 0; }
-
 /* htmx indicator (used on the admin search) */
 .htmx-indicator{ opacity:0; transition:opacity .2s; }
 .htmx-request .htmx-indicator,.htmx-request.htmx-indicator{ opacity:1; }
